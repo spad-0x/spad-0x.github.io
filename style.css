@@ -1,0 +1,289 @@
+/* Reset di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo a {
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #007BFF;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    width: 25px;
+    background: #333;
+    margin-bottom: 4px;
+    border-radius: 5px;
+}
+
+.toggle span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.toggle span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Sezioni */
+.section {
+    padding: 60px 0;
+}
+
+.home-section {
+    background: #f4f4f4;
+    text-align: center;
+}
+
+.about-section, .skills-section, .projects-section, .blog-section, .contact-section {
+    background: #fff;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Competenze */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.skill {
+    flex: 1 1 200px;
+    margin: 10px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.skill h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Progetti */
+.projects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.project {
+    flex: 1 1 300px;
+    margin: 10px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.project h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.project a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.project a:hover {
+    text-decoration: underline;
+}
+
+/* Blog */
+.blog-posts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.blog-post {
+    flex: 1 1 300px;
+    margin: 10px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.blog-post h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.blog-post a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.blog-post a:hover {
+    text-decoration: underline;
+}
+
+/* Contatti */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form label {
+    margin: 10px 0 5px;
+}
+
+.contact-form input, 
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.contact-form button {
+    margin-top: 15px;
+    padding: 10px;
+    border: none;
+    background: #007BFF;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+    background: #0056b3;
+}
+
+.social-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Responsività */
+@media (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        right: 0;
+        height: 100vh;
+        top: 80px;
+        background: #fff;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in;
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    .nav-links li {
+        margin: 20px 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .skills, .projects, .blog-posts {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+    }
+
+    .skill, .project, .blog-post {
+        flex: 1 1 100%;
+    }
+}
