@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il Mio Sito Personale</title>
+    <title>Leonardo Spadoni | Cybersecurity Enthusiast</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <!-- Navbar -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a href="#">Il Mio Nome</a>
+                <a href="index.html">Leonardo Spadoni</a>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Chi Sono</a></li>
                 <li><a href="#skills">Competenze</a></li>
                 <li><a href="#projects">Progetti</a></li>
-                <li><a href="#blog">Blog</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
                 <li><a href="#contact">Contatti</a></li>
             </ul>
             <div class="hamburger">
@@ -32,8 +37,16 @@
     <!-- Sezione Home -->
     <section id="home" class="section home-section">
         <div class="container">
-            <h1>Ciao, sono [Il Tuo Nome]</h1>
-            <p>Studente Magistrale in Cybersecurity presso l'Università La Sapienza di Roma.</p>
+            <div class="home-content">
+                <div class="profile-pic">
+                    <img src="images/profile.jpg" alt="Leonardo Spadoni">
+                </div>
+                <div class="intro-text">
+                    <h1>Ciao, sono Leonardo Spadoni</h1>
+                    <p>Studente Magistrale in Cybersecurity presso l'Università La Sapienza di Roma.</p>
+                    <a href="#projects" class="btn">Scopri i miei progetti</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -41,7 +54,10 @@
     <section id="about" class="section about-section">
         <div class="container">
             <h2>Chi Sono</h2>
-            <p>Inserisci qui una breve biografia su di te, il tuo percorso accademico, interessi e obiettivi professionali.</p>
+            <div class="about-content">
+                <p>Appassionato di Cybersecurity con un forte interesse per la sicurezza delle applicazioni web e l'analisi delle vulnerabilità. Durante il mio percorso accademico all'Università La Sapienza di Roma, ho partecipato a diversi CTF (Capture The Flag) che mi hanno permesso di sviluppare competenze pratiche nel campo.</p>
+                <p>Il mio obiettivo è diventare un esperto di sicurezza informatica, contribuendo a proteggere le infrastrutture digitali e promuovendo le migliori pratiche di sicurezza.</p>
+            </div>
         </div>
     </section>
 
@@ -51,18 +67,25 @@
             <h2>Competenze</h2>
             <div class="skills">
                 <div class="skill">
+                    <i class="fas fa-code"></i>
                     <h3>Programmazione</h3>
                     <p>Python, C++, JavaScript</p>
                 </div>
                 <div class="skill">
+                    <i class="fas fa-shield-alt"></i>
                     <h3>Strumenti di Sicurezza</h3>
                     <p>Wireshark, Metasploit, Burp Suite</p>
                 </div>
                 <div class="skill">
+                    <i class="fas fa-network-wired"></i>
                     <h3>Sistemi Operativi</h3>
                     <p>Linux, Windows</p>
                 </div>
-                <!-- Aggiungi altre competenze secondo necessità -->
+                <div class="skill">
+                    <i class="fas fa-tools"></i>
+                    <h3>Strumenti di Sviluppo</h3>
+                    <p>Git, Docker, VS Code</p>
+                </div>
             </div>
         </div>
     </section>
@@ -73,36 +96,17 @@
             <h2>Progetti</h2>
             <div class="projects">
                 <div class="project">
-                    <h3>Nome Progetto 1</h3>
-                    <p>Descrizione del progetto, tecnologie utilizzate e risultati ottenuti.</p>
-                    <a href="#" target="_blank">Visualizza su GitHub</a>
+                    <img src="images/progetto1.png" alt="Progetto 1">
+                    <h3>Progetto di Penetration Testing</h3>
+                    <p>Ho condotto un penetration test su un'applicazione web, identificando e sfruttando diverse vulnerabilità come SQL Injection e Cross-Site Scripting (XSS).</p>
+                    <a href="https://github.com/LeonardoSpadoni/progetto-pen-testing" target="_blank" class="btn">Visualizza su GitHub</a>
                 </div>
                 <div class="project">
-                    <h3>Nome Progetto 2</h3>
-                    <p>Descrizione del progetto, tecnologie utilizzate e risultati ottenuti.</p>
-                    <a href="#" target="_blank">Visualizza su GitHub</a>
+                    <img src="images/progetto2.png" alt="Progetto 2">
+                    <h3>Automazione della Sicurezza con Python</h3>
+                    <p>Sviluppo di script in Python per automatizzare scansioni di sicurezza e analisi di log, migliorando l'efficienza nella rilevazione di minacce.</p>
+                    <a href="https://github.com/LeonardoSpadoni/automazione-sicurezza" target="_blank" class="btn">Visualizza su GitHub</a>
                 </div>
-                <!-- Aggiungi altri progetti secondo necessità -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Sezione Blog -->
-    <section id="blog" class="section blog-section">
-        <div class="container">
-            <h2>Blog</h2>
-            <div class="blog-posts">
-                <article class="blog-post">
-                    <h3>Titolo Articolo 1</h3>
-                    <p>Breve descrizione dell'articolo...</p>
-                    <a href="#">Leggi di più</a>
-                </article>
-                <article class="blog-post">
-                    <h3>Titolo Articolo 2</h3>
-                    <p>Breve descrizione dell'articolo...</p>
-                    <a href="#">Leggi di più</a>
-                </article>
-                <!-- Aggiungi altri articoli secondo necessità -->
             </div>
         </div>
     </section>
@@ -121,12 +125,11 @@
                 <label for="message">Messaggio:</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
 
-                <button type="submit">Invia</button>
+                <button type="submit" class="btn">Invia</button>
             </form>
             <div class="social-links">
-                <a href="#" target="_blank">LinkedIn</a>
-                <a href="#" target="_blank">GitHub</a>
-                <!-- Aggiungi altri link social se necessario -->
+                <a href="https://www.linkedin.com/in/leonardospadoni" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/LeonardoSpadoni" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             </div>
         </div>
     </section>
@@ -134,19 +137,11 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 [Il Tuo Nome]. Tutti i diritti riservati.</p>
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
         </div>
     </footer>
 
     <!-- Script per la Navbar Responsive -->
-    <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('toggle');
-        });
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
