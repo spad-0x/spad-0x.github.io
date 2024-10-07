@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Concepts in Statistics | Leonardo Spadoni's Blog</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax for Rendering Math Expressions -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        ul li{
+            margin: 20px 0px 20px 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../../index.html">Leonardo Spadoni</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">Home</a></li>
+                <li><a href="../../index.html#about">About</a></li>
+                <li><a href="../../index.html#skills">Skills</a></li>
+                <li><a href="../../index.html#projects">Projects</a></li>
+                <li><a href="../index.html">Blog</a></li>
+                <li><a href="../../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page">
+        <div class="container">
+            <h2>Basic Concepts in Statistics</h2> <br>
+            <h2>Population, Statistical Units, and Distribution</h2>
+            
+            <h3>Population</h3>
+            <p>
+                In statistics, the <strong>population</strong> refers to the complete set of all elements or individuals that share one or more common characteristics that we aim to draw conclusions about or perform analyses on. The population is the primary object of study and can consist of people, animals, objects, or events.
+            </p>
+            <ul>
+                <li>
+                    <strong>Example:</strong> If we want to study the average height of university students in Italy, the population will consist of all university students enrolled in Italian universities.
+                </li>
+            </ul>
+
+            <h3>Statistical Units</h3>
+            <p>
+                The <strong>statistical units</strong> are the individual elements of the population from which data are collected. Each statistical unit represents a single member of the population and possesses the characteristics we are studying.
+            </p>
+            <ul>
+                <li>
+                    <strong>Example:</strong> In the previous case, each individual university student is a statistical unit. By collecting the height of each student, we obtain the necessary data for our analysis.
+                </li>
+            </ul>
+
+            <h3>Distribution</h3>
+            <p>
+                The <strong>distribution</strong> describes how the values of a certain variable are dispersed among the statistical units of the population. The distribution provides information about the frequency with which various values occur and allows us to identify patterns, trends, and anomalies.
+            </p>
+            <ul>
+                <li><strong>Mean (average value):</strong> The sum of all values divided by the number of statistical units.</li>
+                <li><strong>Median:</strong> The middle value when the data are ordered in ascending order.</li>
+                <li><strong>Variance and Standard Deviation:</strong> Measure the dispersion of data around the mean.</li>
+                <li><strong>Skewness and Kurtosis:</strong> Indicate the shape of the distribution (e.g., symmetrical, skewed to the right/left).</li>
+            </ul>
+            <p>
+                <strong>Visual Example:</strong> A <strong>histogram</strong> can be used to graphically represent the distribution of students' heights, showing how many statistical units fall within each height interval.
+            </p>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <h2>Leverage Concept</h2>
+            
+            <h3>Leverage in Statistics</h3>
+            <p>
+                In statistics, <strong>leverage</strong> (or statistical leverage) is a measure that quantifies the influence of an individual observation on the estimation of parameters in a statistical model, such as linear regression.
+            </p>
+            <ul>
+                <li>
+                    <strong>Interpretation:</strong>
+                    <ul>
+                        <li>An observation with <strong>high leverage</strong> has an independent variable (X) value far from the mean of X. This means it has a greater potential to influence the regression line.</li>
+                        <li>An observation with <strong>low leverage</strong> is close to the mean of X and has less influence on the model.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Importance:</strong>
+                    <ul>
+                        <li>Identifying points with high leverage is crucial because they can distort the model, especially if they are also <strong>outliers</strong> (anomalous values in the dependent variable Y).</li>
+                        <li>By analyzing leverage, we can assess the robustness of the model and decide whether to exclude or further investigate certain observations.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Leverage in Finance</h3>
+            <p>
+                The term <strong>leverage</strong> is also widely used in finance to describe the use of debt (borrowed capital) to increase the potential return of an investment.
+            </p>
+            <ul>
+                <li>
+                    <strong>Key Concept:</strong> <strong>Financial Leverage = Debt / Equity</strong>
+                </li>
+                <li>
+                    <strong>Advantages:</strong>
+                    <ul>
+                        <li>Amplifies potential gains if the investment is successful.</li>
+                        <li>Allows controlling a larger amount of resources with a smaller initial investment.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Disadvantages:</strong>
+                    <ul>
+                        <li>Increases the risk of losses, as debt must be repaid regardless of the investment's success.</li>
+                        <li>Can lead to insolvency if not managed properly.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Example:</strong> A company borrows money to finance a project. If the project generates a return higher than the interest rate on the debt, the company benefits from financial leverage. Conversely, if the return is lower, the company suffers greater losses.
+                </li>
+            </ul>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+
+            <h2>Computational Problems with Floating-Point Representation</h2>
+            
+            <h3>Floating-Point Representation</h3>
+            <p>
+                Computers represent real numbers using <strong>floating-point</strong>, a format that allows representing very large or very small numbers efficiently.
+            </p>
+            <ul>
+                <li><strong>Sign:</strong> Indicates whether the number is positive or negative.</li>
+                <li><strong>Mantissa (or significand):</strong> Contains the significant digits of the number.</li>
+                <li><strong>Exponent:</strong> Scales the mantissa to the correct magnitude.</li>
+            </ul>
+            <p>
+                <strong>Limits:</strong>
+            </p>
+            <ul>
+                <li><strong>Finite Precision:</strong> Not all real numbers can be represented exactly, leading to <strong>rounding errors</strong>.</li>
+                <li><strong>Limited Range:</strong> There are minimum and maximum values that can be represented.</li>
+            </ul>
+
+            <h3>Rounding Errors</h3>
+            <p>
+                Rounding errors occur when a number is approximated to the nearest value that can be represented in the floating-point format.
+            </p>
+            <ul>
+                <li><strong>Causes:</strong>
+                    <ul>
+                        <li>Conversion of decimal numbers to binary.</li>
+                        <li>Arithemetical operations that produce results with more digits than can be represented.</li>
+                    </ul>
+                </li>
+                <li><strong>Consequences:</strong>
+                    <ul>
+                        <li><strong>Error Accumulation:</strong> Small errors can accumulate over many operations.</li>
+                        <li><strong>Unexpected Results:</strong> In some cases, the error can be significant relative to the actual value.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Catastrophic Cancellation</h3>
+            <p>
+                <strong>Catastrophic cancellation</strong> is a phenomenon that occurs when subtracting two very close numbers, causing the loss of significant digits.
+            </p>
+            <ul>
+                <li><strong>Mechanism:</strong>
+                    <ul>
+                        <li>The common digits in the most significant positions cancel out, leaving only the less significant digits, which contain most of the rounding error.</li>
+                    </ul>
+                </li>
+                <li><strong>Example:</strong>
+                    <ul>
+                        <li>Calculate \( s = a - b \) with \( a = 1.0000001 \) and \( b = 1.0000000 \).</li>
+                        <li>In floating-point representation with limited precision, we might obtain \( s = 0.0000001 \), but with a significant relative error.</li>
+                    </ul>
+                </li>
+                <li><strong>Impact:</strong>
+                    <ul>
+                        <li>Catastrophic cancellation can lead to completely erroneous numerical results if not properly handled.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Mnemonic Solutions (Knuth)</h3>
+            <p>
+                Donald E. Knuth, a pioneer in computer science, has proposed several techniques to address numerical precision issues.
+            </p>
+            <h4>1. Restructuring Formulas</h4>
+            <p>
+                Modify mathematical expressions to avoid operations that cause catastrophic cancellation.
+            </p>
+            <ul>
+                <li><strong>Example:</strong> Avoid \( \sqrt{a^2 + b^2} - c \) when \( c \) is large and \( \sqrt{a^2 + b^2} \) is close to \( c \).</li>
+                <li>Use algebraic identities to reformulate the expression in a numerically stable way.</li>
+            </ul>
+
+            <h4>2. Use of Numerically Stable Algorithms</h4>
+            <p>
+                Choose algorithms designed to minimize the amplification of rounding errors.
+            </p>
+            <ul>
+                <li><strong>Example:</strong> Use Kahan's summation algorithm to add a series of floating-point numbers, reducing the rounding error.</li>
+            </ul>
+
+            <h4>3. Increasing Precision</h4>
+            <p>
+                Use data types with higher precision or arbitrary-precision arithmetic.
+            </p>
+            <ul>
+                <li><strong>Example:</strong> Switch from <strong>float</strong> to <strong>double</strong> or to 128-bit data types if available.</li>
+            </ul>
+
+            <h4>4. Error Analysis</h4>
+            <p>
+                Study how errors propagate through operations to predict and control the accuracy of results.
+            </p>
+
+            <h4>5. Mnemonic Techniques</h4>
+            <p>
+                Knuth encourages a deep understanding of algorithms and their numerical properties, rather than relying solely on practical rules.
+            </p>
+            <ul>
+                <li><strong>Advice:</strong>
+                    <ul>
+                        <li><em>"Know your algorithm":</em> Understand where errors can arise and how they can be mitigated.</li>
+                        <li><em>"Be suspicious of results":</em> Always verify obtained results, especially when subtracting similar numbers.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+
+            <h2>Test of Learned Concepts</h2>
+            
+            <div style="margin: 0 auto; text-align: center;">
+                <a href="simulation.html" style="border: solid 1px; padding: 4px;">Click to Start a Simulation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Script for Responsive Navbar -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>

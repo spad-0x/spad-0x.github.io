@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nozioni di Base in Statistica | Blog di Leonardo Spadoni</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax for Rendering Math Expressions -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        ul li{
+            margin: 20px 0px 20px 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../../index.html">Leonardo Spadoni</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">Home</a></li>
+                <li><a href="../../index.html#about">Chi Sono</a></li>
+                <li><a href="../../index.html#skills">Competenze</a></li>
+                <li><a href="../../index.html#projects">Progetti</a></li>
+                <li><a href="../index.html">Blog</a></li>
+                <li><a href="../../index.html#contact">Contatti</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page">
+        <div class="container">
+            <h2>Nozioni di Base in Statistica</h2> <br>
+            <h2>Popolazione, Unità Statistiche e Distribuzione</h2>
+            
+            <h3>Popolazione</h3>
+            <p>
+                In statistica, la <strong>popolazione</strong> si riferisce all'insieme completo di tutti gli elementi o individui che condividono una o più caratteristiche comuni su cui desideriamo trarre conclusioni o effettuare analisi. La popolazione è l'oggetto principale di studio e può essere composta da persone, animali, oggetti o eventi.
+            </p>
+            <ul>
+                <li>
+                    <strong>Esempio:</strong> Se vogliamo studiare l'altezza media degli studenti universitari in Italia, la popolazione sarà costituita da tutti gli studenti universitari iscritti nelle università italiane.
+                </li>
+            </ul>
+
+            <h3>Unità Statistiche</h3>
+            <p>
+                Le <strong>unità statistiche</strong> sono gli elementi individuali della popolazione su cui vengono raccolti i dati. Ogni unità statistica rappresenta un singolo membro della popolazione e possiede le caratteristiche che stiamo studiando.
+            </p>
+            <ul>
+                <li>
+                    <strong>Esempio:</strong> Nel caso precedente, ogni singolo studente universitario è un'unità statistica. Raccogliendo l'altezza di ogni studente, otteniamo i dati necessari per la nostra analisi.
+                </li>
+            </ul>
+
+            <h3>Distribuzione</h3>
+            <p>
+                La <strong>distribuzione</strong> descrive come i valori di una certa variabile sono dispersi tra le unità statistiche della popolazione. La distribuzione ci fornisce informazioni sulla frequenza con cui si presentano i vari valori e ci permette di identificare pattern, tendenze e anomalie.
+            </p>
+            <ul>
+                <li><strong>Media (valore medio):</strong> Somma di tutti i valori divisa per il numero di unità statistiche.</li>
+                <li><strong>Mediana:</strong> Il valore centrale quando i dati sono ordinati in ordine crescente.</li>
+                <li><strong>Varianza e Deviazione Standard:</strong> Misurano la dispersione dei dati attorno alla media.</li>
+                <li><strong>Asimmetria e Curtosi:</strong> Indicano la forma della distribuzione (es. simmetrica, inclinata a destra/sinistra).</li>
+            </ul>
+            <p>
+                <strong>Esempio Visivo:</strong> Un <strong>istogramma</strong> può essere utilizzato per rappresentare graficamente la distribuzione dell'altezza degli studenti, mostrando quante unità statistiche rientrano in ciascun intervallo di altezza.
+            </p>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <h2>Nozione di Leverage</h2>
+            
+            <h3>Leverage in Statistica</h3>
+            <p>
+                In statistica, il <strong>leverage</strong> (o leva statistica) è una misura che quantifica l'influenza di un'osservazione individuale sulla stima dei parametri in un modello statistico, come la regressione lineare.
+            </p>
+            <ul>
+                <li>
+                    <strong>Interpretazione:</strong>
+                    <ul>
+                        <li>Un'osservazione con <strong>alto leverage</strong> ha un valore della variabile indipendente (X) distante dalla media delle X. Questo significa che ha un potenziale maggiore di influenzare la linea di regressione.</li>
+                        <li>Un'osservazione con <strong>basso leverage</strong> è vicina alla media delle X e ha meno influenza sul modello.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Importanza:</strong>
+                    <ul>
+                        <li>Identificare punti con alto leverage è cruciale perché possono distorcere il modello, soprattutto se sono anche <strong>outlier</strong> (valori anomali nella variabile dipendente Y).</li>
+                        <li>Analizzando il leverage, possiamo valutare la robustezza del modello e decidere se escludere o approfondire certe osservazioni.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Leverage in Finanza</h3>
+            <p>
+                Il termine <strong>leverage</strong> è ampiamente utilizzato anche in finanza per descrivere l'uso del debito (capitale preso in prestito) per aumentare il potenziale rendimento di un investimento.
+            </p>
+            <ul>
+                <li>
+                    <strong>Concetto Chiave:</strong> <strong>Leva Finanziaria = Debito / Capitale Proprio</strong>
+                </li>
+                <li>
+                    <strong>Vantaggi:</strong>
+                    <ul>
+                        <li>Amplifica i guadagni potenziali se l'investimento ha successo.</li>
+                        <li>Permette di controllare una quantità maggiore di risorse con un investimento iniziale minore.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Svantaggi:</strong>
+                    <ul>
+                        <li>Aumenta il rischio di perdite, poiché il debito deve essere rimborsato indipendentemente dal successo dell'investimento.</li>
+                        <li>Può portare a insolvenza se non gestito correttamente.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Esempio:</strong> Un'azienda prende in prestito denaro per finanziare un progetto. Se il progetto genera un rendimento superiore al tasso d'interesse sul debito, l'azienda beneficia della leva finanziaria. Al contrario, se il rendimento è inferiore, l'azienda subisce perdite maggiori.
+                </li>
+            </ul>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+
+            <h2>Problemi Computazionali con la Rappresentazione in Virgola Mobile</h2>
+            
+            <h3>Rappresentazione in Virgola Mobile</h3>
+            <p>
+                I computer rappresentano i numeri reali utilizzando la <strong>virgola mobile</strong>, un formato che permette di rappresentare numeri molto grandi o molto piccoli in modo efficiente.
+            </p>
+            <ul>
+                <li><strong>Segno:</strong> Indica se il numero è positivo o negativo.</li>
+                <li><strong>Mantissa (o significando):</strong> Contiene le cifre significative del numero.</li>
+                <li><strong>Esponente:</strong> Scala la mantissa alla dimensione corretta.</li>
+            </ul>
+            <p>
+                <strong>Limiti:</strong>
+            </p>
+            <ul>
+                <li><strong>Precisione Finita:</strong> Non tutti i numeri reali possono essere rappresentati esattamente, portando a <strong>errori di arrotondamento</strong>.</li>
+                <li><strong>Gamma Limitata:</strong> Esistono valori minimi e massimi che possono essere rappresentati.</li>
+            </ul>
+
+            <h3>Errori di Arrotondamento</h3>
+            <p>
+                Gli errori di arrotondamento si verificano quando un numero viene approssimato al valore più vicino che può essere rappresentato nel formato di virgola mobile.
+            </p>
+            <ul>
+                <li><strong>Cause:</strong>
+                    <ul>
+                        <li>Conversione di numeri decimali in binario.</li>
+                        <li>Operazioni aritmetiche che producono risultati con più cifre di quelle che possono essere rappresentate.</li>
+                    </ul>
+                </li>
+                <li><strong>Conseguenze:</strong>
+                    <ul>
+                        <li><strong>Accumulo di Errori:</strong> Piccoli errori possono sommarsi attraverso molte operazioni.</li>
+                        <li><strong>Risultati Inattesi:</strong> In alcuni casi, l'errore può essere significativo rispetto al valore reale.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Cancellazione Catastrofica</h3>
+            <p>
+                La <strong>cancellazione catastrofica</strong> è un fenomeno che si verifica quando si sottraggono due numeri molto vicini tra loro, causando la perdita delle cifre significative.
+            </p>
+            <ul>
+                <li><strong>Meccanismo:</strong>
+                    <ul>
+                        <li>Le cifre comuni nelle posizioni più significative si annullano, lasciando solo le cifre meno significative, che contengono la maggior parte dell'errore di arrotondamento.</li>
+                    </ul>
+                </li>
+                <li><strong>Esempio:</strong>
+                    <ul>
+                        <li>Calcoliamo \( s = a - b \) con \( a = 1.0000001 \) e \( b = 1.0000000 \).</li>
+                        <li>In rappresentazione in virgola mobile con precisione limitata, potremmo ottenere \( s = 0.0000001 \), ma con un errore relativo significativo.</li>
+                    </ul>
+                </li>
+                <li><strong>Impatto:</strong>
+                    <ul>
+                        <li>La cancellazione catastrofica può portare a risultati numerici completamente errati se non gestita correttamente.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Soluzioni Mnemotecniche (Knuth)</h3>
+            <p>
+                Donald E. Knuth, un pioniere dell'informatica, ha proposto diverse tecniche per affrontare i problemi di precisione numerica.
+            </p>
+            <h4>1. Ristrutturazione delle Formule</h4>
+            <p>
+                Modificare le espressioni matematiche per evitare operazioni che causano cancellazione catastrofica.
+            </p>
+            <ul>
+                <li><strong>Esempio:</strong> Evitare \( \sqrt{a^2 + b^2} - c \) quando \( c \) è grande e \( \sqrt{a^2 + b^2} \) è prossimo a \( c \).</li>
+                <li>Utilizzare identità algebriche per riformulare l'espressione in modo numericamente stabile.</li>
+            </ul>
+
+            <h4>2. Uso di Algoritmi Numericamente Stabili</h4>
+            <p>
+                Scegliere algoritmi progettati per minimizzare l'amplificazione degli errori di arrotondamento.
+            </p>
+            <ul>
+                <li><strong>Esempio:</strong> Utilizzare l'algoritmo di somma di Kahan per sommare una serie di numeri in virgola mobile riducendo l'errore di arrotondamento.</li>
+            </ul>
+
+            <h4>3. Aumento della Precisione</h4>
+            <p>
+                Utilizzare tipi di dati con maggiore precisione o aritmetica a precisione arbitraria.
+            </p>
+            <ul>
+                <li><strong>Esempio:</strong> Passare da <strong>float</strong> a <strong>double</strong> o a tipi di dati a 128 bit se disponibili.</li>
+            </ul>
+
+            <h4>4. Analisi dell'Errore</h4>
+            <p>
+                Studiare come gli errori si propagano attraverso le operazioni per prevedere e controllare l'accuratezza dei risultati.
+            </p>
+
+            <h4>5. Tecniche Mnemotecniche</h4>
+            <p>
+                Knuth incoraggia la comprensione profonda degli algoritmi e delle loro proprietà numeriche, piuttosto che affidarsi esclusivamente a regole pratiche.
+            </p>
+            <ul>
+                <li><strong>Consiglio:</strong>
+                    <ul>
+                        <li><em>"Conosci il tuo algoritmo":</em> Capire dove possono insorgere gli errori e come possono essere mitigati.</li>
+                        <li><em>"Sii sospettoso dei risultati":</em> Verificare sempre i risultati ottenuti, soprattutto in presenza di sottrazioni tra numeri simili.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <br>
+            <br>
+            <hr>
+            <br>
+
+            <h2>Test delle nozioni apprese</h2>
+            
+            <div style="margin: 0 auto; text-align: center;">
+                <a href="simulation.html" style="border: solid 1px; padding: 4px;">Clicca per avviare una simulazione </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsive -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>

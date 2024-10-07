@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Frequency & Distribution</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .charts-container {
+            display: flex;
+            gap: 40px; /* Aumentato lo spazio tra i canvas */
+            justify-content: center;
+            align-items: flex-start;
+        }
+        canvas {
+            background-color: #ffffff;
+            border: 1px solid #000000;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .controls div {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: absolute; top: 50px; left: 50px;">
+        <a href="./">🔙 Back</a>
+    </div>
+    <h1 style="margin-bottom: 100px;">Homework 1</h1>
+    <div class="controls">
+        <div>
+            <label for="attackerCount">Number Of Attacker:</label>
+            <input type="number" id="attackerCount" min="1" value="1000">
+        </div>
+        <div>
+            <label for="serverCount">Number Of Server:</label>
+            <input type="number" id="serverCount" min="1" value="50">
+        </div>
+        <div>
+            <label for="successProbability">Probability Of Hacking (%):</label>
+            <input type="number" id="successProbability" min="0" max="100" value="70">
+        </div>
+        <button id="startBtn">Avvia Simulazione</button>
+    </div>
+
+    <div class="charts-container">
+        <div style="text-align: center;">
+            <h2>Absolute Frequency</h2>
+            <canvas id="myCanvas" width="600" height="400"></canvas>
+        </div>
+        
+        <div style="text-align: center;">
+            <h2>Frequency Distribution</h2>
+            <canvas id="histogramCanvas" width="600" height="400"></canvas>
+        </div>
+        
+    </div>
+
+    <script>
+    class Graph {
+        constructor(canvasId, options = {}) {
+            this.canvas = document.getElementById(canvasId);
+            if (!this.canvas) {
+                throw new Error(`Canvas con id "${canvasId}" non trovato.`);
+            }
+            this.ctx = this.canvas.getContext('2d');
+
+            // Impostazioni predefinite
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
+            this.margin = options.margin || { top: 20, right: 20, bottom: 60, left: 60 };
+            this.drawableWidth = this.width - this.margin.left - this.margin.right;
+            this.drawableHeight = this.height - this.margin.top - this.margin.bottom;
+
+            // Dati del grafico
+            this.attackers = [];
+            this.serverCount = 1;
+            this.currentServer = 0;
+            this.successProbability = 0;
+
+            // Parametri del grafico
+            this.interval = options.interval || 1000;
+            this.timer = null;
+
+            // Opzioni di stile
+            this.axisColor = options.axisColor || '#000000';
+            this.lineColors = options.lineColors || ['#FF0000', '#0000FF', '#00FF00', '#FFA500', '#800080'];
+            this.pointColor = options.pointColor || '#0000FF';
+            this.lineWidth = options.lineWidth || 2;
+            this.pointRadius = options.pointRadius || 3;
+            this.backgroundColor = options.backgroundColor || '#ffffff';
+            this.borderColor = options.borderColor || '#000000';
+
+            // Testo degli assi
+            this.xLabel = options.xLabel || 'Total Servers';
+            this.yLabel = options.yLabel || 'Hacked';
+
+            // Traccia per histogram
+            this.hackedCounts = {};
+
+            // Callback per l'istogramma
+            this.onHistogramDraw = null;
+
+            // Inizializza il grafico
+            this.init();
+        }
+
+        init() {
+            this.ctx.fillStyle = this.backgroundColor;
+            this.ctx.fillRect(0, 0, this.width, this.height);
+            this.drawAxes();
+            this.drawGraph();
+        }
+
+        addAttackers(count) {
+            this.attackers = [];
+            this.hackedCounts = {};
+            for (let i = 0; i < count; i++) {
+                this.attackers.push({
+                    id: i,
+                    data: [{ server: 0, hacked: 0 }],
+                    color: this.lineColors[i % this.lineColors.length],
+                    hackedTotal: 0
+                });
+            }
+            this.drawGraph();
+        }
+
+        setServerCount(count) {
+            this.serverCount = count >= 1 ? count : 1;
+            this.drawableWidth = this.width - this.margin.left - this.margin.right;
+            this.redraw();
+        }
+
+        setSuccessProbability(prob) {
+            this.successProbability = prob;
+        }
+
+        drawAxes() {
+            this.ctx.strokeStyle = this.axisColor;
+            this.ctx.lineWidth = this.lineWidth;
+
+            // Asse X
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.margin.left, this.height - this.margin.bottom);
+            this.ctx.lineTo(this.width - this.margin.right, this.height - this.margin.bottom);
+            this.ctx.stroke();
+
+            // Asse Y
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.margin.left, this.margin.top);
+            this.ctx.lineTo(this.margin.left, this.height - this.margin.bottom);
+            this.ctx.stroke();
+
+            // Etichette degli assi
+            this.ctx.fillStyle = this.axisColor;
+            this.ctx.font = '16px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText(this.xLabel, this.margin.left + this.drawableWidth / 2, this.height - 20);
+
+            this.ctx.save();
+            this.ctx.translate(20, this.margin.top + this.drawableHeight / 2);
+            this.ctx.rotate(-Math.PI / 2);
+            this.ctx.fillText(this.yLabel, 0, 0);
+            this.ctx.restore();
+
+            // Etichette asse X
+            this.ctx.font = '12px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'top';
+            for (let i = 0; i <= this.serverCount; i++) {
+                const x = this.margin.left + (i / this.serverCount) * this.drawableWidth;
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, this.height - this.margin.bottom);
+                this.ctx.lineTo(x, this.height - this.margin.bottom + 5);
+                this.ctx.stroke();
+                this.ctx.fillText(i, x, this.height - this.margin.bottom + 8);
+            }
+
+            // Etichette asse Y
+            this.ctx.font = '12px Arial';
+            this.ctx.textAlign = 'right';
+            this.ctx.textBaseline = 'middle';
+            for (let i = 0; i <= this.serverCount; i++) {
+                const y = this.height - this.margin.bottom - (i / this.serverCount) * this.drawableHeight;
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.margin.left - 5, y);
+                this.ctx.lineTo(this.margin.left, y);
+                this.ctx.stroke();
+                this.ctx.fillText(i, this.margin.left - 10, y);
+            }
+        }
+
+        drawGraph() {
+            const mapX = (server) => this.margin.left + (server / this.serverCount) * this.drawableWidth;
+            const mapY = (hacked) => this.height - this.margin.bottom - (hacked / this.serverCount) * this.drawableHeight;
+
+            this.attackers.forEach(attacker => {
+                if (attacker.data.length === 0) return;
+
+                this.ctx.strokeStyle = attacker.color;
+                this.ctx.lineWidth = this.lineWidth;
+                this.ctx.beginPath();
+
+                attacker.data.forEach((point, index) => {
+                    const x = mapX(point.server);
+                    const y = mapY(point.hacked);
+
+                    if (index === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        const prevPoint = attacker.data[index - 1];
+                        const prevX = mapX(prevPoint.server);
+                        const prevY = mapY(prevPoint.hacked);
+
+                        this.ctx.lineTo(x, prevY);
+                        this.ctx.lineTo(x, y);
+                    }
+                });
+                this.ctx.stroke();
+
+                // Disegna i punti
+                this.ctx.fillStyle = attacker.color;
+                attacker.data.forEach(point => {
+                    const x = mapX(point.server);
+                    const y = mapY(point.hacked);
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, this.pointRadius, 0, 2 * Math.PI);
+                    this.ctx.fill();
+                });
+            });
+        }
+
+        updateGraph() {
+            if (this.currentServer >= this.serverCount) {
+                this.stop();
+                this.generateHackedCounts();
+                return;
+            }
+
+            this.currentServer += 1;
+
+            this.attackers.forEach(attacker => {
+                const lastHacked = attacker.data[attacker.data.length - 1].hacked;
+                const success = Math.random() * 100 < this.successProbability;
+                let newHacked = success ? lastHacked + 1 : lastHacked;
+                newHacked = Math.min(newHacked, this.serverCount);
+
+                attacker.data.push({ server: this.currentServer, hacked: newHacked });
+
+                if (attacker.data.length > this.serverCount + 1) {
+                    attacker.data.shift();
+                }
+
+                attacker.hackedTotal = newHacked;
+            });
+
+            this.redraw();
+        }
+
+        generateHackedCounts() {
+            this.hackedCounts = {};
+            const binSize = 5; // Dimensione dell'intervallo
+
+            this.attackers.forEach(attacker => {
+                const hacked = attacker.hackedTotal;
+                const binIndex = this.getBinIndex(hacked, binSize);
+                if (this.hackedCounts[binIndex]) {
+                    this.hackedCounts[binIndex]++;
+                } else {
+                    this.hackedCounts[binIndex] = 1;
+                }
+            });
+
+            const sortedBins = Object.keys(this.hackedCounts).map(Number).sort((a, b) => a - b);
+
+            this.histogramData = sortedBins.map(binIndex => ({
+                bin: binIndex,
+                label: this.getBinLabel(binIndex, binSize),
+                count: this.hackedCounts[binIndex]
+            }));
+
+            this.drawHistogram();
+        }
+
+        getBinIndex(hackedTotal, binSize) {
+            if (hackedTotal === 0) {
+                return 0;
+            } else {
+                return Math.floor((hackedTotal - 1) / binSize) + 1;
+            }
+        }
+
+        getBinLabel(binIndex, binSize) {
+            if (binIndex === 0) {
+                return '0';
+            } else {
+                const lowerBound = (binIndex - 1) * binSize + 1;
+                const upperBound = binIndex * binSize;
+                return `${lowerBound}-${upperBound}`;
+            }
+        }
+
+        drawHistogram() {
+            if (typeof this.onHistogramDraw === 'function') {
+                this.onHistogramDraw(this.histogramData);
+            }
+        }
+
+        redraw() {
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.ctx.fillStyle = this.backgroundColor;
+            this.ctx.fillRect(0, 0, this.width, this.height);
+            this.drawAxes();
+            this.drawGraph();
+        }
+
+        start() {
+            if (this.timer) return;
+            this.timer = setInterval(() => {
+                this.updateGraph();
+            }, this.interval);
+        }
+
+        stop() {
+            if (this.timer) {
+                clearInterval(this.timer);
+                this.timer = null;
+            }
+        }
+
+        reset() {
+            this.stop();
+            this.currentServer = 0;
+            this.attackers.forEach(attacker => {
+                attacker.data = [{ server: 0, hacked: 0 }];
+                attacker.hackedTotal = 0;
+            });
+            this.redraw();
+            this.start();
+        }
+    }
+
+    class Histogram {
+        constructor(canvasId, options = {}) {
+            this.canvas = document.getElementById(canvasId);
+            if (!this.canvas) {
+                throw new Error(`Canvas con id "${canvasId}" non trovato.`);
+            }
+            this.ctx = this.canvas.getContext('2d');
+
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
+            this.margin = options.margin || { top: 40, right: 20, bottom: 60, left: 60 };
+            this.drawableWidth = this.width - this.margin.left - this.margin.right;
+            this.drawableHeight = this.height - this.margin.top - this.margin.bottom;
+
+            this.data = [];
+
+            this.axisColor = options.axisColor || '#000000';
+            this.barColor = options.barColor || '#4287f5';
+            this.lineWidth = options.lineWidth || 2;
+            this.labelFont = options.labelFont || '16px Arial';
+            this.tickFont = options.tickFont || '12px Arial';
+            this.xLabel = options.xLabel || 'Numero di Server Hackerati';
+            this.yLabel = options.yLabel || 'Numero di Hacker';
+
+            this.init();
+        }
+
+        init() {
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.fillRect(0, 0, this.width, this.height);
+            this.drawAxes();
+            this.ctx.fillStyle = this.axisColor;
+            this.ctx.font = this.titleFont;
+        }
+
+        setData(data) {
+            this.data = data.sort((a, b) => a.bin - b.bin);
+            this.draw();
+        }
+
+        drawAxes(maxCount = 1) {
+            this.ctx.strokeStyle = this.axisColor;
+            this.ctx.lineWidth = this.lineWidth;
+
+            // Asse X
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.margin.left, this.height - this.margin.bottom);
+            this.ctx.lineTo(this.width - this.margin.right, this.height - this.margin.bottom);
+            this.ctx.stroke();
+
+            // Asse Y
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.margin.left, this.margin.top);
+            this.ctx.lineTo(this.margin.left, this.height - this.margin.bottom);
+            this.ctx.stroke();
+
+            // Etichetta Asse X
+            this.ctx.fillStyle = this.axisColor;
+            this.ctx.font = this.labelFont;
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText(this.xLabel, this.margin.left + this.drawableWidth / 2, this.height - 10);
+
+            // Etichetta Asse Y
+            this.ctx.save();
+            this.ctx.translate(20, this.margin.top + this.drawableHeight / 2);
+            this.ctx.rotate(-Math.PI / 2);
+            this.ctx.fillText(this.yLabel, 0, 0);
+            this.ctx.restore();
+
+            // Etichette asse Y
+            const numTicks = 5;
+            this.ctx.font = this.tickFont;
+            this.ctx.textAlign = 'right';
+            this.ctx.textBaseline = 'middle';
+            for (let i = 0; i <= numTicks; i++) {
+                const y = this.margin.top + (this.drawableHeight / numTicks) * i;
+                const value = Math.round(maxCount - (maxCount / numTicks) * i);
+                this.ctx.fillText(value, this.margin.left - 10, y);
+            }
+        }
+
+        draw() {
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.ctx.fillStyle = '#ffffff';
+            this.ctx.fillRect(0, 0, this.width, this.height);
+
+            const maxCount = Math.max(...this.data.map(d => d.count), 1);
+            this.drawAxes(maxCount);
+
+            const totalHackers = this.data.reduce((acc, d) => acc + d.count, 0);
+
+            const numBars = this.data.length;
+            const spacingRatio = 0.4;
+            const paddingLeft = this.drawableWidth * 0.05;
+            const paddingRight = this.drawableWidth * 0.05;
+            const availableWidth = this.drawableWidth - paddingLeft - paddingRight;
+            const barWidth = availableWidth / (numBars + spacingRatio * (numBars - 1));
+
+            this.data.forEach((d, index) => {
+                const x = this.margin.left + paddingLeft + index * (barWidth + barWidth * spacingRatio);
+                const barHeight = (d.count / maxCount) * this.drawableHeight;
+                const y = this.height - this.margin.bottom - barHeight;
+
+                // Disegna la barra
+                this.ctx.fillStyle = this.barColor;
+                this.ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Etichetta asse X
+                this.ctx.fillStyle = this.axisColor;
+                this.ctx.font = this.tickFont;
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'top';
+                this.ctx.fillText(d.label, x + barWidth / 2, this.height - this.margin.bottom + 5);
+
+                // Conteggio sopra la barra
+                this.ctx.fillStyle = this.axisColor;
+                this.ctx.font = this.tickFont;
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'bottom';
+                this.ctx.fillText(d.count, x + barWidth / 2, y - 5);
+
+                // Percentuale
+                const percentage = totalHackers > 0 ? ((d.count / totalHackers) * 100).toFixed(1) + '%' : '0%';
+                this.ctx.fillText(percentage, x + barWidth / 2, y - 20);
+            });
+        }
+    }
+
+
+    // Creo gli oggetti appena carica il DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        const graph = new Graph('myCanvas', {
+            margin: { top: 20, right: 20, bottom: 60, left: 60 },
+            interval: 10,
+            axisColor: '#000000',
+            lineColors: ['#FF0000', '#0000FF', '#00FF00', '#FFA500', '#800080', '#008080'],
+            pointColor: '#0000FF',
+            lineWidth: 2,
+            pointRadius: 3,
+            backgroundColor: '#ffffff',
+            borderColor: '#000000',
+            xLabel: 'Total Server',
+            yLabel: 'Hacked Server'
+        });
+
+        const histogram = new Histogram('histogramCanvas', {
+            margin: { top: 40, right: 20, bottom: 60, left: 60 },
+            barColor: '#4287f5',
+            axisColor: '#000000',
+            xLabel: 'Servers Intervals',
+            yLabel: 'Hackers'
+        });
+
+        graph.onHistogramDraw = (histogramData) => {
+            histogram.setData(histogramData);
+        };
+
+        const startBtn = document.getElementById('startBtn');
+
+        startBtn.addEventListener('click', () => {
+            const attackerCount = parseInt(document.getElementById('attackerCount').value) || 1;
+            const serverCount = parseInt(document.getElementById('serverCount').value) || 1;
+            const successProb = parseFloat(document.getElementById('successProbability').value) || 0;
+
+            graph.setServerCount(serverCount);
+            graph.setSuccessProbability(successProb);
+            graph.addAttackers(attackerCount);
+            graph.reset();
+        });
+    });
+    </script>
+</body>
+</html>
