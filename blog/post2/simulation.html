@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulatore di Passeggiata Aleatoria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .controls, .charts {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .controls {
+            flex: 1 1 200px;
+        }
+        .charts {
+            flex: 2 1 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        canvas {
+            background-color: #ffffff;
+            border: 1px solid #000000;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+        /* Stili per la legenda */
+        .legend {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        .legend-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simulatore di Passeggiata Aleatoria</h1>
+
+    <div class="container">
+        <div class="controls">
+            <h2>Controlli</h2>
+            <label>
+                Numero di Simulazioni:
+                <input type="number" id="numSimulations" value="50" min="1">
+            </label>
+            <label>
+                Numero di Passi:
+                <input type="number" id="numSteps" value="100" min="1">
+            </label>
+            <label>
+                Probabilità di Salto +1 (p):
+                <input type="number" id="probability" value="0.5" min="0" max="1" step="0.01">
+            </label>
+            <label>
+                Tempo Intermedio per Distribuzione:
+                <input type="number" id="intermediateTime" value="50" min="1">
+            </label>
+            <button id="startBtn">Avvia Simulazione</button>
+        </div>
+        <div class="charts">
+            <div>
+                <canvas id="trajectoryCanvas" width="600" height="400"></canvas>
+                <!-- Legenda per le traiettorie -->
+                <div class="legend">
+                    <div class="legend-color" style="background-color: rgba(0, 0, 255, 0.1); border: 1px solid #000;"></div>
+                    <div class="legend-text">Traiettorie delle Simulazioni</div>
+                </div>
+            </div>
+            <div>
+                <canvas id="distributionCanvas" width="600" height="400"></canvas>
+                <!-- Legenda per le distribuzioni -->
+                <div class="legend">
+                    <div class="legend-color" style="background-color: rgba(0, 0, 255, 0.5);"></div>
+                    <div class="legend-text">Distribuzione Finale</div>
+                    <div class="legend-color" style="background-color: rgba(255, 0, 0, 0.5); margin-left: 20px;"></div>
+                    <div class="legend-text">Distribuzione Intermedia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('startBtn').addEventListener('click', () => {
+        const numSimulations = parseInt(document.getElementById('numSimulations').value);
+        const numSteps = parseInt(document.getElementById('numSteps').value);
+        const p = parseFloat(document.getElementById('probability').value);
+        const intermediateTime = parseInt(document.getElementById('intermediateTime').value);
+
+        // Controlli di validità
+        if (p < 0 || p > 1) {
+            alert('La probabilità deve essere tra 0 e 1.');
+            return;
+        }
+        if (intermediateTime < 1 || intermediateTime > numSteps) {
+            alert('Il tempo intermedio deve essere tra 1 e il numero di passi.');
+            return;
+        }
+
+        simulateRandomWalk(numSimulations, numSteps, p, intermediateTime);
+    });
+
+    function simulateRandomWalk(numSimulations, numSteps, p, intermediateTime) {
+        const trajectories = [];
+        const finalPositions = [];
+        const intermediatePositions = [];
+
+        for (let i = 0; i < numSimulations; i++) {
+            const trajectory = [0]; // Inizia dal centro
+            let position = 0;
+
+            for (let step = 1; step <= numSteps; step++) {
+                const jump = Math.random() < p ? 1 : -1;
+                position += jump;
+                trajectory.push(position);
+
+                if (step === intermediateTime) {
+                    intermediatePositions.push(position);
+                }
+            }
+
+            trajectories.push(trajectory);
+            finalPositions.push(position);
+        }
+
+        drawTrajectories(trajectories, numSteps);
+        drawDistribution(finalPositions, intermediatePositions, numSimulations, intermediateTime);
+    }
+
+    function drawTrajectories(trajectories, numSteps) {
+        const canvas = document.getElementById('trajectoryCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Imposta il centro del canvas
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        // Trova il valore massimo per scalare il grafico
+        let maxAbsValue = 0;
+        trajectories.forEach(trajectory => {
+            trajectory.forEach(value => {
+                if (Math.abs(value) > maxAbsValue) {
+                    maxAbsValue = Math.abs(value);
+                }
+            });
+        });
+        maxAbsValue = Math.max(maxAbsValue, 1);
+
+        // Disegna le traiettorie
+        trajectories.forEach(trajectory => {
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+
+            trajectory.forEach((value, index) => {
+                const x = centerX + ((index / numSteps) - 0.5) * canvas.width;
+                const y = centerY - (value / maxAbsValue) * (canvas.height / 2);
+                ctx.lineTo(x, y);
+            });
+
+            ctx.strokeStyle = 'rgba(0, 0, 255, 0.1)';
+            ctx.stroke();
+        });
+
+        // Disegna gli assi
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(canvas.width, centerY);
+        ctx.moveTo(centerX, 0);
+        ctx.lineTo(centerX, canvas.height);
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+
+        // Aggiungi le etichette agli assi
+        ctx.fillStyle = '#000';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Tempo', canvas.width / 2, canvas.height - 10);
+        ctx.save();
+        ctx.translate(10, canvas.height / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText('Posizione', 0, 0);
+        ctx.restore();
+    }
+
+    function drawDistribution(finalPositions, intermediatePositions, numSimulations, intermediateTime) {
+        const canvas = document.getElementById('distributionCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Calcola le distribuzioni
+        const bins = {};
+        const binsIntermediate = {};
+        finalPositions.forEach(pos => {
+            bins[pos] = (bins[pos] || 0) + 1;
+        });
+        intermediatePositions.forEach(pos => {
+            binsIntermediate[pos] = (binsIntermediate[pos] || 0) + 1;
+        });
+
+        // Trova i valori minimo e massimo
+        const allPositions = finalPositions.concat(intermediatePositions);
+        const minPos = Math.min(...allPositions);
+        const maxPos = Math.max(...allPositions);
+
+        // Calcola media e varianza per le posizioni finali
+        const meanFinal = finalPositions.reduce((a, b) => a + b, 0) / numSimulations;
+        const varianceFinal = finalPositions.reduce((a, b) => a + Math.pow(b - meanFinal, 2), 0) / numSimulations;
+
+        // Calcola media e varianza per le posizioni intermedie
+        const meanIntermediate = intermediatePositions.reduce((a, b) => a + b, 0) / numSimulations;
+        const varianceIntermediate = intermediatePositions.reduce((a, b) => a + Math.pow(b - meanIntermediate, 2), 0) / numSimulations;
+
+        // Imposta parametri per il grafico
+        const numBins = maxPos - minPos + 1;
+        const barWidth = canvas.width / numBins / 2;
+        const maxCount = Math.max(...Object.values(bins), ...Object.values(binsIntermediate));
+
+        // Disegna asse Y e etichette
+        ctx.beginPath();
+        ctx.moveTo(40, 0);
+        ctx.lineTo(40, canvas.height - 30);
+        ctx.strokeStyle = '#000';
+        ctx.stroke();
+
+        ctx.fillStyle = '#000';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        const numTicks = 5;
+        for (let i = 0; i <= numTicks; i++) {
+            const y = (canvas.height - 30) - ((canvas.height - 30) / numTicks) * i;
+            const value = Math.round((maxCount / numTicks) * i);
+            ctx.fillText(value, 35, y);
+            ctx.beginPath();
+            ctx.moveTo(38, y);
+            ctx.lineTo(42, y);
+            ctx.stroke();
+        }
+
+        // Disegna asse X e etichette
+        ctx.beginPath();
+        ctx.moveTo(40, canvas.height - 30);
+        ctx.lineTo(canvas.width, canvas.height - 30);
+        ctx.stroke();
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        for (let i = minPos; i <= maxPos; i++) {
+            const x = 40 + ((i - minPos + 0.5) / numBins) * (canvas.width - 40);
+            ctx.fillText(i, x, canvas.height - 25);
+            ctx.beginPath();
+            ctx.moveTo(x, canvas.height - 32);
+            ctx.lineTo(x, canvas.height - 28);
+            ctx.stroke();
+        }
+
+        // Disegna distribuzione delle posizioni finali
+        Object.keys(bins).forEach(pos => {
+            const count = bins[pos];
+            const x = 40 + ((pos - minPos + 0.75) / numBins) * (canvas.width - 40);
+            const y = (canvas.height - 30) - (count / maxCount) * (canvas.height - 40);
+
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+            ctx.fillRect(x, y, barWidth, (canvas.height - 30) - y);
+        });
+
+        // Disegna distribuzione delle posizioni intermedie
+        Object.keys(binsIntermediate).forEach(pos => {
+            const count = binsIntermediate[pos];
+            const x = 40 + ((pos - minPos + 0.25) / numBins) * (canvas.width - 40);
+            const y = (canvas.height - 30) - (count / maxCount) * (canvas.height - 40);
+
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+            ctx.fillRect(x, y, barWidth, (canvas.height - 30) - y);
+        });
+
+        // Mostra media e varianza
+        ctx.fillStyle = '#000';
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`Finale - Media: ${meanFinal.toFixed(2)}, Varianza: ${varianceFinal.toFixed(2)}`, 10, 10);
+        ctx.fillText(`Intermedio (t=${intermediateTime}) - Media: ${meanIntermediate.toFixed(2)}, Varianza: ${varianceIntermediate.toFixed(2)}`, 10, 30);
+
+        // Aggiungi le etichette agli assi
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Posizione', canvas.width / 2, canvas.height - 10);
+
+        ctx.save();
+        ctx.translate(15, (canvas.height - 30) / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText('Frequenza', 0, 0);
+        ctx.restore();
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog di Leonardo Spadoni</title>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Assicura che il canvas sia dietro agli altri contenuti */
+            background-color: black; /* Sfondo nero per l'effetto Matrix */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family:'Roboto', sans-serif;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(0, 0, 0);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #0F0;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FFF;
+        }
+
+        /* Blog Section */
+        .section.blog-page {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .blog-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .blog-post {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .blog-post:hover {
+            background-color: #222;
+        }
+
+        .blog-post h3 a {
+            color: #0F0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .blog-post h3 a:hover {
+            color: #FFF;
+        }
+
+        .blog-post p {
+            color: #AAA;
+        }
+
+        .blog-post .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0F0;
+            color: #000;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .blog-post .btn:hover {
+            background-color: #FFF;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(0, 0, 0, 0.8);
+        }
+
+        footer p {
+            color: #0F0;
+        }
+
+        footer a {
+            color: #0F0;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #FFF;
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas for Matrix Rain Effect -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../#home">Home</a></li>
+                <li><a href="../#about">Chi Sono</a></li>
+                <li><a href="../#skills">Competenze</a></li>
+                <li><a href="../#projects">Progetti</a></li>
+                <li><a href="./">Blog</a></li>
+                <li><a href="../#contact">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sezione Blog -->
+    <section class="section blog-page">
+        <div class="container">
+            <h2>Blog</h2>
+            <div class="blog-posts">
+                <article class="blog-post">
+                    <h3><a href="post1/">Basic Notion | Statistics</a></h3>
+                    <p>Homework 1</p>
+                    <a href="post1/" class="btn">Read More</a>
+                </article>
+
+                <article class="blog-post">
+                    <h3><a href="post2/">Welford Recursion | Statistics</a></h3>
+                    <p>Homework 2</p>
+                    <a href="post2/" class="btn">Read More</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsive -->
+    <script src="../scripts.js"></script>
+</body>
+</html>

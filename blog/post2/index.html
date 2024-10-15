@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricorsione di Welford e Analisi Statistica | Blog di Leonardo Spadoni</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <style>
+        ul li{
+            margin: 20px 0px 20px 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../../index.html">Leonardo Spadoni</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../../index.html#home">Home</a></li>
+                <li><a href="../../index.html#about">About</a></li>
+                <li><a href="../../index.html#skills">Skills</a></li>
+                <li><a href="../../index.html#projects">Projects</a></li>
+                <li><a href="../index.html">Blog</a></li>
+                <li><a href="../../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page">
+        <div class="container">
+            <h2>Ricorsione di Welford e Analisi Statistica</h2>
+            <br>
+
+            <!-- Ricorsione di Welford -->
+            <h2>Ricorsione di Welford</h2>
+            <p>
+                La ricorsione di <strong>Welford</strong> è un algoritmo numericamente stabile per il calcolo incrementale della media e della varianza campionaria. Permette di aggiornare la media e la varianza man mano che nuovi dati vengono aggiunti, senza la necessità di conservare tutti i dati precedenti.
+            </p>
+            <h3>Derivazione Semplice ed Elegante</h3>
+            <p>
+                Supponiamo di avere una sequenza di valori \( x_1, x_2, \dots, x_n \). Vogliamo calcolare la media \( \mu_n \) e la varianza \( \sigma_n^2 \) dopo aver osservato il valore \( x_n \).
+            </p>
+            <p>
+                La media può essere aggiornata con la formula ricorsiva:
+            </p>
+            <p style="text-align: center;">
+                \( \mu_n = \mu_{n-1} + \dfrac{x_n - \mu_{n-1}}{n} \)
+            </p>
+            <p>
+                Per la varianza, utilizziamo la seguente ricorsione:
+            </p>
+            <p style="text-align: center;">
+                \( M_n = M_{n-1} + (x_n - \mu_{n-1})(x_n - \mu_n) \)
+            </p>
+            <p>
+                Dove \( M_n \) è la somma dei quadrati delle differenze dalla media. La varianza è poi calcolata come:
+            </p>
+            <p style="text-align: center;">
+                \( \sigma_n^2 = \dfrac{M_n}{n} \)
+            </p>
+            <p>
+                Questa derivazione evita problemi di cancellazione numerica ed è efficiente dal punto di vista computazionale.
+            </p>
+
+            <!-- Note Personali sul Comportamento di Media e Varianza -->
+            <h2>Note Personali sul Comportamento di Media e Varianza nel Tempo</h2>
+            <p>
+                Durante le mie simulazioni, ho osservato come la media e la varianza si comportano nel tempo nei diversi casi di frequenze assolute e relative sia nel processo di Bernoulli che nella passeggiata aleatoria.
+            </p>
+
+            <h3>Osservazioni sui Quattro Casi</h3>
+            <ul>
+                <li>
+                    <strong>Frequenza Assoluta nel Processo di Bernoulli:</strong>
+                    <p>
+                        La media delle frequenze assolute aumenta linearmente nel tempo, poiché accumuliamo successi indipendenti. La varianza cresce proporzionalmente al numero di prove.
+                    </p>
+                </li>
+                <li>
+                    <strong>Frequenza Relativa nel Processo di Bernoulli:</strong>
+                    <p>
+                        La media delle frequenze relative tende a stabilizzarsi attorno alla probabilità di successo \( p \) man mano che aumenta il numero di prove, grazie alla legge dei grandi numeri. La varianza diminuisce nel tempo.
+                    </p>
+                </li>
+                <li>
+                    <strong>Frequenza Assoluta nella Passeggiata Aleatoria:</strong>
+                    <p>
+                        La posizione (somma cumulativa dei salti) oscilla nel tempo. La media rimane costante a zero se \( p = 0.5 \), mentre la varianza aumenta linearmente con il tempo.
+                    </p>
+                </li>
+                <li>
+                    <strong>Frequenza Relativa nella Passeggiata Aleatoria:</strong>
+                    <p>
+                        La media delle frequenze relative tende a zero nel caso simmetrico (\( p = 0.5 \)). La varianza diminuisce nel tempo.
+                    </p>
+                </li>
+            </ul>
+
+            <h3>Differenze tra Distribuzione del Numero Assoluto di Successi e Frequenze Relative</h3>
+            <p>
+                La distribuzione del numero assoluto di successi tende ad allargarsi nel tempo, aumentando la varianza. Al contrario, la distribuzione delle frequenze relative si restringe attorno al valore atteso \( p \), riducendo la varianza.
+            </p>
+            <p>
+                Questo perché, mentre il numero assoluto di successi continua a crescere, la frequenza relativa si stabilizza grazie alla proporzionalità rispetto al numero totale di prove.
+            </p>
+
+            <!-- Link alla Simulazione -->
+            <br>
+            <hr>
+            <br>
+            <h2>Test dei Concetti Appresi</h2>
+            <div style="margin: 0 auto; text-align: center;">
+                <a href="simulation.html" style="border: solid 1px; padding: 4px;">Clicca qui per Avviare una Simulazione</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>

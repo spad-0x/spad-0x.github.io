@@ -357,7 +357,7 @@ footer {
 @media (max-width: 768px) {
     .nav-links {
         position: absolute;
-        top: 40px;
+        top: 80px;
         left: 0;
         width: 100%;
         background: #fff;
