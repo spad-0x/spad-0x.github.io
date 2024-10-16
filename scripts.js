@@ -7,7 +7,7 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('toggle'); // Toggle the 'toggle' class for animation
 });
 
-// Matrix Rain Effect
+// Canvas setup
 const canvas = document.getElementById('matrixCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -19,7 +19,7 @@ function setCanvasSize() {
 
 setCanvasSize();
 
-// Characters used in Matrix rain (Japanese characters and symbols)
+// Characters used in Matrix rain
 const matrixChars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポ';
 const fontSize = 16;
 const columns = Math.floor(canvas.width / fontSize);
@@ -56,17 +56,17 @@ function draw() {
 }
 
 // Interval to refresh canvas
-const matrixInterval = setInterval(draw, 60);
+const matrixInterval = setInterval(draw, 70);
 
-// Resize canvas on window resize with debounce
-let resizeTimeout;
+// Resize canvas on window resize
 window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        setCanvasSize();
-        // Reinitialize drops on resize
-        for (let x = 0; x < columns; x++) {
-            drops[x] = Math.random() * canvas.height;
-        }
-    }, 200);
+    setCanvasSize();
+    // Reinitialize drops on resize
+    // Aggiorna il numero di colonne in base alla nuova larghezza
+    columns = Math.floor(canvas.width / fontSize);
+    // Reinizializza l'array drops con la nuova dimensione
+    drops.length = 0;
+    for (let x = 0; x < columns; x++) {
+        drops[x] = Math.random() * canvas.height;
+    }
 });

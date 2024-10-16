@@ -4,300 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leonardo Spadoni | Computer Science Engineer| Cybersecurity Enthusiast</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./styles.css">
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
-    <!-- MathJax for Rendering Math Expressions -->
-    <script id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
-
-    <style>
-        @font-face {
-            font-family: 'ModernDOS8x8';
-            src: url('fonts/ModernDOS/ModernDOS8x8.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        @font-face {
-            font-family: 'Nippo';
-            src: url('fonts/Nippo-Variable.ttf') format('truetype');
-        }
-
-
-
-
-
-        /* Stili per il canvas Matrix Rain */
-        #matrixCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Assicura che il canvas sia dietro agli altri contenuti */
-            background-color: black; /* Sfondo nero per l'effetto Matrix */
-        }
-
-        /* Base Styles */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            color: #fff;
-            background-color: rgb(0, 0, 0);
-        }
-        body{
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        /* Navbar Styles */
-        .navbar {
-            padding-top: 20px;
-            padding-bottom: 20px;
-            display: flex;
-            justify-content: center; /* Centra gli elementi orizzontalmente */
-            align-items: center;     /* Centra gli elementi verticalmente */
-            background-color: rgb(0, 0, 0);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-
-        /* Rimosso il logo dalla navbar */
-
-        .nav-links {
-            padding-left: 0px;
-            list-style: none;
-            display: flex;
-            gap: 20px; /* Spazio tra i link di navigazione */
-        }
-
-
-        .nav-links a {
-            color: #0F0;
-            text-decoration: none;
-            font-size: 18px;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #FFF;
-        }
-
-        /* Hamburger Menu (Mobile) */
-        .hamburger {
-            display: none; /* Nascondi per schermi grandi */
-            flex-direction: column;
-            cursor: pointer;
-            top: 20px;
-            padding: 20px;
-            /* Rimozione del posizionamento assoluto dal base */
-        }
-
-        .hamburger span {
-            height: 3px;
-            width: 25px;
-            background: #0F0;
-            margin-bottom: 4px;
-            transition: all 0.3s linear;
-        }
-
-        /* Responsive Navbar */
-        @media (max-width: 768px) {
-            .nav-links {
-                width: 100%;
-                padding-left: 0px;
-                position: fixed;
-                top: 30px; /* Posizionato sotto il navbar */
-                background-color: rgb(0, 0, 0);
-                flex-direction: column;
-                align-items: center;
-                max-height: 0; /* Nascosto di default */
-                overflow: hidden;
-                transition: max-height 0.5s ease-in-out;
-                margin-top: 0px;
-                padding-bottom: 15px;
-                border-radius: 10px;
-            }
-
-            .nav-links li {
-                opacity: 0;
-            }
-
-            .hamburger {
-                display: flex; /* Mostra l'hamburger sui piccoli schermi */
-                position: absolute;
-                left: 50%; /* Centra orizzontalmente */
-                transform: translate(-50%, -50%); /* Centra perfettamente */
-            }
-
-            .nav-active {
-                max-height: 500px; /* Altezza sufficiente per mostrare tutti i menu items */
-            }
-
-            .nav-active li {
-                opacity: 1;
-                transition: opacity 0.5s ease-in;
-            }
-
-            /* Animazione dell'hamburger per trasformarsi in una 'X' quando attivo */
-            .hamburger.toggle span:nth-child(1) {
-                transform: rotate(-45deg) translate(-5px,4.5px);
-            }
-
-            .hamburger.toggle span:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger.toggle span:nth-child(3) {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 20px 60px 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            padding-top: 100px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Home Section */
-        #home {
-            padding: 0px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: transparent; /* Assicurati che il background sia trasparente per vedere il Matrix rain */
-        }
-
-        #home h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #0F0;
-        }
-
-        #home p {
-            font-size: 24px;
-            max-width: 800px;
-        }
-
-        /* About Section */
-        #about {
-            background: rgb(255, 255, 255);
-            border-radius: 20px;
-            padding: 40px;
-            color: rgb(0, 0, 0);
-        }
-
-        /* Skills Section */
-        #skills {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            background-color: rgb(0, 0, 0, 0.8);
-        }
-
-        .skill {
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            flex: 1 1 200px;
-            text-align: center;
-        }
-
-        .skill i {
-            font-size: 40px;
-            color: #0F0;
-            margin-bottom: 10px;
-        }
-
-        /* Projects Section */
-        #projects{
-            background-color: rgb(255, 255, 255);
-            border-radius: 20px;
-            color: #000;
-        }
-
-        #projects .project {
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        /* Blog Section */
-        #blog{
-            background-color: rgb(0, 0, 0, 0.8);
-        }
-
-        #blog .blog-post {
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        #blog .blog-post h3 a {
-            color: #0F0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        #blog .blog-post h3 a:hover {
-            color: #FFF;
-        }
-
-        /* Contact Section */
-        #contact{
-            background-color: rgb(0, 0, 0, 0.8);
-        }
-
-        #contact form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #contact form input, 
-        #contact form textarea {
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        #contact form button {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #0F0;
-            color: #000;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        #contact form button:hover {
-            background: #FFF;
-        }
-
-        /* Footer Styles */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: rgb(0, 0, 0, 0.8);
-        }
-    </style>
 </head>
 <body>
     <!-- Canvas for Matrix Rain Effect -->
@@ -312,7 +20,6 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="/blog/">Blog</a></li>
-                <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="hamburger">
                 <span></span>
@@ -324,7 +31,7 @@
 
     <!-- Home Section -->
     <section id="home">
-        <div class="container">
+        <div class="container" style="background-color: rgb(0, 0, 0, 0.8); padding-top: 0px; padding: 0px 20px 30px 20px;">
             <h1>Leonardo Spadoni</h1>
             <p>
                 Computer Science Engineer and cybersecurity enthusiast.
@@ -334,91 +41,133 @@
 
     <!-- About Me Section -->
     <section id="about">
-        <div class="container">
-            <h2>About Me</h2>
+        <div class="container-white">
+            <h2>[ About Me ]</h2>
             <p>
-                
+                Hi, I'm Leonardo and I'm 23 years old. <br><br>
+                I graduated in computer engineering and now I'm following the master's degree course in cybersecurity.<br><br>
+                I'm a software developer and a fullstack developer as well as a hacking enthusiast.
             </p>
         </div>
     </section>
 
     <!-- Skills Section -->
     <section id="skills">
-        <div class="container">
-            <h2>Skills</h2>
+        <div class="container" style="background-color: rgb(0, 0, 0, 0.8); padding-top: 0px; padding: 20px 30px 30px 30px;">
+            <h2>Skills</h2> <br>
+           <!-- Linguaggi di Programmazione -->
+        <div class="skill-category">
+            <h3>Programming Languages</h3>
             <div class="skill">
-                <i class="fas fa-code"></i>
-                <h3>Programming</h3>
-                <p>Python, C, PHP, JS</p>
+                <span>Python [60%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 60%;"></div>
+                </div>
             </div>
             <div class="skill">
-                <i class="fas fa-database"></i>
-                <h3>Databases</h3>
-                <p>Knowledgeable in SQL, MongoDB, and database design. Skilled in data management and optimization.</p>
+                <span>C [50%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
             </div>
             <div class="skill">
-                <i class="fas fa-project-diagram"></i>
-                <h3>Project Management</h3>
-                <p>Experienced in Agile methodologies, team leadership, and project planning to ensure timely delivery.</p>
+                <span>PHP [40%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 40%;"></div>
+                </div>
             </div>
-            <!-- Aggiungi altre skills se necessario -->
+            <div class="skill">
+                <span>JavaScript [40%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 40%;"></div>
+                </div>
+            </div>
+            <!-- Aggiungi altre skills -->
+        </div>
+
+        <br>
+
+        <!-- Database -->
+        <div class="skill-category">
+            <h3>Databases</h3>
+            <div class="skill">
+                <span>SQL [70%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- Hacking Etico -->
+        <div class="skill-category">
+            <h3>Ethical Hacking</h3>
+            <div class="skill">
+                <span>Networking [75%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%;"></div>
+                </div>
+            </div>
+            <div class="skill">
+                <span>Web [70%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;"></div>
+                </div>
+            </div>
+            <div class="skill">
+                <span>Binary [50%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
+            </div>
+            <div class="skill">
+                <span>Crypto [50%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- Problem Solving -->
+        <div class="skill-category">
+            <h3>Problem Solving</h3>
+            <div class="skill">
+                <span>Algorithms and Data Structures [70%]</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;"></div>
+                </div>
+            </div>
+        </div>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects">
-        <div class="container">
-            <h2>Projects</h2>
+        <div class="container-white">
+            <h2>[ Projects ]</h2>
             <div class="project">
-                <h3>Project Title 1</h3>
+                <h3>Tradotto.app ()</h3>
                 <p>
-                    [Fornisci una breve descrizione del tuo progetto, le tecnologie utilizzate e il tuo ruolo in esso.]
+                    Instead of wasting time copying and pasting between tabs, let the app do the rest. <br><br>
+                    To have it work in the background for you, all it takes is a simple key combination: <br>
+
+                    <strong>Select the text</strong> you want to translate and press <strong>⌘+C then ⌥+C</strong>. The translation will appear in the app right away.
                 </p>
-                <a href="#" style="color: rgb(0, 148, 0); text-decoration: none;">View Project</a>
+                <br>    
+                <a href="https://github.com/spad-0x/Tradotto" target="_blank" style="color: rgb(0, 148, 0); text-decoration: none;">View Project on GitHub</a>
             </div>
+            <hr width="70%">
             <div class="project">
-                <h3>Project Title 2</h3>
+                <h3>Network Analyzer (.C)</h3>
                 <p>
-                    [Fornisci una breve descrizione del tuo progetto, le tecnologie utilizzate e il tuo ruolo in esso.]
+                    ⚙ Work in Progress...
                 </p>
-                <a href="#" style="color: rgb(0, 148, 0); text-decoration: none;">View Project</a>
+                <!-- <a href="" style="color: rgb(0, 148, 0); text-decoration: none;">View Project</a> -->
             </div>
             <!-- Aggiungi altri progetti se necessario -->
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section id="blog">
-        <div class="container">
-            <h2>Blog</h2>
-            <div class="blog-post">
-                <h3><a href="#">Understanding Machine Learning</a></h3>
-                <p>
-                    [Fornisci una breve panoramica o estratto del tuo post sul blog riguardo il machine learning.]
-                </p>
-                <a href="#" class="btn" style="color: #0F0; text-decoration: none;">Read More</a>
-            </div>
-            <div class="blog-post">
-                <h3><a href="#">The Future of Web Development</a></h3>
-                <p>
-                    [Fornisci una breve panoramica o estratto del tuo post sul blog riguardo le tendenze nello sviluppo web.]
-                </p>
-                <a href="#" class="btn" style="color: #0F0; text-decoration: none;">Read More</a>
-            </div>
-            <!-- Aggiungi altri post del blog se necessario -->
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2>Contact Me</h2>
-            <form action="#" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
         </div>
     </section>
 
@@ -427,8 +176,9 @@
         <div class="container">
             <p>&copy; 2024 Leonardo Spadoni. All rights reserved.</p>
             <p>
-                <a href="https://github.com/yourusername" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
-                <a href="https://linkedin.com/in/yourusername" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a> |
+                <a href="https://instagram.com/spad_0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
             </p>
         </div>
     </footer>
