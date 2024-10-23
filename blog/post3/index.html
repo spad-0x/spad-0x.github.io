@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Mediana e le Misure di Posizione | Blog di Leonardo Spadoni</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>La Mediana e le Misure di Posizione</h2>
+            <br>
+
+            <!-- Perché la Mediana Minimizza la Somma delle Deviazioni Assolute -->
+            <h2>Perché la Mediana Minimizza la Somma delle Deviazioni Assolute</h2>
+            <p>
+                La <strong>mediana</strong> è una misura di posizione che rappresenta il valore centrale di un insieme di dati ordinati. Formalmente, data una serie di osservazioni \( x_1, x_2, \dots, x_n \), la mediana è il valore \( c \) che minimizza la somma delle deviazioni assolute:
+            </p>
+            <p style="text-align: center;">
+                \( S(c) = \sum_{i=1}^{n} |x_i - c| \)
+            </p>
+            <h3>Dimostrazione Semplice</h3>
+            <p>
+                Supponiamo di voler trovare il valore di \( c \) che minimizza \( S(c) \). Consideriamo i dati ordinati in ordine crescente:
+            </p>
+            <p style="text-align: center;">
+                \( x_{(1)} \leq x_{(2)} \leq \dots \leq x_{(n)} \)
+            </p>
+            <p>
+                La funzione \( S(c) \) è una funzione convessa rispetto a \( c \) e presenta un minimo quando \( c \) è uguale alla mediana dei dati. Per dimostrarlo, osserviamo che:
+            </p>
+            <ul>
+                <li>
+                    Per valori di \( c \) minori della mediana, la somma \( S(c) \) diminuisce al crescere di \( c \).
+                </li>
+                <li>
+                    Per valori di \( c \) maggiori della mediana, la somma \( S(c) \) aumenta al crescere di \( c \).
+                </li>
+            </ul>
+            <p>
+                Questo significa che il punto di minimo di \( S(c) \) si trova proprio in corrispondenza della mediana.
+            </p>
+
+            <h3>Dimostrazione Formale</h3>
+            <p>
+                Consideriamo la derivata della funzione obiettivo \( S(c) \):
+            </p>
+            <p style="text-align: center;">
+                \( \dfrac{dS}{dc} = \sum_{i=1}^{n} \dfrac{d}{dc} |x_i - c| \)
+            </p>
+            <p>
+                Poiché la derivata di \( |x_i - c| \) rispetto a \( c \) è:
+            </p>
+            <p style="text-align: center;">
+                \( \dfrac{d}{dc} |x_i - c| = \begin{cases} -1 & \text{se } c < x_i \\ 0 & \text{se } c = x_i \\ 1 & \text{se } c > x_i \end{cases} \)
+            </p>
+            <p>
+                La derivata totale diventa:
+            </p>
+            <p style="text-align: center;">
+                \( \dfrac{dS}{dc} = \sum_{x_i < c} (-1) + \sum_{x_i = c} (0) + \sum_{x_i > c} (1) = (-n_1) + n_2 \)
+            </p>
+            <p>
+                Dove \( n_1 \) è il numero di osservazioni minori di \( c \) e \( n_2 \) è il numero di osservazioni maggiori di \( c \). Il minimo di \( S(c) \) si verifica quando la derivata cambia segno, cioè quando \( n_1 = n_2 \), ovvero quando \( c \) è la mediana.
+            </p>
+
+            <!-- Diverse Definizioni di Misure di Posizione -->
+            <h2>Diverse Definizioni di Misure di Posizione</h2>
+            <p>
+                Le misure di posizione, o di tendenza centrale, sono statistiche che riassumono un insieme di dati identificando un valore centrale attorno al quale i dati sono distribuiti. Esistono diverse misure di posizione, ciascuna con le proprie caratteristiche e applicazioni.
+            </p>
+
+            <h3>Misure di Posizione Comuni</h3>
+            <ul>
+                <li>
+                    <strong>Media Aritmetica (\( \overline{x} \)):</strong>
+                    <p style="text-align: center;">
+                        \( \overline{x} = \dfrac{1}{n} \sum_{i=1}^{n} x_i \)
+                    </p>
+                    <p>
+                        È la somma di tutti i valori divisa per il numero totale di valori. Sensibile ai valori estremi (outlier).
+                    </p>
+                </li>
+                <li>
+                    <strong>Mediana:</strong>
+                    <p>
+                        È il valore centrale di un insieme di dati ordinati. Non è influenzata dai valori estremi ed è preferibile quando i dati hanno una distribuzione asimmetrica.
+                    </p>
+                </li>
+                <li>
+                    <strong>Moda:</strong>
+                    <p>
+                        È il valore che appare con maggiore frequenza nell'insieme di dati. Utile per dati categoriali o discreti.
+                    </p>
+                </li>
+                <li>
+                    <strong>Media Geometrica (\( G \)):</strong>
+                    <p style="text-align: center;">
+                        \( G = \left( \prod_{i=1}^{n} x_i \right)^{1/n} \)
+                    </p>
+                    <p>
+                        Utilizzata per dati positivi, come tassi di crescita o dati proporzionali.
+                    </p>
+                </li>
+                <li>
+                    <strong>Media Armonica (\( H \)):</strong>
+                    <p style="text-align: center;">
+                        \( H = \dfrac{n}{\sum_{i=1}^{n} \dfrac{1}{x_i}} \)
+                    </p>
+                    <p>
+                        Indicata quando si lavora con rapporti o velocità.
+                    </p>
+                </li>
+            </ul>
+
+            <h3>Generalizzazioni e Infinite Altre Definizioni</h3>
+            <p>
+                Le misure di posizione possono essere generalizzate attraverso varie metodologie, portando a un numero infinito di possibili definizioni. Alcuni esempi includono:
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Medie di Hölder (Medie Generalizzate):</strong>
+                    <p style="text-align: center;">
+                        \( M_r = \left( \dfrac{1}{n} \sum_{i=1}^{n} x_i^r \right)^{1/r} \)
+                    </p>
+                    <p>
+                        Variando il parametro \( r \), otteniamo diverse medie:
+                    </p>
+                    <ul>
+                        <li>\( r = 1 \): Media aritmetica</li>
+                        <li>\( r = 0 \): Media geometrica (limite per \( r \to 0 \))</li>
+                        <li>\( r = -1 \): Media armonica</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Media Troncata:</strong>
+                    <p>
+                        Calcolata scartando una certa percentuale dei valori più alti e più bassi, riducendo l'influenza degli outlier.
+                    </p>
+                </li>
+                <li>
+                    <strong>Media Winsorizzata:</strong>
+                    <p>
+                        Simile alla media troncata, ma i valori estremi sono sostituiti con i valori più vicini non scartati.
+                    </p>
+                </li>
+                <li>
+                    <strong>Quantili e Percentili:</strong>
+                    <p>
+                        Valori che dividono l'insieme di dati ordinati in parti uguali. La mediana è un caso particolare (50º percentile).
+                    </p>
+                </li>
+                <li>
+                    <strong>Media Ponderata:</strong>
+                    <p>
+                        Ogni valore \( x_i \) è moltiplicato per un peso \( w_i \), riflettendo l'importanza relativa delle osservazioni.
+                    </p>
+                    <p style="text-align: center;">
+                        \( \overline{x}_w = \dfrac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i} \)
+                    </p>
+                </li>
+            </ul>
+
+            <p>
+                Queste generalizzazioni mostrano come, variando le formule o introducendo nuovi parametri, possiamo definire infinite altre misure di posizione per adattarci a diverse esigenze analitiche.
+            </p>
+
+            <!-- Conclusione -->
+            <h2>Conclusione</h2>
+            <p>
+                La scelta della misura di posizione più appropriata dipende dalla natura dei dati e dagli obiettivi dell'analisi. Comprendere le diverse opzioni e le loro proprietà permette di sintetizzare le informazioni in modo efficace e significativo.
+            </p>
+
+            <!-- Link alla Simulazione -->
+            <br>
+            <hr>
+            <br>
+            <h2>Approfondisci con una Simulazione</h2>
+            <div style="margin-top: 100px; text-align: center;">
+                <a href="simulation.html" style="border: solid 1px; padding: 4px; text-decoration: none; color: rgb(0, 255, 0);">Clicca qui per Avviare una Simulazione</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>

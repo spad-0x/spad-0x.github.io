@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulatore di Processo di Attacco Continuo</title>
+    <!-- Collega il foglio di stile e altri asset necessari -->
+</head>
+<body>
+
+    <a href="../">back</a>
+
+    <!-- Contenuto Principale -->
+    <section class="section blog-post-page">
+        <div class="container">
+            <h2>Simulatore di Processo di Attacco Continuo</h2>
+            <!-- Form per i Parametri -->
+            <div class="controls">
+                <label for="totalTime">Tempo Totale (T):</label>
+                <input type="number" id="totalTime" value="10" min="1">
+                
+                <label for="lambda">Tasso di Attacco (Λ):</label>
+                <input type="number" id="lambda" value="5" min="0" step="0.1">
+                
+                <label for="numIntervals">Numero di Intervalli (n):</label>
+                <input type="number" id="numIntervals" value="1000" min="1">
+                
+                <button id="startBtn">Avvia Simulazione</button>
+            </div>
+            <!-- Canvas per il Grafico -->
+            <canvas id="simulationCanvas" width="800" height="400"></canvas>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- Script per la Simulazione -->
+    <script src="simulation.js"></script>
+</body>
+</html>
