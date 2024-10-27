@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta Tag -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Static Code Analysis using FlawFinder | Leonardo Spadoni's Blog</title>
+        <!-- Link al file CSS -->
+        <link rel="stylesheet" href="../../styles.css">
+        <!-- Favicon -->
+        <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+        <!-- Font Awesome per le icone -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- MathJax per le formule matematiche -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    </head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container" style="color: #0F0; margin-top: 15%;">
+        <header>
+            <h1>Static Code Analysis using FlawFinder</h1>
+            <h4>Security in Software Application | Project 1</h4>
+        </header>
+        <section>
+            <h2>1. Introduction</h2>
+            <p>This project involves using <strong>Flawfinder</strong> a static analysis tool, to scan a C code fragment for potential security vulnerabilities. The goal is to identify and address these flaws, demonstrating the tool’s effectiveness while highlighting the need for manual code review to catch any issues that may have been missed.</p>
+            <h2>2. Tool Analysis</h2>
+            <h3>Strengths</h3>
+            <ul>
+                <li>Quickly identifies common vulnerabilities like buffer overflows;</li>
+            </ul>
+            <h3>Weakness</h3>
+            <ul>
+                <li>Frequently can’t find configuration issues, since they are not represented in the code;</li>
+                <li>Limited analysis capabilities beyond pattern matching, prone to false positives;</li>
+            </ul>
+
+
+            <h2>3. Code Fragment Overview</h2>
+            <p>The code provided contains several syntax errors and the use of statements not present in the C language such as try/catch and the omission of some libraries.</p>
+            <a href="input.html" target="_blank" style="color: #0F0;">Click to see source code</a>
+
+            
+            <h2>4. Flawfinder Output</h2>
+            <img src="screenshot_1.png" width="800" alt=""><br>
+            <a href="report.html" target="_blank" style="color: #0F0;">Click to see the report in HTML</a>
+
+            <h2>5. Analysis of Findings</h2>
+            <ul>
+                <li><strong>Line 7 [char Array]:</strong> Static arrays can overflow if they’re not correctly bounded. This warning may be a <strong>false positive</strong> if input length is restricted or validated.</li>
+                <li><strong>Line 7 [strlen]:</strong> strlen may cause over-read if strings are not null-terminated. This is a potential risk but may be low-impact if all inputs are verified.</li>
+                <li><strong>Line 8 [strncpy]:</strong> strncpy may not automatically null-terminate, risking memory issues. If null termination is manually enforced, this could be a <strong>false positive</strong>.</li>
+                <li><strong>Line 8 [strlen]:</strong> Similar to the previous warning, strlen risks over-read without null-terminated strings. Proper input validation may reduce this risk.</li>
+                <li><strong>Line 9 [strlen]:</strong> Repeats the over-read risk in non-terminated strings. This can be managed with reliable input controls.</li>
+                <li><strong>Line 16 [read]:</strong> Boundary checks in loops are important to avoid overflow with read operations. However, if loops are properly bounded, this could be low-risk.</li>
+                <li><strong>Line 21 [read]:</strong> Like the previous read warning, ensuring boundary checks here prevents buffer issues, with low risk in controlled cases.</li>
+                <li><strong>Line 27 [char Array]:</strong> Like the previous warning, static arrays require bounds checking. If input is tightly controlled, this could be a low-risk or <strong>false positive</strong>.</li>
+                <li><strong>Line 32 [char Array]:</strong> Another static array warning, indicating potential overflow risks if boundaries aren’t respected. Controlled input makes this lower-risk.</li>
+                <li><strong>Line 33 [strncpy]:</strong> strncpy may fail to null-terminate. Adding a manual null-terminator could turn this into a <strong>false positive</strong> if handled correctly.</li>
+                <li><strong>Line 34 [strcat]:</strong> The strcat function lacks inherent bounds checking, which could cause overflow; however, since the source here is a constant, this is likely low-risk.</li>
+                <li><strong>Line 41 [strcpy]:</strong> The use of strcpy can lead to buffer overflow if the source exceeds the destination size. While this is typically risky, if inputs are controlled, the risk may be minimal. Consider <strong>strncpy</strong> for a safer alternative.</li>
+                <li><strong>Line 55 [fprintf]:</strong> Format strings can be vulnerable if an attacker controls them. Using a constant format specification, instead of a variable, reduces this risk significantly.</li>                
+            </ul>
+            
+
+            <h2>6. Additional Vulnerabilities</h2>
+            <p>These are additional vulnerabilities found through manual inspection:</p>
+            <ul>
+                <li>
+                    <strong>while Loop in main - Array Out-of-Bounds Access:</strong>
+                    The loop while (y >= 0) { a[y] = y; y--; } accesses a[10], which is out-of-bounds for a 10-element array, leading to memory corruption.
+                </li>
+            </ul>
+
+            <h2>7. Code Correction</h2>
+            <p>The corrected code fragment after removing all vulnerabilities:</p>
+            <pre><code>
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+    #include &lt;stdio.h&gt;
+    #include &lt;ctype.h&gt;
+    #include &lt;unistd.h&gt;  // for read()
+    
+    // Copying a String Safely
+    void func1(char *src) {
+    
+        // length validation
+        size_t src_len = strlen(src);
+        if (src_len &gt; 1023) {
+            fprintf(stderr, "Error: input too large\n");
+            return;
+        }
+        char dst[1024];  // fixed maximum buffer size to prevent overflow
+        strncpy(dst, src, src_len);
+        dst[src_len] = '\0';  // ensure null-termination
+    }
+    
+    // Reading from a File Descriptor Safely
+    void func2(int fd) {
+        char *buf;
+        size_t len;
+        if (read(fd, &amp;len, sizeof(len)) != sizeof(len)) {
+            fprintf(stderr, "Error reading length\n");
+            return;
+        }
+    
+        if (len &gt; 1024) {
+            fprintf(stderr, "Error: data length exceeds buffer limit\n");
+            return;
+        }
+    
+        buf = (char *)malloc(len + 1);  // allocate buffer with an extra byte for null-termination
+        if (buf == NULL) {
+            fprintf(stderr, "Error: memory allocation failed\n");
+            return;
+        }
+    
+        if (read(fd, buf, len) != (ssize_t)len) {
+            fprintf(stderr, "Error reading data\n");
+            free(buf);
+            return;
+        }
+        buf[len] = '\0';  // ensure null-termination
+    
+        free(buf);  // free allocated memory to avoid memory leaks
+    }
+    
+    // Reading User Input with Bounds Checking
+    void func3() {
+        char buffer[1024];
+        printf("Please enter your user ID: ");
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            fprintf(stderr, "Error reading input\n");
+            return;
+        }
+    
+        if (!isalpha((unsigned char)buffer[0])) {
+            char errormsg[1044];
+            snprintf(errormsg, sizeof(errormsg), "%.1023s is not a valid ID", buffer);
+            fprintf(stderr, "%s\n", errormsg);  // print error message securely
+        }
+    }
+    
+    // Buffer Allocation and Safe Copying
+    void func4(char *foo) {
+        size_t foo_len = strlen(foo);
+        if (foo_len &gt;= 10) {
+            fprintf(stderr, "Error: input too large for buffer\n");
+            return;
+        }
+        char *buffer = (char *)malloc(10 * sizeof(char));
+        if (buffer == NULL) {
+            fprintf(stderr, "Error: memory allocation failed\n");
+            return;
+        }
+        strncpy(buffer, foo, 9);  // safely copy up to 9 characters
+        buffer[9] = '\0';         // null-terminate to ensure safety
+    
+        free(buffer);  // free allocated memory
+    }
+    
+    int main() {
+        int y = 10;
+        int a[10];
+    
+        func4("fooooooooooooooooooooooooooooooooooooooooooooooooooo");
+    
+        // Simplified error handling for non-C++ code
+        func3();
+    
+        FILE *aFile = fopen("output.txt", "w");  // declare and open a file securely
+        if (aFile == NULL) {
+            fprintf(stderr, "Error opening file\n");
+            return 1;
+        }
+    
+        fprintf(aFile, "%s\n", "hello world");  // use safe file handling functions
+        fclose(aFile);  // close file after writing to it
+    
+        while (y &gt; 0) {
+            if (y &lt; 10) {
+                a[y] = y;  // safely use within bounds
+            }
+            y--;
+        }
+    
+        return 0;
+    }
+                </code></pre>
+                
+
+            <h2>8. Conclusion</h2>
+            <p>This project demonstrates the utility of Flawfinder in catching basic vulnerabilities while also showing the importance of manual review for deeper analysis.</p>
+        </section>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. All rights reserved.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="../../scripts.js"></script>
+</body>
+</html>
