@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistical Independence: An Overview | Blog di Leonardo Spadoni</title>
+    <!-- Link al file CSS -->
+    <link rel="stylesheet" href="../../styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Statistical Independence: An Overview</h2>
+            <br>
+
+            <!-- Introduzione -->
+            <h2>Introduzione</h2>
+            <p>
+                L'indipendenza statistica è un concetto fondamentale in probabilità e statistica che descrive una situazione in cui il verificarsi di un evento non influisce sul verificarsi di un altro. In altre parole, due eventi sono indipendenti se la conoscenza di uno non fornisce alcuna informazione sull'altro.
+            </p>
+
+            <!-- Definizione Formale in Teoria delle Probabilità -->
+            <h2>Definizione Formale in Teoria delle Probabilità</h2>
+            <p>
+                Due eventi \( A \) e \( B \) sono detti indipendenti se e solo se:
+            </p>
+            <p style="text-align: center;">
+                \( P(A \cap B) = P(A) \times P(B) \)
+            </p>
+            <p>
+                Dove:
+            </p>
+            <ul>
+                <li>\( P(A \cap B) \) è la probabilità che entrambi gli eventi \( A \) e \( B \) si verifichino.</li>
+                <li>\( P(A) \) e \( P(B) \) sono le probabilità individuali degli eventi \( A \) e \( B \).</li>
+            </ul>
+            <p>
+                Questa equazione indica che la probabilità che entrambi gli eventi si verifichino insieme è uguale al prodotto delle loro probabilità individuali.
+            </p>
+
+            <!-- Implicazioni dell'Indipendenza -->
+            <h2>Implicazioni dell'Indipendenza</h2>
+            <h3>Regola Moltiplicativa</h3>
+            <p>
+                Per eventi indipendenti, la probabilità congiunta è il prodotto delle probabilità marginali.
+            </p>
+            <h3>Nessuna Influenza</h3>
+            <p>
+                Il verificarsi dell'evento \( A \) non modifica la probabilità dell'evento \( B \), e viceversa.
+            </p>
+
+            <!-- Variabili Casuali e Indipendenza -->
+            <h2>Variabili Casuali e Indipendenza</h2>
+            <p>
+                Quando si trattano variabili casuali, l'indipendenza implica che il valore di una variabile non influisce sulla distribuzione di probabilità di un'altra.
+            </p>
+            <p>
+                Per due variabili casuali \( X \) e \( Y \), esse sono indipendenti se per tutti i valori<br> \( x \) e \( y \):
+            </p>
+            <p style="text-align: center;">
+                \( P(X = x \text{ e } Y = y) = P(X = x) \times P(Y = y) \)
+            </p>
+
+            <!-- Analogie tra Indipendenza Statistica e Teoria delle Probabilità -->
+            <h2>Analogie tra Indipendenza Statistica e Teoria delle Probabilità</h2>
+            <h3>Probabilità Condizionata</h3>
+            <p>
+                La probabilità condizionata di \( A \) dato \( B \) è:
+            </p>
+            <p style="text-align: center;">
+                \( P(A \mid B) = \dfrac{P(A \cap B)}{P(B)} \)
+            </p>
+            <p>
+                Se \( A \) e \( B \) sono indipendenti:
+            </p>
+            <p style="text-align: center;">
+                \( P(A \mid B) = P(A) \)
+            </p>
+            <p>
+                Ciò significa che sapere che \( B \) è accaduto non cambia la probabilità di \( A \).
+            </p>
+            <h3>Valore Atteso di Variabili Indipendenti</h3>
+            <p>
+                Per variabili casuali indipendenti \( X \) e \( Y \):
+            </p>
+            <p style="text-align: center;">
+                \( E[XY] = E[X] \times E[Y] \)
+            </p>
+            <p>
+                Dove \( E[X] \) denota il valore atteso (media) di \( X \).
+            </p>
+
+            <!-- Esempi di Indipendenza Statistica -->
+            <h2>Esempi di Indipendenza Statistica</h2>
+            <h3>Lanci di Moneta</h3>
+            <p>
+                Lanciando una moneta equa due volte, il risultato del primo lancio non influisce sul risultato del secondo.
+            </p>
+            <ul>
+                <li><strong>Evento \( A \):</strong> Il primo lancio risulta Testa.</li>
+                <li><strong>Evento \( B \):</strong> Il secondo lancio risulta Croce.</li>
+            </ul>
+            <p>
+                Poiché i lanci sono indipendenti:
+            </p>
+            <p style="text-align: center;">
+                \( P(A \cap B) = P(A) \times P(B) = \left( \dfrac{1}{2} \right) \times \left( \dfrac{1}{2} \right) = \dfrac{1}{4} \)
+            </p>
+            <h3>Lancio di Dadi</h3>
+            <p>
+                Lanciando due dadi, l'esito di un dado non influenza l'esito dell'altro.
+            </p>
+            <ul>
+                <li><strong>Evento \( A \):</strong> Il primo dado mostra un 3.</li>
+                <li><strong>Evento \( B \):</strong> Il secondo dado mostra un 6.</li>
+            </ul>
+            <p>
+                Probabilità:
+            </p>
+            <p style="text-align: center;">
+                \( P(A \cap B) = P(A) \times P(B) = \left( \dfrac{1}{6} \right) \times \left( \dfrac{1}{6} \right) = \dfrac{1}{36} \)
+            </p>
+
+            <!-- Importanza dell'Indipendenza Statistica -->
+            <h2>Importanza dell'Indipendenza Statistica</h2>
+            <ul>
+                <li><strong>Semplificazione dei Calcoli:</strong> L'indipendenza permette di calcolare le probabilità congiunte utilizzando la regola moltiplicativa.</li>
+                <li><strong>Fondamento per Metodi Statistici:</strong> Molti test statistici e modelli assumono indipendenza tra le osservazioni o le variabili.</li>
+                <li><strong>Comprensione delle Relazioni:</strong> Identificare se le variabili sono indipendenti aiuta nella modellazione e nell'interpretazione dei dati.</li>
+            </ul>
+
+            <!-- Test per l'Indipendenza -->
+            <h2>Test per l'Indipendenza</h2>
+            <h3>Test Chi-Quadrato di Indipendenza</h3>
+            <p>
+                Utilizzato per variabili categoriche per verificare se due variabili sono indipendenti.
+            </p>
+            <ul>
+                <li><strong>Ipotesi Nulla (\( H_0 \)):</strong> Le variabili sono indipendenti.</li>
+                <li>Calcola la differenza tra frequenze osservate ed attese.</li>
+            </ul>
+            <h3>Coefficiente di Correlazione</h3>
+            <p>
+                Per variabili continue, il coefficiente di correlazione di Pearson misura la dipendenza lineare.
+            </p>
+            <p>
+                Un coefficiente pari a zero suggerisce assenza di relazione lineare, ma non necessariamente implica indipendenza.
+            </p>
+
+            <!-- Idee Sbagliate Comuni -->
+            <h2>Idee Sbagliate Comuni</h2>
+            <h3>Non Correlato vs. Indipendente</h3>
+            <p>
+                Due variabili possono essere non correlate ma non indipendenti, specialmente in presenza di relazioni non lineari.
+            </p>
+            <p>
+                L'indipendenza implica correlazione zero, ma il contrario non è sempre vero.
+            </p>
+            <h3>Eventi Mutuamente Esclusivi</h3>
+            <p>
+                Eventi mutuamente esclusivi non possono verificarsi simultaneamente (\( P(A \cap B) = 0 \)).
+            </p>
+            <p>
+                Eventi mutuamente esclusivi non sono indipendenti a meno che almeno uno degli eventi abbia probabilità zero.
+            </p>
+
+            <!-- Proprietà Matematiche -->
+            <h2>Proprietà Matematiche</h2>
+            <h3>Per Molteplici Eventi</h3>
+            <p>
+                Un insieme di eventi \( \{A_1, A_2, \dots, A_n\} \) è mutuamente indipendente se e solo se, per ogni sottoinsieme \( S \):
+            </p>
+            <p style="text-align: center;">
+                \( P\left( \bigcap_{i \in S} A_i \right) = \prod_{i \in S} P(A_i) \)
+            </p>
+            <h3>Variabili Casuali Indipendenti</h3>
+            <p>
+                La funzione di densità di probabilità congiunta si fattorizza nel prodotto delle marginali:
+            </p>
+            <p style="text-align: center;">
+                \( f_{X,Y}(x,y) = f_X(x) \times f_Y(y) \)
+            </p>
+
+            <!-- Applicazioni -->
+            <h2>Applicazioni</h2>
+            <h3>Disegno di Esperimenti</h3>
+            <p>
+                La randomizzazione assicura l'indipendenza tra le unità sperimentali, riducendo i bias.
+            </p>
+            <h3>Ingegneria dell'Affidabilità</h3>
+            <p>
+                Sistemi con guasti di componenti indipendenti possono essere analizzati utilizzando le regole di probabilità per l'indipendenza.
+            </p>
+            <h3>Crittografia</h3>
+            <p>
+                L'indipendenza è cruciale per creare sistemi crittografici sicuri in cui le componenti chiave non rivelano informazioni l'una sull'altra.
+            </p>
+
+            <!-- Conclusione -->
+            <h2>Conclusione</h2>
+            <p>
+                L'indipendenza statistica è un concetto fondamentale in probabilità e statistica, sostenendo molti risultati teorici e applicazioni pratiche. Comprendendo l'indipendenza, possiamo modellare meglio i fenomeni casuali, progettare esperimenti robusti e fare inferenze accurate dai dati.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>
