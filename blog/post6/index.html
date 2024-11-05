@@ -1,1 +1,445 @@
-<h1>Building</h1>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proving the Cauchy-Schwarz Inequality and Exploring Statistical Concepts</title>
+    <!-- Link al file CSS -->
+    <link rel="stylesheet" href="../../styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Proving the Cauchy-Schwarz Inequality and Exploring Statistical Concepts</h2>
+            <br>
+
+            <!-- Introduction -->
+            <h2>Introduction</h2>
+            <p>
+                This article covers three fundamental topics in statistics and probability theory:
+            </p>
+            <ol>
+                <li>
+                    <strong>Proof of the Cauchy-Schwarz Inequality:</strong> A simple yet powerful inequality with applications in various fields, including statistics, linear algebra, and analysis.
+                </li>
+                <li>
+                    <strong>Independence vs. Uncorrelation:</strong> A reflection on the conceptual differences between statistical independence and uncorrelated random variables, along with measures to assess them.
+                </li>
+                <li>
+                    <strong>Euler-Maruyama Simulator Enhancement:</strong> Developing a unified simulation framework for stochastic differential equations (SDEs) using the Euler-Maruyama method.
+                </li>
+            </ol>
+            <p>
+                Additionally, an optional exercise explores the derivation of regression coefficients using the least squares method and their relationship with the coefficient of determination, \( R^2 \).
+            </p>
+
+            <!-- 1. Proving the Cauchy-Schwarz Inequality -->
+            <h2>1. Proving the Cauchy-Schwarz Inequality</h2>
+            <p>
+                The Cauchy-Schwarz inequality is a fundamental result in linear algebra and analysis. In the context of real-valued sequences or vectors, it states that for any two sequences \( \{x_i\} \) and \( \{y_i\} \):
+            </p>
+            <p style="text-align: center;">
+                \( \left( \sum_{i=1}^{n} x_i y_i \right)^2 \leq \left( \sum_{i=1}^{n} x_i^2 \right) \left( \sum_{i=1}^{n} y_i^2 \right) \)
+            </p>
+
+            <h3>Simplest Proof Using the Schwarz Inequality</h3>
+            <p>
+                Consider any real numbers \( x_i \) and \( y_i \) for \( i = 1, 2, \dots, n \). Define the real-valued function:
+            </p>
+            <p style="text-align: center;">
+                \( f(t) = \sum_{i=1}^{n} (x_i - t y_i)^2 \)
+            </p>
+            <p>
+                Since \( f(t) \geq 0 \) for all real \( t \), it must reach its minimum at some real value of \( t \). Expand \( f(t) \):
+            </p>
+            <p style="text-align: center;">
+                \( f(t) = \sum_{i=1}^{n} (x_i^2 - 2 x_i y_i t + y_i^2 t^2 ) = \sum_{i=1}^{n} x_i^2 - 2t \sum_{i=1}^{n} x_i y_i + t^2 \sum_{i=1}^{n} y_i^2 \)
+            </p>
+            <p>
+                Consider \( f(t) \) as a quadratic function in \( t \):
+            </p>
+            <p style="text-align: center;">
+                \( f(t) = A t^2 - 2B t + C \)
+            </p>
+            <p>
+                Where:
+            </p>
+            <ul>
+                <li>\( A = \sum_{i=1}^{n} y_i^2 \)</li>
+                <li>\( B = \sum_{i=1}^{n} x_i y_i \)</li>
+                <li>\( C = \sum_{i=1}^{n} x_i^2 \)</li>
+            </ul>
+            <p>
+                Since \( f(t) \geq 0 \) for all \( t \), the discriminant of this quadratic must be non-positive:
+            </p>
+            <p style="text-align: center;">
+                \( \Delta = (-2B)^2 - 4AC = 4B^2 - 4AC \leq 0 \)
+            </p>
+            <p>
+                Simplify:
+            </p>
+            <p style="text-align: center;">
+                \( 4B^2 - 4AC \leq 0 \quad \Rightarrow \quad B^2 \leq AC \)
+            </p>
+            <p>
+                Therefore:
+            </p>
+            <p style="text-align: center;">
+                \( \left( \sum_{i=1}^{n} x_i y_i \right)^2 \leq \left( \sum_{i=1}^{n} x_i^2 \right) \left( \sum_{i=1}^{n} y_i^2 \right) \)
+            </p>
+
+            <h3>Normalizing Denominator (Correlation Coefficient \( r \))</h3>
+            <p>
+                In statistics, the Cauchy-Schwarz inequality underpins the fact that the absolute value of the Pearson correlation coefficient \( r \) does not exceed 1.
+            </p>
+            <p>
+                The Pearson correlation coefficient is defined as:
+            </p>
+            <p style="text-align: center;">
+                \( r = \dfrac{\sum_{i=1}^{n} (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \overline{x})^2 \sum_{i=1}^{n} (y_i - \overline{y})^2}} \)
+            </p>
+            <p>
+                Applying the Cauchy-Schwarz inequality to centered variables \( x_i - \overline{x} \) and \( y_i - \overline{y} \), we ensure that \( -1 \leq r \leq 1 \).
+            </p>
+
+            <!-- 2. Independence vs. Uncorrelation -->
+            <h2>2. Independence vs. Uncorrelation: Conceptual Differences and Measures</h2>
+            <h3>Definitions</h3>
+            <p>
+                <strong>Statistical Independence:</strong> Two random variables \( X \) and \( Y \) are independent if the occurrence of one does not affect the probability distribution of the other. Formally:
+            </p>
+            <p style="text-align: center;">
+                \( P(X = x \text{ and } Y = y) = P(X = x) \times P(Y = y) \)
+            </p>
+            <p>
+                <strong>Uncorrelation:</strong> Two random variables \( X \) and \( Y \) are uncorrelated if their covariance is zero:
+            </p>
+            <p style="text-align: center;">
+                \( \text{Cov}(X, Y) = E[(X - E[X])(Y - E[Y])] = 0 \)
+            </p>
+
+            <h3>Conceptual Differences</h3>
+            <h4>Dependency vs. Linear Relationship:</h4>
+            <ul>
+                <li>
+                    <strong>Independence</strong> implies no dependency of any kind between variables. Knowledge of one provides no information about the other.
+                </li>
+                <li>
+                    <strong>Uncorrelation</strong> indicates no linear relationship between variables. However, they may still be dependent in a non-linear manner.
+                </li>
+            </ul>
+            <h4>Implications:</h4>
+            <ul>
+                <li>
+                    Independence \( \Rightarrow \) Uncorrelation (if variables have finite variances).
+                </li>
+                <li>
+                    Uncorrelation \( \centernot\Rightarrow \) Independence. Variables can be uncorrelated but dependent.
+                </li>
+            </ul>
+
+            <h3>Examples</h3>
+            <h4>Independent Variables Are Uncorrelated:</h4>
+            <p>
+                Let \( X \) and \( Y \) be independent random variables with finite variances. Then \( \text{Cov}(X, Y) = 0 \).
+            </p>
+            <h4>Uncorrelated but Dependent Variables:</h4>
+            <p>
+                Let \( X \) be a standard normal variable, and define \( Y = X^2 \). Then \( E[X] = 0 \), \( E[Y] = E[X^2] = 1 \), but \( \text{Cov}(X, Y) = E[XY] - E[X]E[Y] = 0 - 0 \times 1 = 0 \).
+            </p>
+            <p>
+                \( X \) and \( Y \) are uncorrelated but clearly dependent since \( Y \) is determined by \( X \).
+            </p>
+
+            <h3>Measures to Assess Independence and Uncorrelation</h3>
+            <ul>
+                <li>
+                    <strong>Covariance and Correlation:</strong>
+                    <p>
+                        Covariance measures the joint variability of two random variables. Pearson Correlation Coefficient \( r \) quantifies the strength and direction of the linear relationship.
+                    </p>
+                </li>
+                <li>
+                    <strong>Higher-Order Moments:</strong>
+                    <p>
+                        Checking for zero covariance is insufficient for independence. Skewness and kurtosis can reveal non-linear dependencies.
+                    </p>
+                </li>
+                <li>
+                    <strong>Mutual Information:</strong>
+                    <p>
+                        A measure from information theory that quantifies the total amount of information shared between variables. \( I(X; Y) = 0 \) if and only if \( X \) and \( Y \) are independent.
+                    </p>
+                </li>
+                <li>
+                    <strong>Chi-Square Test of Independence:</strong>
+                    <p>
+                        For categorical data, assesses whether observed frequencies differ from expected frequencies under independence.
+                    </p>
+                </li>
+            </ul>
+
+            <h3>Implications in Statistical Modeling</h3>
+            <ul>
+                <li>
+                    <strong>Assumptions of Independence:</strong> Many statistical methods assume independence of observations (e.g., regression analysis, ANOVA).
+                </li>
+                <li>
+                    <strong>Violation of Independence:</strong> Can lead to incorrect inferences and underestimated standard errors.
+                </li>
+                <li>
+                    <strong>Assessing Dependencies:</strong> Important in time series analysis, where autocorrelation is common.
+                </li>
+            </ul>
+
+            <!-- 3. Euler-Maruyama Simulator Enhancement -->
+            <h2>3. Euler-Maruyama Simulator Enhancement</h2>
+            <h3>Developing a Unified Simulation Framework for SDEs</h3>
+            <p>
+                The Euler-Maruyama method is a numerical technique used to approximate solutions to stochastic differential equations (SDEs). Enhancing the simulator involves creating a general framework that can handle various types of SDEs.
+            </p>
+
+            <h4>Goals</h4>
+            <ul>
+                <li>
+                    <strong>Central Class for SDEs:</strong> Design a base class that encapsulates common attributes and methods required for SDE simulation.
+                </li>
+                <li>
+                    <strong>Flexibility:</strong> Allow the framework to handle different drift and diffusion functions.
+                </li>
+                <li>
+                    <strong>Reusability:</strong> Promote code reuse and maintainability.
+                </li>
+            </ul>
+
+            <h4>Implementation Steps</h4>
+            <h5>Define the Base SDE Class</h5>
+            <pre><code class="language-python">
+class SDE:
+    def __init__(self, drift_function, diffusion_function, initial_value, time_grid):
+        self.drift = drift_function
+        self.diffusion = diffusion_function
+        self.x0 = initial_value
+        self.time_grid = time_grid
+            </code></pre>
+
+            <h5>Implement the Euler-Maruyama Method</h5>
+            <pre><code class="language-python">
+def simulate(self):
+    x = np.zeros(len(self.time_grid))
+    x[0] = self.x0
+    dt = self.time_grid[1] - self.time_grid[0]
+    for i in range(1, len(self.time_grid)):
+        t = self.time_grid[i-1]
+        x[i] = x[i-1] + self.drift(x[i-1], t) * dt + self.diffusion(x[i-1], t) * np.sqrt(dt) * np.random.normal()
+    return x
+            </code></pre>
+
+            <h5>Example Usage</h5>
+            <p><strong>Ornstein-Uhlenbeck Process:</strong></p>
+            <pre><code class="language-python">
+def ou_drift(x, t):
+    theta = 0.7
+    mu = 1.5
+    return theta * (mu - x)
+
+def ou_diffusion(x, t):
+    sigma = 0.2
+    return sigma
+
+sde = SDE(drift_function=ou_drift, diffusion_function=ou_diffusion, initial_value=0, time_grid=np.linspace(0, 1, 1000))
+simulation = sde.simulate()
+            </code></pre>
+
+            <h4>Extensibility</h4>
+            <ul>
+                <li>
+                    Users can define custom drift and diffusion functions to model different SDEs.
+                </li>
+                <li>
+                    The framework can include methods for statistical analysis of simulations.
+                </li>
+            </ul>
+
+            <h4>Benefits</h4>
+            <ul>
+                <li>
+                    <strong>Unified Approach:</strong> Handles multiple SDEs within a single framework.
+                </li>
+                <li>
+                    <strong>Modularity:</strong> Easy to modify and extend components.
+                </li>
+                <li>
+                    <strong>Educational Tool:</strong> Helps in understanding the behavior of different stochastic processes.
+                </li>
+            </ul>
+
+            <!-- Optional Exercise -->
+            <h2>Optional Exercise: Deriving Regression Coefficients and Relationship with \( R^2 \)</h2>
+            <h3>Deriving the Least Squares Regression Coefficients</h3>
+            <p>
+                For a simple linear regression model:
+            </p>
+            <p style="text-align: center;">
+                \( y = a + b x + \varepsilon \)
+            </p>
+            <p>
+                Where:
+            </p>
+            <ul>
+                <li>\( y \) is the dependent variable.</li>
+                <li>\( x \) is the independent variable.</li>
+                <li>\( a \) is the intercept.</li>
+                <li>\( b \) is the slope.</li>
+                <li>\( \varepsilon \) is the error term.</li>
+            </ul>
+
+            <h4>Coefficient \( b \) (Slope)</h4>
+            <p>
+                Minimize the sum of squared errors:
+            </p>
+            <p style="text-align: center;">
+                \( S = \sum_{i=1}^{n} (y_i - a - b x_i)^2 \)
+            </p>
+            <p>
+                Take partial derivatives with respect to \( a \) and \( b \), set them to zero:
+            </p>
+            <h5>With respect to \( b \):</h5>
+            <p style="text-align: center;">
+                \( \dfrac{\partial S}{\partial b} = -2 \sum_{i=1}^{n} x_i (y_i - a - b x_i) = 0 \)
+            </p>
+            <h5>With respect to \( a \):</h5>
+            <p style="text-align: center;">
+                \( \dfrac{\partial S}{\partial a} = -2 \sum_{i=1}^{n} (y_i - a - b x_i) = 0 \)
+            </p>
+            <p>
+                Solve the normal equations:
+            </p>
+            <p style="text-align: center;">
+                \(
+                \begin{cases}
+                    \sum y_i = n a + b \sum x_i \\
+                    \sum x_i y_i = a \sum x_i + b \sum x_i^2
+                \end{cases}
+                \)
+            </p>
+            <p>
+                Express \( a \) and \( b \):
+            </p>
+            <p style="text-align: center;">
+                \( b = \dfrac{\sum (x_i - \overline{x})(y_i - \overline{y})}{\sum (x_i - \overline{x})^2} \)
+            </p>
+            <p style="text-align: center;">
+                \( a = \overline{y} - b \overline{x} \)
+            </p>
+
+            <h3>Relationship with \( R^2 \) (Coefficient of Determination)</h3>
+            <p>
+                \( R^2 \) measures the proportion of variance in \( y \) explained by \( x \):
+            </p>
+            <p style="text-align: center;">
+                \( R^2 = \dfrac{SSR}{SST} = 1 - \dfrac{SSE}{SST} \)
+            </p>
+            <p>
+                Where:
+            </p>
+            <ul>
+                <li>
+                    <strong>SSR (Regression Sum of Squares):</strong>
+                    \( SSR = \sum_{i=1}^{n} (\hat{y}_i - \overline{y})^2 \)
+                </li>
+                <li>
+                    <strong>SSE (Error Sum of Squares):</strong>
+                    \( SSE = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \)
+                </li>
+                <li>
+                    <strong>SST (Total Sum of Squares):</strong>
+                    \( SST = \sum_{i=1}^{n} (y_i - \overline{y})^2 \)
+                </li>
+                <li>
+                    \( \hat{y}_i = a + b x_i \)
+                </li>
+            </ul>
+
+            <h4>Connection between \( R^2 \) and Correlation Coefficient \( r \)</h4>
+            <p>
+                In simple linear regression:
+            </p>
+            <p style="text-align: center;">
+                \( R^2 = r^2 \)
+            </p>
+            <p>
+                Where \( r \) is the Pearson correlation coefficient between \( x \) and \( y \).
+            </p>
+
+            <!-- Conclusion -->
+            <h2>Conclusion</h2>
+            <p>
+                This article provided:
+            </p>
+            <ul>
+                <li>
+                    A straightforward proof of the Cauchy-Schwarz inequality, highlighting its importance in ensuring that correlation coefficients are bounded between -1 and 1.
+                </li>
+                <li>
+                    A reflection on the differences between statistical independence and uncorrelation, emphasizing that while independence implies uncorrelation (given finite variances), the converse is not necessarily true.
+                </li>
+                <li>
+                    An enhancement plan for an Euler-Maruyama simulator, promoting a flexible framework capable of handling various stochastic differential equations.
+                </li>
+                <li>
+                    An optional exploration of deriving regression coefficients using the least squares method and understanding their relationship with the coefficient of determination, \( R^2 \).
+                </li>
+            </ul>
+            <p>
+                Understanding these concepts deepens our comprehension of statistical principles and enhances our ability to model and analyze complex systems.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>
