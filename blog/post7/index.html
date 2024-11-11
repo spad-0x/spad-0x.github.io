@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Fundamental Theorem of Calculus and Probability Distributions | Leonardo Spadoni's Blog</title>
+    <!-- MathJax for mathematical formulas -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page">
+        <div class="container">
+            <h2>The Fundamental Theorem of Calculus and Probability Distributions</h2>
+
+            <!-- The Fundamental Theorem of Calculus -->
+            <h2>The Fundamental Theorem of Calculus and Its Relationship with Density Functions and Cumulative Distribution Functions</h2>
+            <p>
+                The <strong>Fundamental Theorem of Calculus (FTC)</strong> bridges the concepts of differentiation and integration, serving as a cornerstone in mathematical analysis. In probability theory, this theorem establishes a crucial relationship between <strong>probability density functions (PDFs)</strong> and <strong>cumulative distribution functions (CDFs)</strong>. In this section, we will explore this relationship and demonstrate how the FTC applies to probability distributions.
+            </p>
+
+            <h3>The Fundamental Theorem of Calculus</h3>
+            <p>
+                The FTC consists of two parts:
+            </p>
+            <ol>
+                <li>
+                    <strong>First Part (FTC1):</strong> Relates the integral of a function to its antiderivative.
+                </li>
+                <li>
+                    <strong>Second Part (FTC2):</strong> States that the derivative of the integral of a function is the original function.
+                </li>
+            </ol>
+
+            <h4>First Part (FTC1)</h4>
+            <p>
+                If \( f \) is continuous on \([a, b]\) and \( F \) is an antiderivative of \( f \) on \([a, b]\), then:
+            </p>
+            <p style="text-align: center;">
+                \( \displaystyle \int_a^b f(x) \, dx = F(b) - F(a) \)
+            </p>
+
+            <h4>Second Part (FTC2)</h4>
+            <p>
+                If \( f \) is continuous on an open interval \( I \) and \( a \) is any point in \( I \), then for every \( x \) in \( I \):
+            </p>
+            <p style="text-align: center;">
+                \( \displaystyle \frac{d}{dx} \left( \int_a^x f(t) \, dt \right) = f(x) \)
+            </p>
+
+            <h3>Relationship with Density Functions and Cumulative Distribution Functions</h3>
+            <p>
+                In probability theory, the <strong>cumulative distribution function (CDF)</strong> of a continuous random variable \( X \) is defined as:
+            </p>
+            <p style="text-align: center;">
+                \( F_X(x) = P(X \leq x) = \displaystyle \int_{-\infty}^x f_X(t) \, dt \)
+            </p>
+            <p>
+                where \( f_X(x) \) is the <strong>probability density function (PDF)</strong> of \( X \).
+            </p>
+
+            <h4>Applying the FTC to Probability Distributions</h4>
+            <p>
+                Using the FTC, we can establish the relationship between PDFs and CDFs:
+            </p>
+            <ol>
+                <li>
+                    <strong>From PDF to CDF:</strong>
+                    <p>
+                        The CDF is the integral of the PDF:
+                    </p>
+                    <p style="text-align: center;">
+                        \( F_X(x) = \displaystyle \int_{-\infty}^x f_X(t) \, dt \)
+                    </p>
+                </li>
+                <li>
+                    <strong>From CDF to PDF:</strong>
+                    <p>
+                        The PDF is the derivative of the CDF:
+                    </p>
+                    <p style="text-align: center;">
+                        \( f_X(x) = \dfrac{d}{dx} F_X(x) \)
+                    </p>
+                </li>
+            </ol>
+
+            <h4>Example: Standard Normal Distribution</h4>
+            <p>
+                Consider the standard normal distribution with PDF:
+            </p>
+            <p style="text-align: center;">
+                \( f_X(x) = \dfrac{1}{\sqrt{2\pi}} e^{-\dfrac{x^2}{2}} \)
+            </p>
+            <p>
+                The CDF is:
+            </p>
+            <p style="text-align: center;">
+                \( F_X(x) = \displaystyle \int_{-\infty}^x \dfrac{1}{\sqrt{2\pi}} e^{-\dfrac{t^2}{2}} \, dt \)
+            </p>
+            <p>
+                Although the CDF does not have a closed-form expression, its derivative recovers the PDF:
+            </p>
+            <p style="text-align: center;">
+                \( \dfrac{d}{dx} F_X(x) = f_X(x) \)
+            </p>
+
+            <!-- Generating Realizations from a Discrete Univariate Probability Distribution -->
+            <h2>Generating Realizations from a Discrete Univariate Probability Distribution</h2>
+            <p>
+                In this exercise, we will:
+            </p>
+            <ul>
+                <li>Generate realizations from a discrete univariate probability distribution with arbitrary probabilities.</li>
+                <li>Graphically show the convergence of the empirical distribution to the theoretical distribution as the sample size increases.</li>
+                <li>Compute the mean and variance using recursive methods (e.g., Knuth's/Welford's algorithms) and compare these results with the theoretical mean and variance, discussing the relationship.</li>
+            </ul>
+
+            <h3>Defining the Arbitrary Discrete Distribution</h3>
+            <p>
+                Let's define a discrete random variable \( X \) that takes values in \( \{1, 2, 3, 4, 5\} \) with the following arbitrary probabilities:
+            </p>
+            <table style="margin: 0 auto; text-align: center;">
+                <tr>
+                    <th>\( x \)</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+                <tr>
+                    <td>\( P(X = x) \)</td>
+                    <td>0.1</td>
+                    <td>0.2</td>
+                    <td>0.4</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+            </table>
+
+            <h4>Theoretical Mean and Variance</h4>
+            <p>
+                <strong>Mean (\( \mu \)):</strong>
+            </p>
+            <p style="text-align: center;">
+                \( \mu = E[X] = \sum_{i=1}^{5} x_i P(X = x_i) = (1)(0.1) + (2)(0.2) + (3)(0.4) + (4)(0.2) + (5)(0.1) = 3 \)
+            </p>
+            <p>
+                <strong>Variance (\( \sigma^2 \)):</strong>
+            </p>
+            <p style="text-align: center;">
+                \(
+                \begin{align*}
+                \sigma^2 &= E[(X - \mu)^2] = \sum_{i=1}^{5} (x_i - \mu)^2 P(X = x_i) \\
+                &= (1 - 3)^2(0.1) + (2 - 3)^2(0.2) + (3 - 3)^2(0.4) + (4 - 3)^2(0.2) + (5 - 3)^2(0.1) \\
+                &= (4)(0.1) + (1)(0.2) + (0)(0.4) + (1)(0.2) + (4)(0.1) \\
+                &= 0.4 + 0.2 + 0 + 0.2 + 0.4 = 1.2
+                \end{align*}
+                \)
+            </p>
+
+            <h3>Generating Random Samples</h3>
+            <p>
+                We will use the <strong>inverse transform sampling</strong> method to generate random samples from the defined discrete distribution.
+            </p>
+
+            <h4>Steps:</h4>
+            <ol>
+                <li>Compute the cumulative distribution function (CDF).</li>
+                <li>Generate a uniform random number \( U \) in [0, 1].</li>
+                <li>Find the smallest \( x \) such that \( F_X(x) \geq U \).</li>
+                <li>Assign this \( x \) as the generated value.</li>
+            </ol>
+
+            <h3>Empirical vs. Theoretical Distribution</h3>
+            <p>
+                We will generate samples of increasing sizes (\( N = 10^2, 10^3, 10^4, 10^5 \)) and graphically show how the empirical distribution converges to the theoretical distribution.
+            </p>
+
+            <h3>Computing Mean and Variance Using Welford's Algorithm</h3>
+            <p>
+                <strong>Welford's algorithm</strong> provides a numerically stable method for computing the mean and variance incrementally.
+            </p>
+
+            <h4>Algorithm Steps:</h4>
+            <ol>
+                <li>Initialization: Set \( \mu_0 = 0 \) and \( M_2 = 0 \).</li>
+                <li>For each new data point \( x_i \), update:
+                    <ul>
+                        <li>\( n = n + 1 \)</li>
+                        <li>\( \delta = x_i - \mu_{n-1} \)</li>
+                        <li>\( \mu_n = \mu_{n-1} + \delta / n \)</li>
+                        <li>\( M_2 = M_2 + \delta \times (x_i - \mu_n) \)</li>
+                    </ul>
+                </li>
+                <li>At any point, compute:
+                    <ul>
+                        <li>Mean: \( \mu_n \)</li>
+                        <li>Variance: \( \sigma^2 = M_2 / n \)</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Comparing the Results</h3>
+            <p>
+                We will compare the empirical mean and variance computed using Welford's algorithm with the theoretical values, discussing the convergence and the relationship between them.
+            </p>
+
+            <!-- Link to the Simulation -->
+            <hr>
+            <h2>Try the Simulation</h2>
+            <div style="text-align: center;">
+                <a href="simulation.html" style="border: solid 1px; padding: 10px; text-decoration: none;">Click here to Start the Simulation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. All rights reserved.</p>
+            <p>
+                <a href="https://github.com/spad-0x" target="_blank">GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" target="_blank">LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Include your own scripts here, if any -->
+</body>
+</html>

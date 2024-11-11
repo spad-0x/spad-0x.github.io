@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discrete Distribution Simulation | Leonardo Spadoni's Blog</title>
+    <!-- Include Chart.js library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Meta tag for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include your own CSS styles if needed -->
+    <style>
+        /* Responsive container for charts */
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            margin: auto;
+        }
+        /* Style for controls */
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Adjust input and button styles */
+        input[type="number"] {
+            width: 80px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            canvas {
+                max-width: 100%;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Simulation Content -->
+    <section class="section">
+        <div class="container">
+            <h2>Simulation of the Discrete Univariate Probability Distribution</h2>
+            <p>
+                This simulation generates random samples from a discrete distribution with arbitrary probabilities, computes the empirical mean and variance using Welford's algorithm, and displays the results using interactive charts.
+            </p>
+            <!-- Controls -->
+            <div class="controls">
+                <label for="sampleSize">Sample Size (N): </label>
+                <input type="number" id="sampleSize" value="1000" min="10" step="10">
+                <button id="generateBtn">Generate Samples</button>
+            </div>
+            <!-- Charts -->
+            <div class="chart-container">
+                <canvas id="distributionChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="meanChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="varianceChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. All rights reserved.</p>
+            <p>
+                <a href="https://github.com/spad-0x" target="_blank">GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" target="_blank">LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Define the probabilities and values
+        const xValues = [1, 2, 3, 4, 5];
+        const probabilities = [0.1, 0.2, 0.4, 0.2, 0.1];
+
+        // Compute the cumulative distribution function (CDF)
+        const cdf = [];
+        probabilities.reduce((accumulator, currentValue, index) => {
+            cdf[index] = accumulator + currentValue;
+            return cdf[index];
+        }, 0);
+
+        // Function to generate random samples
+        function generateRandomSample(N) {
+            const samples = [];
+            for (let i = 0; i < N; i++) {
+                const U = Math.random();
+                let x;
+                for (let j = 0; j < cdf.length; j++) {
+                    if (U < cdf[j]) {
+                        x = xValues[j];
+                        break;
+                    }
+                }
+                samples.push(x);
+            }
+            return samples;
+        }
+
+        // Welford's algorithm for mean and variance
+        function welfordAlgorithm(data) {
+            let n = 0;
+            let mean = 0;
+            let M2 = 0;
+            const means = [];
+            const variances = [];
+
+            data.forEach(x => {
+                n++;
+                const delta = x - mean;
+                mean += delta / n;
+                const delta2 = x - mean;
+                M2 += delta * delta2;
+                means.push(mean);
+                variances.push(M2 / n);
+            });
+
+            return { means, variances };
+        }
+
+        // Initialize charts
+        let distributionChart, meanChart, varianceChart;
+
+        // Update charts with new data
+        function updateCharts(N) {
+            const samples = generateRandomSample(N);
+            const empiricalProbs = xValues.map(x => samples.filter(s => s === x).length / N);
+
+            // Chart configuration options
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: '' } },
+                    y: { title: { display: true, text: '' }, beginAtZero: true }
+                },
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            };
+
+            // Update Distribution Chart
+            if (distributionChart) {
+                distributionChart.destroy();
+            }
+            const ctxDist = document.getElementById('distributionChart').getContext('2d');
+            distributionChart = new Chart(ctxDist, {
+                type: 'bar',
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            label: 'Theoretical Probabilities',
+                            data: probabilities,
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Empirical Probabilities',
+                            data: empiricalProbs,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        x: { title: { display: true, text: 'Value' } },
+                        y: { title: { display: true, text: 'Probability' }, beginAtZero: true, max: 0.5 }
+                    }
+                }
+            });
+
+            // Compute mean and variance using Welford's algorithm
+            const { means, variances } = welfordAlgorithm(samples);
+
+            // Generate labels for the number of samples
+            const sampleNumbers = Array.from({ length: N }, (_, i) => i + 1);
+
+            // Update Mean Chart
+            if (meanChart) {
+                meanChart.destroy();
+            }
+            const ctxMean = document.getElementById('meanChart').getContext('2d');
+            meanChart = new Chart(ctxMean, {
+                type: 'line',
+                data: {
+                    labels: sampleNumbers,
+                    datasets: [
+                        {
+                            label: 'Empirical Mean',
+                            data: means,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: false,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Theoretical Mean',
+                            data: Array(N).fill(3),
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        x: { title: { display: true, text: 'Sample Number' } },
+                        y: { title: { display: true, text: 'Mean' } }
+                    }
+                }
+            });
+
+            // Update Variance Chart
+            if (varianceChart) {
+                varianceChart.destroy();
+            }
+            const ctxVar = document.getElementById('varianceChart').getContext('2d');
+            varianceChart = new Chart(ctxVar, {
+                type: 'line',
+                data: {
+                    labels: sampleNumbers,
+                    datasets: [
+                        {
+                            label: 'Empirical Variance',
+                            data: variances,
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            fill: false,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Theoretical Variance',
+                            data: Array(N).fill(1.2),
+                            borderColor: 'rgba(201, 203, 207, 1)',
+                            borderDash: [5, 5],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        x: { title: { display: true, text: 'Sample Number' } },
+                        y: { title: { display: true, text: 'Variance' } }
+                    }
+                }
+            });
+        }
+
+        // Event listener for the Generate Samples button
+        document.getElementById('generateBtn').addEventListener('click', () => {
+            const N = parseInt(document.getElementById('sampleSize').value);
+            if (N > 0) {
+                updateCharts(N);
+            } else {
+                alert('Please enter a valid sample size.');
+            }
+        });
+
+        // Initial chart rendering with default sample size
+        window.onload = () => {
+            const defaultN = parseInt(document.getElementById('sampleSize').value);
+            updateCharts(defaultN);
+        };
+    </script>
+</body>
+</html>
