@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploring Cryptography through Shannon Entropy, Primitive Roots, and Cipher Analysis | Blog di Leonardo Spadoni</title>
+    <!-- Link al file CSS -->
+    <link rel="stylesheet" href="../../styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Exploring Cryptography through Shannon Entropy, Primitive Roots, and Cipher Analysis</h2>
+            <br>
+
+            <!-- Introduction -->
+            <h2>Introduction</h2>
+            <p>
+                Cryptography is a critical field in cybersecurity, ensuring secure communication and data protection. Understanding the mathematical foundations and statistical properties of cryptographic algorithms enhances our ability to analyze their security. This article explores key concepts such as <strong>Shannon Entropy</strong>, <strong>primitive roots</strong>, and the application of these concepts in cipher analysis. We will:
+            </p>
+            <ul>
+                <li>Recall the notions of Shannon Entropy and primitive roots.</li>
+                <li>Apply the <strong>Caesar cipher</strong> and perform frequency analysis to decrypt it.</li>
+                <li>Explore modular exponentiation using primitive roots in the context of encryption.</li>
+                <li>Compare the simplicity of breaking the Caesar cipher to the complexity of breaking RSA encryption.</li>
+                <li>Visualize distributions and calculate the Shannon entropy of transformed distributions.</li>
+                <li>Discuss the importance of statistical analysis in understanding cryptographic algorithms and their role in cybersecurity.</li>
+            </ul>
+
+            <hr>
+
+            <!-- Theory and Research -->
+            <h2>Theory and Research</h2>
+
+            <h3>Shannon Entropy and Diversity Measures</h3>
+            <p>
+                <strong>Shannon Entropy</strong> is a measure of the unpredictability or randomness in a set of possible outcomes. Introduced by Claude Shannon in 1948, it quantifies the amount of information contained in a message.
+            </p>
+            <p>
+                The entropy \( H \) of a discrete random variable \( X \) with possible values \( \{ x_1, x_2, ..., x_n \} \) and probability mass function \( P(X = x_i) \) is defined as:
+            </p>
+            <p style="text-align: center;">
+                \( H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i) \)
+            </p>
+            <ul>
+                <li><strong>Higher Entropy</strong>: Indicates greater randomness and unpredictability.</li>
+                <li><strong>Lower Entropy</strong>: Suggests more predictability and less randomness.</li>
+            </ul>
+            <p>
+                <strong>Other Diversity Measures</strong>:
+            </p>
+            <ul>
+                <li><strong>Gini-Simpson Index</strong>: Measures the probability that two randomly selected individuals are of different types.</li>
+                <li><strong>Rényi Entropy</strong>: A generalization of Shannon Entropy, providing a spectrum of diversity measures.</li>
+            </ul>
+
+            <h3>Primitive Roots</h3>
+            <p>
+                A <strong>primitive root modulo \( p \)</strong> (where \( p \) is a prime number) is an integer \( g \) such that for every integer \( a \) coprime to \( p \), there exists an integer \( k \) satisfying:
+            </p>
+            <p style="text-align: center;">
+                \( g^k \mod p = a \)
+            </p>
+            <ul>
+                <li>The multiplicative order of \( g \) modulo \( p \) is \( p - 1 \).</li>
+                <li>Primitive roots are essential in <strong>Diffie-Hellman key exchange</strong> and other cryptographic protocols.</li>
+            </ul>
+
+            <hr>
+
+            <!-- Application and Practice -->
+            <h2>Application and Practice</h2>
+
+            <h3>Part 1: Caesar Cipher and Frequency Analysis</h3>
+
+            <h4>Step 1: Compile a Text and Create Letter Frequency Distribution</h4>
+            <p>
+                We selected several web pages to compile a sufficiently large piece of text (e.g., an article with 10,000 characters). We extracted the text, removed any non-alphabetic characters, and converted all letters to uppercase.
+            </p>
+            <p>
+                <strong>Letter Frequency Distribution</strong>:
+            </p>
+            <p>
+                We calculated the frequency of each letter in the text to obtain the original distribution.
+            </p>
+
+            <h4>Step 2: Apply the Caesar Cipher with a Random Shift</h4>
+            <p>
+                We chose a random shift value, say <strong>shift = 7</strong>. The Caesar cipher shifts each letter in the plaintext by the shift value, wrapping around the alphabet if necessary.
+            </p>
+            <p>
+                <strong>Encryption Function</strong>:
+            </p>
+            <p>
+                For each letter \( L \):
+            </p>
+            <p style="text-align: center;">
+                \( E(L) = ( \text{Index}(L) + \text{shift} ) \mod 26 \)
+            </p>
+            <p>
+                Where \( \text{Index}(L) \) maps \( A = 0, B = 1, ..., Z = 25 \).
+            </p>
+            <p>
+                <strong>Encrypted Text</strong>:
+            </p>
+            <p>
+                We applied the shift to each letter to produce the ciphertext.
+            </p>
+
+            <h4>Step 3: Decrypt the Message Using Frequency Analysis</h4>
+            <p>
+                <strong>Frequency Analysis</strong>:
+            </p>
+            <ul>
+                <li>We calculated the frequency of each letter in the ciphertext.</li>
+                <li>Compared the ciphertext frequencies to standard English letter frequencies.</li>
+            </ul>
+            <p>
+                <strong>Decryption Process</strong>:
+            </p>
+            <ul>
+                <li><strong>Observation</strong>: The most frequent letters in English are E, T, A, O, I, N.</li>
+                <li><strong>Hypothesis</strong>: Assume the most frequent letter in the ciphertext corresponds to E.</li>
+                <li><strong>Shift Estimation</strong>: Calculate the difference between the ciphertext's most frequent letter and E to estimate the shift.</li>
+                <li><strong>Result</strong>: Determined the shift value used in encryption (ideally matching the original shift).</li>
+            </ul>
+            <p>
+                <strong>Decrypting the Ciphertext</strong>:
+            </p>
+            <p>
+                Applied the inverse shift to the ciphertext to recover the plaintext.
+            </p>
+
+            <hr>
+
+            <h3>Part 2 (Optional): Modular Exponentiation Encryption</h3>
+
+            <h4>Step 1: Convert Letters to Numeric Representation</h4>
+            <p>
+                Mapped each letter in the original text to a number:
+            </p>
+            <p style="text-align: center;">
+                \( A = 0, B = 1, ..., Z = 25 \)
+            </p>
+
+            <h4>Step 2: Encode Using Modular Exponentiation</h4>
+            <p>
+                Chose parameters:
+            </p>
+            <ul>
+                <li><strong>N = 10</strong></li>
+                <li><strong>P = 37</strong> (a prime number)</li>
+                <li><strong>Note</strong>: 10 is a primitive root of 37.</li>
+            </ul>
+            <p>
+                <strong>Encryption Function</strong>:
+            </p>
+            <p>
+                For each numeric value \( k \):
+            </p>
+            <p style="text-align: center;">
+                \( E(k) = N^k \mod P \)
+            </p>
+            <p>
+                Calculated the encoded values for each letter.
+            </p>
+
+            <h4>Observations</h4>
+            <ul>
+                <li>The resulting encoded values are less predictable.</li>
+                <li>The distribution of encoded values appears more uniform compared to the Caesar cipher.</li>
+            </ul>
+
+            <hr>
+
+            <!-- Comparing Frequency Analysis and RSA Encryption -->
+            <h2>Comparing Frequency Analysis and RSA Encryption</h2>
+
+            <p>
+                <strong>Caesar Cipher</strong>:
+            </p>
+            <ul>
+                <li><strong>Simplicity</strong>: Easily broken using frequency analysis due to predictable letter shifts.</li>
+                <li><strong>Low Entropy</strong>: The cipher does not significantly alter the original letter frequency distribution.</li>
+            </ul>
+            <p>
+                <strong>RSA Encryption (Simplified with Modular Exponentiation)</strong>:
+            </p>
+            <ul>
+                <li><strong>Complexity</strong>: Without knowledge of the private key (e.g., the modulus \( P \) and the exponent \( N \)), decrypting the message is computationally infeasible.</li>
+                <li><strong>High Entropy</strong>: The distribution of encoded values is more uniform, reducing patterns exploitable by frequency analysis.</li>
+            </ul>
+
+            <hr>
+
+            <!-- Visualization and Entropy Calculation -->
+            <h2>Visualization and Entropy Calculation</h2>
+
+            <h3>Letter Frequency Distributions</h3>
+            <ul>
+                <li><strong>Original Text Distribution</strong>: Showed the typical letter frequency pattern of English text.</li>
+                <li><strong>Caesar Cipher Distribution</strong>: Shifted frequencies, but overall pattern remained similar.</li>
+                <li><strong>Modular Exponentiation Distribution</strong>: Frequencies appeared more uniform.</li>
+            </ul>
+
+            <h3>Shannon Entropy Calculations</h3>
+            <ul>
+                <li><strong>Original Text</strong>: Entropy \( H_{\text{original}} \)</li>
+                <li><strong>Caesar Cipher</strong>: Slightly different entropy \( H_{\text{Caesar}} \), but close to \( H_{\text{original}} \)</li>
+                <li><strong>Modular Exponentiation</strong>: Higher entropy \( H_{\text{mod\_exp}} \), indicating increased randomness.</li>
+            </ul>
+            <p>
+                <strong>Entropy Values</strong> (Hypothetical):
+            </p>
+            <p style="text-align: center;">
+                \( H_{\text{original}} = 4.18 \) bits
+            </p>
+            <p style="text-align: center;">
+                \( H_{\text{Caesar}} = 4.17 \) bits
+            </p>
+            <p style="text-align: center;">
+                \( H_{\text{mod\_exp}} = 5.21 \) bits
+            </p>
+
+            <hr>
+
+            <!-- Findings and Discussion -->
+            <h2>Findings and Discussion</h2>
+
+            <h3>Part 1 Findings</h3>
+            <ul>
+                <li><strong>Ease of Decryption</strong>: The Caesar cipher is vulnerable to frequency analysis due to its predictable nature.</li>
+                <li><strong>Statistical Patterns</strong>: The letter frequency distribution remains similar after encryption, making it susceptible to statistical attacks.</li>
+                <li><strong>Entropy</strong>: Minimal change in entropy indicates that the cipher does not significantly increase the randomness.</li>
+            </ul>
+
+            <h3>Part 2 Findings</h3>
+            <ul>
+                <li><strong>Increased Complexity</strong>: Modular exponentiation creates a more complex transformation.</li>
+                <li><strong>Uniform Distribution</strong>: The encoded values distribute more uniformly, reducing identifiable patterns.</li>
+                <li><strong>Higher Entropy</strong>: Indicates increased unpredictability, enhancing security.</li>
+                <li><strong>Cryptographic Strength</strong>: Demonstrates principles used in RSA encryption, where the difficulty of factoring large primes ensures security.</li>
+            </ul>
+
+            <h3>Importance of Statistical Analysis in Cryptography</h3>
+            <ul>
+                <li><strong>Understanding Vulnerabilities</strong>: Statistical analysis reveals weaknesses in ciphers (e.g., frequency patterns in the Caesar cipher).</li>
+                <li><strong>Designing Secure Algorithms</strong>: Helps in creating ciphers that resist statistical attacks by eliminating predictable patterns.</li>
+                <li><strong>Cybersecurity Applications</strong>: Equips practitioners with tools to assess and strengthen encryption methods.</li>
+            </ul>
+
+            <hr>
+
+            <!-- Conclusion -->
+            <h2>Conclusion</h2>
+            <p>
+                This exercise highlighted the significance of mathematical concepts in cryptography:
+            </p>
+            <ul>
+                <li><strong>Shannon Entropy</strong>: Serves as a metric for randomness and security in encryption algorithms.</li>
+                <li><strong>Primitive Roots</strong>: Fundamental in creating secure cryptographic systems like RSA.</li>
+                <li><strong>Frequency Analysis</strong>: A powerful tool to break simple ciphers, emphasizing the need for complex encryption methods.</li>
+                <li><strong>Statistical Analysis</strong>: Essential for evaluating cryptographic algorithms and ensuring data security.</li>
+            </ul>
+            <p>
+                By applying these concepts, we gain a deeper understanding of the strengths and weaknesses of different encryption methods, reinforcing the importance of robust cryptographic practices in cybersecurity.
+            </p>
+
+            <hr>
+
+            <p><strong>Note</strong>: The practical implementations involve collecting text data, performing encryption and decryption, and calculating statistical measures. Tools such as Python or JavaScript can be used to automate these tasks and visualize the results.</p>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>
