@@ -17,6 +17,14 @@
     src: url(/fonts/Cascadia.ttf) format('truetype');
 }
 
+
+@font-face {
+    font-family: 'Jersey 15';
+    src: url(/fonts/Jersey_15/Jersey15-Regular.ttf) format('truetype');
+}
+
+
+
 .language-javascript{
     color: #0F0;
 }
@@ -39,7 +47,8 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Cascadia'; 
+    font-family: 'Jersey 15';
+    font-size: large;
     color: #fff;
     background-color: rgb(0, 0, 0);
 }
@@ -75,7 +84,7 @@ body{
 .nav-links a {
     color: #0F0;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 30px;
     transition: color 0.3s;
 }
 
@@ -222,7 +231,6 @@ section {
 #skills h2 {
     text-align: center;
     font-size: 250%;
-    font-family: 'ModernDOS8x8', monospace;
 }
 
 .skill-category {
@@ -230,14 +238,12 @@ section {
 }
 
 .skill-category h3 {
-    font-family: 'ModernDOS8x8', monospace;
     line-height: 100%;
     font-size: 200%;
     margin-bottom: 20px;
 }
 
 .skill {
-    font-family: 'ModernDOS8x8', monospace;
     font-size: 180%;
 
     margin-bottom: 20px;
@@ -282,6 +288,7 @@ section {
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+    font-size: 25px;
 }
 
 /* Blog Section */
