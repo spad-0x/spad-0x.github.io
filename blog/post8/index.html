@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyzing Sampling Distributions and Cryptographic Functions Using JavaScript | Blog di Leonardo Spadoni</title>
+    <!-- Link al file CSS -->
+    <link rel="stylesheet" href="../../styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Analyzing Sampling Distributions and Cryptographic Functions Using JavaScript</h2>
+            <br>
+
+            <!-- Introduction -->
+            <h2>Introduction</h2>
+            <p>
+                In this article, we will explore two main topics:
+            </p>
+            <ol>
+                <li><strong>Sampling Distributions</strong>: Using a discrete probability distribution, we will generate multiple samples of varying sizes, compute the distribution of the sampling averages, and analyze the relationship between the sample statistics and the parent distribution's parameters.</li>
+                <li><strong>Cryptographic Functions and Distributions</strong>: We will examine the distribution of the random variable \( Y = g^U \mod n \), where \( U \) is uniformly distributed, for different values of \( g \) and \( n \). We will analyze the implications of these distributions in terms of cryptographic properties like uniformity and predictability.</li>
+            </ol>
+
+            <hr>
+
+            <!-- Part 1 -->
+            <h2>Part 1: Sampling Distributions from a Discrete Distribution</h2>
+
+            <h3>Objective</h3>
+            <ul>
+                <li>Generate \( m \) samples, each of size \( n \), from a given discrete distribution.</li>
+                <li>Compute the distribution of the sampling averages.</li>
+                <li>Determine the mean and variance of the distribution of the sample means.</li>
+                <li>Discuss the relationship between these statistics and those of the parent distribution.</li>
+            </ul>
+
+            <h3>Discrete Distribution Setup</h3>
+            <p>We will use the same discrete distribution defined previously:</p>
+            <table>
+                <tr>
+                    <th>\( x \)</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                </tr>
+                <tr>
+                    <th>\( P(X = x) \)</th>
+                    <td>0.1</td>
+                    <td>0.2</td>
+                    <td>0.4</td>
+                    <td>0.2</td>
+                    <td>0.1</td>
+                </tr>
+            </table>
+
+            <p><strong>Theoretical Mean (\( \mu \))</strong>:</p>
+            <p style="text-align: center;">
+                \( \mu = E[X] = \sum_{i=1}^{5} x_i P(X = x_i) = 3 \)
+            </p>
+
+            <p><strong>Theoretical Variance (\( \sigma^2 \))</strong>:</p>
+            <p style="text-align: center;">
+                \( \sigma^2 = E[(X - \mu)^2] = 1.2 \)
+            </p>
+
+            <h3>Generating Samples</h3>
+            <p>We will generate \( m = 1000 \) samples of varying sizes \( n = 20, 30, 100 \).</p>
+
+            <h4>Methodology</h4>
+            <ol>
+                <li>For each sample size \( n \), generate \( m \) samples.</li>
+                <li>For each sample, compute the sample mean.</li>
+                <li>Collect all the sample means to form the distribution of the sampling averages.</li>
+            </ol>
+
+            <h3>Implementation in JavaScript</h3>
+            <p>We will use JavaScript to implement the simulation. The code can be run in a web browser or a JavaScript environment like Node.js. For visualization, we'll use a JavaScript plotting library such as Chart.js.</p>
+
+            <h4>Code: Generating Samples and Computing Sample Means</h4>
+            <pre><code class="language-javascript">
+// Define the discrete distribution
+const xValues = [1, 2, 3, 4, 5];
+const probabilities = [0.1, 0.2, 0.4, 0.2, 0.1];
+
+// Compute the cumulative distribution function (CDF)
+const cdf = probabilities.reduce((acc, prob, index) => {
+    acc.push(prob + (acc[index - 1] || 0));
+    return acc;
+}, []);
+
+// Function to generate a single sample of size n
+function generateSample(n) {
+    const sample = [];
+    for (let i = 0; i < n; i++) {
+        const u = Math.random();
+        const xIndex = cdf.findIndex(cumProb => cumProb >= u);
+        sample.push(xValues[xIndex]);
+    }
+    return sample;
+}
+
+// Function to generate m samples of size n and compute their means
+function samplingDistribution(m, n) {
+    const sampleMeans = [];
+    for (let i = 0; i < m; i++) {
+        const sample = generateSample(n);
+        const mean = sample.reduce((sum, val) => sum + val, 0) / n;
+        sampleMeans.push(mean);
+    }
+    return sampleMeans;
+}
+            </code></pre>
+
+            <h3>Computing the Sampling Distribution</h3>
+            <p>For each \( n \), we compute the sampling distribution and visualize it.</p>
+
+            <h4>Code: Visualizing the Sampling Distribution</h4>
+            <pre><code class="language-javascript">
+// Sample sizes and number of samples
+const sampleSizes = [20, 30, 100];
+const m = 1000;
+
+// Function to compute mean and variance
+function computeStats(data) {
+    const mean = data.reduce((sum, val) => sum + val, 0) / data.length;
+    const variance = data.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / data.length;
+    return { mean, variance };
+}
+
+// Visualization using Chart.js
+function plotSamplingDistributions() {
+    sampleSizes.forEach((n, index) => {
+        const sampleMeans = samplingDistribution(m, n);
+        const { mean: meanOfMeans, variance: varianceOfMeans } = computeStats(sampleMeans);
+
+        // Create histogram data
+        const histogramData = {};
+        sampleMeans.forEach(mean => {
+            const bin = mean.toFixed(2);
+            histogramData[bin] = (histogramData[bin] || 0) + 1;
+        });
+
+        const labels = Object.keys(histogramData);
+        const data = Object.values(histogramData);
+
+        // Create a canvas element for the chart
+        const canvas = document.createElement('canvas');
+        document.body.appendChild(canvas);
+
+        // Create the chart
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Sample Size n=${n}`,
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: `Sample Size n=${n}, Mean=${meanOfMeans.toFixed(2)}, Variance=${varianceOfMeans.toFixed(4)}`
+                },
+                scales: {
+                    xAxes: [{ scaleLabel: { display: true, labelString: 'Sample Mean' } }],
+                    yAxes: [{ scaleLabel: { display: true, labelString: 'Frequency' } }]
+                }
+            }
+        });
+    });
+}
+
+// Run the visualization
+plotSamplingDistributions();
+            </code></pre>
+
+            <p><strong>Note</strong>: To run this code, include the Chart.js library in your HTML file:</p>
+            <pre><code class="language-html">
+&lt;script src="https://cdn.jsdelivr.net/npm/chart.js">&lt;/script>
+            </code></pre>
+
+            <h3>Results and Observations</h3>
+            <p>For each sample size \( n \), we observe the following:</p>
+
+            <h4>Sample Size \( n = 20 \)</h4>
+            <ul>
+                <li><strong>Mean of Sample Means</strong>: Approximately 3.0</li>
+                <li><strong>Variance of Sample Means</strong>: Decreases compared to the parent variance.</li>
+                <li><strong>Distribution Shape</strong>: Wider spread due to smaller sample size.</li>
+            </ul>
+
+            <h4>Sample Size \( n = 30 \)</h4>
+            <ul>
+                <li><strong>Mean of Sample Means</strong>: Still around 3.0</li>
+                <li><strong>Variance of Sample Means</strong>: Further decreases.</li>
+                <li><strong>Distribution Shape</strong>: Slightly narrower.</li>
+            </ul>
+
+            <h4>Sample Size \( n = 100 \)</h4>
+            <ul>
+                <li><strong>Mean of Sample Means</strong>: Close to 3.0</li>
+                <li><strong>Variance of Sample Means</strong>: Significantly smaller.</li>
+                <li><strong>Distribution Shape</strong>: Much narrower, resembling a normal distribution.</li>
+            </ul>
+
+            <h3>Relationship with the Parent Distribution</h3>
+            <p>
+                <strong>Mean</strong>: The mean of the sampling distribution (\( \mu_{\bar{X}} \)) equals the theoretical mean (\( \mu \)) of the parent distribution.
+            </p>
+            <p style="text-align: center;">
+                \( \mu_{\bar{X}} = \mu \)
+            </p>
+            <p>
+                <strong>Variance</strong>: The variance of the sampling distribution (\( \sigma^2_{\bar{X}} \)) is related to the parent variance (\( \sigma^2 \)) by:
+            </p>
+            <p style="text-align: center;">
+                \( \sigma^2_{\bar{X}} = \dfrac{\sigma^2}{n} \)
+            </p>
+            <p>
+                As \( n \) increases, \( \sigma^2_{\bar{X}} \) decreases, leading to a narrower distribution of sample means.
+            </p>
+
+            <h3>Conclusion</h3>
+            <ul>
+                <li>The sampling distribution of the sample means approaches a normal distribution due to the Central Limit Theorem, especially for larger \( n \).</li>
+                <li>The mean of the sampling distribution equals the parent mean.</li>
+                <li>The variance of the sampling distribution decreases with increasing sample size, inversely proportional to \( n \).</li>
+            </ul>
+
+            <hr>
+
+            <!-- Part 2 -->
+            <h2>Part 2: Cryptographic Functions and Distributions</h2>
+
+            <h3>Objective</h3>
+            <ul>
+                <li>Generate the distribution of \( Y = g^U \mod n \), where \( U \) is uniformly distributed in \([1, \text{max}_U]\).</li>
+                <li>Analyze the distributions for specific values of \( g \) and \( n \).</li>
+                <li>Compute entropy or other diversity indexes.</li>
+                <li>Discuss implications for cryptographic properties.</li>
+            </ul>
+
+            <h3>Definitions</h3>
+            <ul>
+                <li><strong>Modular Exponentiation</strong>: \( Y = g^U \mod n \)</li>
+                <li><strong>Uniform Random Variable</strong>: \( U \sim \text{Uniform}(1, \text{max}_U) \)</li>
+                <li><strong>Entropy</strong>: Measure of randomness in the distribution.</li>
+            </ul>
+
+            <h3>Parameters</h3>
+
+            <h4>Case A</h4>
+            <ul>
+                <li>\( n = 19 \)</li>
+                <li>\( g = 2, 3, 10, 17 \)</li>
+                <li>\( \text{max}_U = 1000 \)</li>
+            </ul>
+
+            <h4>Case B</h4>
+            <ul>
+                <li>\( n = 15 \)</li>
+                <li>\( g = 3, 6, 9, 12 \)</li>
+                <li>\( \text{max}_U = 1000 \)</li>
+            </ul>
+
+            <h3>Generating the Distributions</h3>
+
+            <h4>Code: Generating \( Y \) and Computing Entropy</h4>
+            <pre><code class="language-javascript">
+// Function to generate Y distribution
+function generateYDistribution(g, n, maxU) {
+    const U = [];
+    for (let i = 1; i <= maxU; i++) {
+        U.push(i);
+    }
+    const Y = U.map(u => {
+        return BigInt(g) ** BigInt(u) % BigInt(n);
+    });
+    return Y;
+}
+
+// Function to compute entropy
+function computeEntropy(Y) {
+    const counts = {};
+    Y.forEach(y => {
+        counts[y] = (counts[y] || 0) + 1;
+    });
+    const probabilities = Object.values(counts).map(count => count / Y.length);
+    const entropy = -probabilities.reduce((sum, p) => sum + p * Math.log2(p), 0);
+    return entropy;
+}
+            </code></pre>
+
+            <p><strong>Note</strong>: We use <code>BigInt</code> for large exponentiations to handle big numbers in JavaScript.</p>
+
+            <h3>Case A: \( n = 19 \), \( g = 2, 3, 10, 17 \)</h3>
+
+            <h4>Code: Visualizing Distributions and Computing Entropy</h4>
+            <pre><code class="language-javascript">
+// Parameters
+const nA = 19;
+const gValuesA = [2, 3, 10, 17];
+const maxU = 1000;
+
+// Visualization using Chart.js
+function plotDistributionsCaseA() {
+    gValuesA.forEach((g, index) => {
+        const Y = generateYDistribution(g, nA, maxU);
+        const entropy = computeEntropy(Y);
+
+        // Count frequencies
+        const counts = {};
+        Y.forEach(y => {
+            counts[y] = (counts[y] || 0) + 1;
+        });
+
+        const yValues = Object.keys(counts);
+        const frequencies = yValues.map(y => counts[y]);
+
+        // Create canvas element
+        const canvas = document.createElement('canvas');
+        document.body.appendChild(canvas);
+
+        // Create chart
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: yValues,
+                datasets: [{
+                    label: `g = ${g}, Entropy = ${entropy.toFixed(2)}`,
+                    data: frequencies,
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: `Distribution of Y for g = ${g}, n = ${nA}`
+                },
+                scales: {
+                    xAxes: [{ scaleLabel: { display: true, labelString: 'Y values' } }],
+                    yAxes: [{ scaleLabel: { display: true, labelString: 'Frequency' } }]
+                }
+            }
+        });
+    });
+}
+
+// Run visualization for Case A
+plotDistributionsCaseA();
+            </code></pre>
+
+            <h3>Case B: \( n = 15 \), \( g = 3, 6, 9, 12 \)</h3>
+
+            <h4>Code: Visualizing Distributions and Computing Entropy</h4>
+            <pre><code class="language-javascript">
+// Parameters
+const nB = 15;
+const gValuesB = [3, 6, 9, 12];
+
+// Visualization using Chart.js
+function plotDistributionsCaseB() {
+    gValuesB.forEach((g, index) => {
+        const Y = generateYDistribution(g, nB, maxU);
+        const entropy = computeEntropy(Y);
+
+        // Count frequencies
+        const counts = {};
+        Y.forEach(y => {
+            counts[y] = (counts[y] || 0) + 1;
+        });
+
+        const yValues = Object.keys(counts);
+        const frequencies = yValues.map(y => counts[y]);
+
+        // Create canvas element
+        const canvas = document.createElement('canvas');
+        document.body.appendChild(canvas);
+
+        // Create chart
+        new Chart(canvas.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: yValues,
+                datasets: [{
+                    label: `g = ${g}, Entropy = ${entropy.toFixed(2)}`,
+                    data: frequencies,
+                    backgroundColor: 'rgba(255, 159, 64, 0.7)',
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: `Distribution of Y for g = ${g}, n = ${nB}`
+                },
+                scales: {
+                    xAxes: [{ scaleLabel: { display: true, labelString: 'Y values' } }],
+                    yAxes: [{ scaleLabel: { display: true, labelString: 'Frequency' } }]
+                }
+            }
+        });
+    });
+}
+
+// Run visualization for Case B
+plotDistributionsCaseB();
+            </code></pre>
+
+            <p><strong>Note</strong>: Ensure that the <code>BigInt</code> exponentiation and modulo operations are supported in your JavaScript environment.</p>
+
+            <h3>Observations</h3>
+
+            <h4>Case A</h4>
+            <ul>
+                <li><strong>Uniformity</strong>: The distributions for \( g = 2, 3, 10, 17 \) are more uniform.</li>
+                <li><strong>Entropy</strong>: Higher entropy values, indicating greater unpredictability.</li>
+                <li><strong>Cryptographic Suitability</strong>: Better for cryptographic applications due to uniformity and high entropy.</li>
+            </ul>
+
+            <h4>Case B</h4>
+            <ul>
+                <li><strong>Patterns</strong>: The distributions for \( g = 3, 6, 9, 12 \) show noticeable patterns and less uniformity.</li>
+                <li><strong>Entropy</strong>: Lower entropy values, indicating predictability.</li>
+                <li><strong>Vulnerabilities</strong>: Potential weaknesses due to lower entropy and predictable outputs.</li>
+            </ul>
+
+            <h3>Computing Entropy and Diversity Indexes</h3>
+            <p>Entropy measures the randomness in the distribution:</p>
+            <p style="text-align: center;">
+                \( H(Y) = -\sum_{i} P(Y = y_i) \log_2 P(Y = y_i) \)
+            </p>
+            <ul>
+                <li><strong>Higher Entropy</strong>: Indicates a more uniform distribution, desirable in cryptographic applications.</li>
+                <li><strong>Lower Entropy</strong>: Suggests predictability and potential vulnerabilities.</li>
+            </ul>
+
+            <h3>Cryptographic Implications</h3>
+
+            <h4>Case A Advantages</h4>
+            <ul>
+                <li><strong>High Entropy</strong>: Uniform distributions make it difficult to predict \( Y \) without knowing \( U \) or \( g \).</li>
+                <li><strong>Primitive Roots</strong>: The chosen \( g \) values (2, 3, 10, 17) are primitive roots modulo 19, ensuring maximal cycle lengths and uniformity.</li>
+                <li><strong>Security</strong>: Enhanced cryptographic strength due to unpredictability.</li>
+            </ul>
+
+            <h4>Case B Vulnerabilities</h4>
+            <ul>
+                <li><strong>Low Entropy</strong>: Non-uniform distributions with discernible patterns.</li>
+                <li><strong>Predictability</strong>: Easier to guess or infer \( Y \), reducing security.</li>
+                <li><strong>Subgroup Attack Risks</strong>: \( g \) values are not primitive roots modulo 15, leading to smaller subgroup orders.</li>
+            </ul>
+
+            <h3>Reason for Choosing \( g = 2, 3, 10, 17 \) in Case A</h3>
+            <p>
+                - **Primitive Roots Modulo 19**: These values are generators of the multiplicative group modulo 19.
+            </p>
+            <p>
+                - **Maximal Periods**: Ensure that \( g^U \mod n \) cycles through all possible residues before repeating.
+            </p>
+            <p>
+                - **Uniform Distribution**: Leads to higher entropy and better cryptographic properties.
+            </p>
+
+            <h3>Spotting Errors in the Exercise</h3>
+            <p>
+                - **Possible Error**: Using a composite modulus \( n = 15 \) instead of a prime number.
+            </p>
+            <p>
+                - **Implication**: Composite moduli can introduce vulnerabilities due to the presence of factors and non-invertible elements.
+            </p>
+            <p>
+                - **Correction**: For cryptographic purposes, it is preferable to use a prime modulus to ensure a cyclic group and maximal entropy.
+            </p>
+
+            <hr>
+
+            <p><strong>Note</strong>: The code snippets provided can be run in a web browser environment. Ensure that you include the necessary libraries and that your JavaScript environment supports the <code>BigInt</code> data type for large integer calculations.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>

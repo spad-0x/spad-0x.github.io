@@ -17,7 +17,9 @@
     src: url(/fonts/Cascadia.ttf) format('truetype');
 }
 
-
+.language-javascript{
+    color: #0F0;
+}
 
 
 
