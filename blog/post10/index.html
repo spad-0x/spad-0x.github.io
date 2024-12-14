@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploring the Properties of the Sampling Mean and Variance | Blog di Leonardo Spadoni</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Exploring the Properties of the Sampling Mean and Variance</h2>
+            <br>
+
+            <h2>Introduction</h2>
+            <p>
+                This article discusses the main properties of the sampling mean and variance, the significance of the Law of Large Numbers, and potential applications related to cybersecurity. We will then extend the approach used in previous homework (HMWK 7) to compute and analyze the distribution of the sampling variances, both corrected and uncorrected. By examining the distribution of sample variances, we will compare their mean and variance to the theoretical mean and variance of the parent distribution.
+            </p>
+
+            <hr>
+
+            <h2>Theoretical Concepts</h2>
+            <h3>Properties of the Sampling Mean</h3>
+            <ul>
+                <li><strong>Unbiasedness:</strong> The sampling mean \( \overline{X} \) is an unbiased estimator of the population mean \( \mu \). Thus, \( E[\overline{X}] = \mu \).</li>
+                <li><strong>Consistency:</strong> As the sample size \( n \) increases, the sampling mean \( \overline{X} \) converges in probability to \( \mu \).</li>
+                <li><strong>Efficiency:</strong> Among all unbiased estimators of \( \mu \) that are linear functions of the sample, the sample mean has the lowest variance.</li>
+            </ul>
+
+            <h3>Properties of the Sampling Variance</h3>
+            <p>
+                The sample variance is used to estimate the population variance \( \sigma^2 \). There are two forms:
+            </p>
+            <ul>
+                <li><strong>Uncorrected Sample Variance:</strong>
+                    <p style="text-align: center;">
+                        \( s_u^2 = \frac{1}{n}\sum_{i=1}^{n}(X_i - \overline{X})^2 \)
+                    </p>
+                </li>
+                <li><strong>Corrected Sample Variance (Bessel's Correction):</strong>
+                    <p style="text-align: center;">
+                        \( s_c^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \overline{X})^2 \)
+                    </p>
+                </li>
+            </ul>
+            <p>
+                The corrected sample variance \( s_c^2 \) is an unbiased estimator of \( \sigma^2 \), while the uncorrected \( s_u^2 \) is biased, though the bias diminishes as \( n \) grows large.
+            </p>
+
+            <h3>The Law of Large Numbers (LLN)</h3>
+            <p>
+                The Law of Large Numbers states that as the sample size \( n \) increases, the sampling mean \( \overline{X} \) converges to the population mean \( \mu \) almost surely or in probability.
+            </p>
+
+            <h3>Applications in Cybersecurity</h3>
+            <ul>
+                <li><strong>Statistical Anomaly Detection:</strong> Over large samples of network traffic, normal behavior patterns emerge. Deviations may indicate attacks or anomalies.</li>
+                <li><strong>Key Space Estimation:</strong> Repeated trials of cryptographic operations can approximate distributional properties of random variables used in crypto-systems.</li>
+            </ul>
+            <p>
+                By leveraging the LLN, analysts can make reliable inferences about underlying processes (like traffic distributions or random number generators) used in cybersecurity tools.
+            </p>
+
+            <hr>
+
+            <h2>Practical Application</h2>
+            <h3>Goal</h3>
+            <p>
+                Following the same scheme as HMWK 7, we will:
+            </p>
+            <ul>
+                <li>Generate samples from a known discrete distribution.</li>
+                <li>Compute the sample variances (both corrected and uncorrected) for each sample.</li>
+                <li>Determine the distribution of these sample variances.</li>
+                <li>Compute the mean and variance of the sample variance distribution.</li>
+                <li>Discuss how these results relate to the theoretical mean and variance of the parent distribution.</li>
+            </ul>
+
+            <h3>Setup</h3>
+            <p><strong>Parent Distribution:</strong></p>
+            <p style="text-align: center;">
+                Values: \( \{1,2,3,4,5\} \) <br>
+                Probabilities: \( P(X=1)=0.1, P(X=2)=0.2, P(X=3)=0.4, P(X=4)=0.2, P(X=5)=0.1 \)
+            </p>
+            <p><strong>Theoretical Mean:</strong> \( \mu = 3 \)</p>
+            <p><strong>Theoretical Variance:</strong> \( \sigma^2 = 1.2 \)</p>
+
+            <h3>Steps</h3>
+            <ol>
+                <li><strong>Generate Samples:</strong> From the discrete distribution, generate \( m \) samples of size \( n \).</li>
+                <li><strong>Compute Sample Variance:</strong> For each sample, compute both the corrected and uncorrected sample variance:
+                    <p style="text-align: center;">
+                        \( s_u^2 = \frac{1}{n}\sum(X_i - \overline{X})^2, \quad s_c^2 = \frac{1}{n-1}\sum(X_i - \overline{X})^2 \)
+                    </p>
+                </li>
+                <li><strong>Distribution of Sample Variances:</strong> Repeat for multiple samples (e.g., \( m=1000 \)) to form a distribution of \( s_u^2 \) and \( s_c^2 \).</li>
+                <li><strong>Compute Mean and Variance of the Sample Variance Distribution:</strong> Let \( E[s_c^2] \) and \( E[s_u^2] \) be their means. Compare these with \( \sigma^2 \).</li>
+            </ol>
+
+            <hr>
+
+            <h2>Expected Results</h2>
+            <h3>Uncorrected Variance (\( s_u^2 \))</h3>
+            <ul>
+                <li>Uncorrected variance tends to underestimate the population variance.</li>
+                <li>As \( n \) increases, the difference between \( s_u^2 \) and \( \sigma^2 \) diminishes.</li>
+            </ul>
+
+            <h3>Corrected Variance (\( s_c^2 \))</h3>
+            <ul>
+                <li>Unbiased estimator of \( \sigma^2 \). Expect \( E[s_c^2] \approx \sigma^2 \).</li>
+                <li>Distribution of \( s_c^2 \) is typically skewed for small \( n \), but stabilizes as \( n \) grows.</li>
+            </ul>
+
+            <h3>Observing the Distributions</h3>
+            <ul>
+                <li>For small samples, the variance estimators may vary widely.</li>
+                <li>As \( n \) increases, these distributions tighten around \( \sigma^2 \).</li>
+            </ul>
+
+            <h3>Mean and Variance of the Variance Distributions</h3>
+            <ul>
+                <li>Mean of \( s_c^2 \) distribution: Approaches \( \sigma^2 \) as \( n \) grows.</li>
+                <li>Variance of \( s_c^2 \) distribution: Decreases with \( n \), indicating more stable estimates.</li>
+            </ul>
+            <p>
+                This aligns with theoretical expectations: larger samples yield more reliable estimates.
+            </p>
+
+            <hr>
+
+            <h2>Conclusion</h2>
+            <p>
+                By examining the distribution of the sampling variances, both corrected and uncorrected, we see that:
+            </p>
+            <ul>
+                <li>Uncorrected variance underestimates \( \sigma^2 \), but the bias shrinks as \( n \) grows.</li>
+                <li>Corrected variance (\( s_c^2 \)) provides an unbiased estimate of \( \sigma^2 \).</li>
+                <li>Larger samples produce more stable and reliable variance estimates.</li>
+            </ul>
+            <p>
+                Understanding these properties is crucial not only in basic statistical inference but also in fields like cybersecurity, where large sample analysis can guide decision-making in anomaly detection, cryptanalysis, and other security-related applications.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>
