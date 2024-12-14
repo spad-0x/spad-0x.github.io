@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sampling Mean, Variance, and Lebesgue–Stieltjes Integration | Blog di Leonardo Spadoni</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq6zz6KxU6YfCf0WQK0QszPJZibQJGugE0HcP0cV7Vj7c3zIwC+X1C4f1b9jFrp6HdF0p0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- MathJax per le formule matematiche -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="../../#home">Home</a></li>
+                <li><a href="../../#about">About</a></li>
+                <li><a href="../../#skills">Skills</a></li>
+                <li><a href="../../#projects">Projects</a></li>
+                <li><a href="../">Blog</a></li>
+                <li><a href="../../#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Post -->
+    <section class="section blog-post-page" style="margin-top: 100px;">
+        <div class="container">
+            <h2>Sampling Mean, Variance, and Lebesgue–Stieltjes Integration</h2>
+            <br>
+
+            <h2>Introduction</h2>
+            <p>
+                In this article, we will explore several theoretical and practical concepts:
+            </p>
+            <ul>
+                <li><strong>Sampling Mean and Variance</strong>: Understanding the distributions of these statistics and their main properties.</li>
+                <li><strong>Lebesgue–Stieltjes Integration</strong>: Introducing the general idea of Lebesgue–Stieltjes integration and its applications in probability and measure theory.</li>
+                <li><strong>Numerical Comparison of Integrals</strong>: Implementing a numerical approach to compute a Lebesgue integral and comparing the result with the corresponding Riemann integral for a given distribution (e.g., computing the mean or variance).</li>
+            </ul>
+
+            <hr>
+
+            <h2>Theory</h2>
+            <h3>Sampling Mean and Variance Distributions</h3>
+            <p>
+                When we draw a sample from a population and compute statistics like the mean and variance, these statistics themselves have distributions:
+            </p>
+
+            <h4>Sampling Mean Distribution</h4>
+            <p>
+                If \( X_1, X_2, \dots, X_n \) are i.i.d. random variables with mean \( \mu \) and variance \( \sigma^2 \), the sampling mean \( \overline{X} = \frac{1}{n}\sum_{i=1}^{n}X_i \) has mean \( \mu \) and variance \( \frac{\sigma^2}{n} \).
+            </p>
+            <p>
+                By the Central Limit Theorem (CLT), for large \( n \), \( \overline{X} \) is approximately normally distributed, regardless of the distribution of the individual \( X_i \), provided certain conditions hold.
+            </p>
+
+            <h4>Sampling Variance Distribution</h4>
+            <p>
+                The sample variance \( s^2 \) is an estimator of the population variance \( \sigma^2 \). Using Bessel’s correction,
+            </p>
+            <p style="text-align: center;">
+                \( s_c^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i - \overline{X})^2 \)
+            </p>
+            <p>
+                \( s_c^2 \) is an unbiased estimator of \( \sigma^2 \). Its distribution is related to the chi-squared distribution and is more complex. However, as \( n \) grows, \( s_c^2 \) converges in probability to \( \sigma^2 \).
+            </p>
+
+            <h3>Lebesgue–Stieltjes Integration and Probability</h3>
+            <p>
+                Lebesgue–Stieltjes integration generalizes Riemann integration, allowing integration with respect to more general functions, including cumulative distribution functions (CDFs).
+            </p>
+            <p>
+                For a distribution function \( F_X \) of a random variable \( X \), the expected value \( E[X] \) can be expressed as a Lebesgue–Stieltjes integral:
+            </p>
+            <p style="text-align: center;">
+                \( E[X] = \int x \, dF_X(x) \)
+            </p>
+            <p>
+                Similarly, variance and other moments can be computed using Lebesgue–Stieltjes integrals. In measure-theoretic probability, probability measures are special cases of measures, and Lebesgue integration provides a solid foundation for modern probability theory.
+            </p>
+
+            <hr>
+
+            <h2>Numerical Comparison of Integrals</h2>
+            <p>
+                We will:
+            </p>
+            <ul>
+                <li>Define a probability density function (PDF) for a continuous distribution (e.g., a normal distribution).</li>
+                <li>Compute the mean (expected value) using:
+                    <ul>
+                        <li>A Riemann integral approximation (e.g., a simple numerical quadrature).</li>
+                        <li>A Lebesgue–Stieltjes integral approach (approximation).</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>
+                In practice, computing a Lebesgue–Stieltjes integral numerically can be approached similarly to computing a Riemann integral by discretizing the CDF and using step functions. The key difference is conceptual.
+            </p>
+
+            <h3>Example Distribution</h3>
+            <p>
+                Consider a normal distribution \( N(\mu,\sigma^2) \) with \( \mu=0 \) and \( \sigma=1 \).
+            </p>
+            <p style="text-align: center;">
+                PDF: \( f_X(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2} \)
+            </p>
+            <p>
+                We will approximate integrals over a range, say \([-10,10]\), to ensure we capture most of the mass of the normal distribution.
+            </p>
+
+            <h4>JavaScript Implementation (Node.js or Browser)</h4>
+            <pre><code class="language-javascript">
+// Parameters for the normal distribution
+const mu = 0;
+const sigma = 1;
+
+// PDF of N(0,1)
+function pdf(x) {
+    return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-0.5 * x * x);
+}
+
+// Numerical Riemann integral approximation (trapezoidal rule)
+function riemannIntegral(func, a, b, n) {
+    const dx = (b - a) / n;
+    let sum = 0.5 * (func(a) + func(b));
+    for (let i = 1; i < n; i++) {
+        sum += func(a + i * dx);
+    }
+    return sum * dx;
+}
+
+// Compute the CDF using numerical integration of the PDF
+function cdf(x) {
+    if (x < -10) return 0;
+    if (x > 10) return 1;
+    return riemannIntegral(pdf, -10, x, 1000);
+}
+
+// Mean using Riemann integral: E[X] = ∫ x f(x) dx
+function meanRiemann() {
+    return riemannIntegral((x) => x * pdf(x), -10, 10, 10000);
+}
+
+// Lebesgue–Stieltjes integral approximation for mean: E[X] = ∫ x dF_X(x)
+function meanLebesgue() {
+    const a = -10;
+    const b = 10;
+    const n = 10000;
+    const dx = (b - a) / n;
+    let sum = 0;
+    let prevF = cdf(a);
+    for (let i = 1; i <= n; i++) {
+        const x = a + i * dx;
+        const currentF = cdf(x);
+        const dF = currentF - prevF;
+        sum += x * dF;
+        prevF = currentF;
+    }
+    return sum;
+}
+
+// Example usage
+console.log("Mean (Riemann):", meanRiemann());
+console.log("Mean (Lebesgue–Stieltjes):", meanLebesgue());
+</code></pre>
+
+            <p>
+                Increase the integration resolution for higher accuracy. The chosen integration limits and steps are approximations.
+            </p>
+
+            <h4>Computing the Variance</h4>
+            <p>
+                To compute variance:
+            </p>
+            <p style="text-align: center;">
+                \( Var(X) = E[X^2] - (E[X])^2 \)
+            </p>
+            <p>
+                Compute \( E[X^2] \) similarly by integrating \( x^2 f_X(x) \) using both approaches and compare.
+            </p>
+
+            <hr>
+
+            <h2>Conclusion</h2>
+            <p>
+                In this article, we:
+            </p>
+            <ul>
+                <li>Explored the distributions of sampling mean and variance, understanding their convergence properties.</li>
+                <li>Introduced Lebesgue–Stieltjes integration and its role in measure-theoretic probability.</li>
+                <li>Demonstrated a numerical approach to compare Lebesgue–Stieltjes and Riemann integral computations for expectations.</li>
+            </ul>
+            <p>
+                These concepts bridge theoretical probability with practical numerical methods, enhancing our ability to analyze statistical properties and apply them in areas like data science, machine learning, and cybersecurity.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Leonardo Spadoni. Tutti i diritti riservati.</p>
+            <p>
+                <a href="https://github.com/spad-0x" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="https://linkedin.com/in/spadonileonardo" style="color: #0F0; text-decoration: none;" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Script per la Navbar Responsiva -->
+    <script src="../../scripts.js"></script>
+</body>
+</html>
