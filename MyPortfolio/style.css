@@ -1,0 +1,39 @@
+/* Custom CSS */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #030712;
+    /* bgMain */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    /* slate-800 */
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+    /* accentGreen */
+}
+
+/* Ensure body takes up full space for canvas behind */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #030712;
+}
+
+/* Clean up input autofill styles for dark theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #030712 inset !important;
+    -webkit-text-fill-color: white !important;
+}

