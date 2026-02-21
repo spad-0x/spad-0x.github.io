@@ -15,12 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mobileMenuBtn && mobileMenu) {
         mobileMenuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
+            const isClosed = mobileMenu.classList.contains("opacity-0");
+            if (isClosed) {
+                mobileMenu.classList.remove("opacity-0", "-translate-y-4", "pointer-events-none");
+                mobileMenu.classList.add("opacity-100", "translate-y-0", "pointer-events-auto");
+            } else {
+                mobileMenu.classList.add("opacity-0", "-translate-y-4", "pointer-events-none");
+                mobileMenu.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
+            }
         });
 
         mobileLinks.forEach(link => {
             link.addEventListener("click", () => {
-                mobileMenu.classList.add("hidden");
+                mobileMenu.classList.add("opacity-0", "-translate-y-4", "pointer-events-none");
+                mobileMenu.classList.remove("opacity-100", "translate-y-0", "pointer-events-auto");
             });
         });
     }
@@ -84,6 +92,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // 5. Decode Hover Effect Slow (For Navbar)
+    const decodeElementsSlow = document.querySelectorAll(".decode-text-slow");
+
+    decodeElementsSlow.forEach(el => {
+        el.addEventListener("mouseenter", event => {
+            let iterations = 0;
+            const targetText = event.target.dataset.value;
+
+            clearInterval(el.interval);
+
+            el.interval = setInterval(() => {
+                event.target.innerText = targetText.split("")
+                    .map((letter, index) => {
+                        if (index < iterations) {
+                            return targetText[index];
+                        }
+                        return numbers[Math.floor(Math.random() * numbers.length)];
+                    })
+                    .join("");
+
+                if (iterations >= targetText.length) {
+                    clearInterval(el.interval);
+                }
+
+                iterations += 1;
+            }, 50); // Slower interval
+        });
+    });
+
     // 4. Custom Three.js GeoJSON Globe Setup
     let scene, camera, renderer, globeContainer;
     let arcLines = [];
@@ -131,8 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
             new THREE.SphereGeometry(99.0, 64, 64),
             new THREE.MeshBasicMaterial({
                 color: 0x030b14, // Ultra dark navy/black ocean
-                transparent: true,
-                opacity: 0.85 // Holographic transparency
+                transparent: false,
+                opacity: 1 // Holographic transparency
             })
         );
         globeContainer.add(innerSphere);
@@ -201,38 +238,73 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Define Major Cities Coordinates
         const cities = [
-            { lat: 40.7128, lng: -74.0060 }, // NYC
-            { lat: 51.5074, lng: -0.1278 },  // London
-            { lat: 35.6762, lng: 139.6503 }, // Tokyo
-            { lat: 55.7558, lng: 37.6173 },  // Moscow
-            { lat: 39.9042, lng: 116.4074 }, // Beijing
-            { lat: 37.7749, lng: -122.4194 },// SF
-            { lat: 50.1109, lng: 8.6821 },   // Frankfurt
-            { lat: -23.5505, lng: -46.6333 },// Sao Paulo
-            { lat: -33.8688, lng: 151.2093 },// Sydney
-            { lat: 25.2048, lng: 55.2708 },  // Dubai
-            { lat: 1.3521, lng: 103.8198 },  // Singapore
-            { lat: 48.8566, lng: 2.3522 },   // Paris
-            { lat: 50.4501, lng: 30.5234 },  // Kyiv
-            { lat: 31.2304, lng: 121.4737 },  // Shanghai
-            { lat: 41.8781, lng: -87.6298 },   // Chicago
+            { lat: 40.7128, lng: -74.0060 },    // NYC
+            { lat: 51.5074, lng: -0.1278 },     // London
+            { lat: 35.6762, lng: 139.6503 },    // Tokyo
+            { lat: 55.7558, lng: 37.6173 },     // Moscow
+            { lat: 59.9343, lng: 30.3351 },     // Saint Petersburg
+            { lat: 60.0000, lng: 30.3167 },     // Novosibirsk
+            { lat: 55.0369, lng: 82.9105 },     // Yekaterinburg
+            { lat: 53.2299, lng: 50.1626 },     // Kazan
+            { lat: 51.5287, lng: 46.0353 },     // Chelyabinsk
+            { lat: 55.7669, lng: 37.6219 },     // Perm
+            { lat: 39.9042, lng: 116.4074 },    // Beijing
+            { lat: 50.1109, lng: 8.6821 },      // Frankfurt
+            { lat: -23.5505, lng: -46.6333 },   // Sao Paulo
+            { lat: -33.8688, lng: 151.2093 },   // Sydney
+            { lat: 25.2048, lng: 55.2708 },     // Dubai
+            { lat: 1.3521, lng: 103.8198 },     // Singapore
+            { lat: 48.8566, lng: 2.3522 },      // Paris
+            { lat: 43.2965, lng: 5.3697 },      // Marseille
+            { lat: 50.4501, lng: 30.5234 },     // Kyiv
+            { lat: 31.2304, lng: 121.4737 },    // Shanghai
+            { lat: 41.8781, lng: -87.6298 },    // Chicago
             { lat: 34.0522, lng: -118.2437 },   // Los Angeles
-            { lat: 28.6139, lng: 77.2090 },    // New Delhi
+            { lat: 28.6139, lng: 77.2090 },     // New Delhi
             { lat: 22.5431, lng: 114.0579 },    // Shenzhen
-            { lat: 30.0444, lng: 31.2357 },    // Cairo
-            { lat: 19.4326, lng: -99.1332 },   // Mexico City
-            { lat: 19.0760, lng: 72.8777 },    // Mumbai
-            { lat: 41.0082, lng: 28.9784 },    // Istanbul
-            { lat: 13.7563, lng: 100.5018 },   // Bangkok
-            { lat: 37.5665, lng: 126.9780 },   // Seoul
-            { lat: -34.6037, lng: -58.3816 },  // Buenos Aires
-            { lat: 6.5244, lng: 3.3792 },      // Lagos
-            { lat: -6.2088, lng: 106.8456 },   // Jakarta
-            { lat: 43.6532, lng: -79.3832 },   // Toronto
-            { lat: 52.5200, lng: 13.4050 },    // Berlin
-            { lat: 41.9028, lng: 12.4964 },    // Rome
-            { lat: -33.9249, lng: 18.4241 },   // Cape Town
-            { lat: 22.3193, lng: 114.1694 }    // Hong Kong
+            { lat: 30.0444, lng: 31.2357 },     // Cairo
+            { lat: 19.4326, lng: -99.1332 },    // Mexico City
+            { lat: 19.0760, lng: 72.8777 },     // Mumbai
+            { lat: 41.0082, lng: 28.9784 },     // Istanbul
+            { lat: 13.7563, lng: 100.5018 },    // Bangkok
+            { lat: 37.5665, lng: 126.9780 },    // Seoul
+            { lat: -34.6037, lng: -58.3816 },   // Buenos Aires
+            { lat: 21.3072, lng: -157.8581 },   // Honolulu
+            { lat: 6.5244, lng: 3.3792 },       // Lagos
+            { lat: -6.2088, lng: 106.8456 },    // Jakarta
+            { lat: 34.6575, lng: -1.6572 },     // Beirut
+            { lat: 52.5200, lng: 13.4050 },     // Berlin
+            { lat: 41.9028, lng: 12.4964 },     // Rome
+            { lat: -33.9249, lng: 18.4241 },    // Cape Town
+            { lat: 22.3193, lng: 114.1694 },    // Hong Kong
+            { lat: 40.4168, lng: -3.7038 },     // Madrid
+            { lat: 40.8466, lng: 14.2522 },     // Naples
+            { lat: 45.4642, lng: 9.1895 },      // Milan
+            { lat: 41.3851, lng: 2.1734 },      // Barcelona
+            { lat: 64.1353, lng: -21.8952 },    // Reykjavik
+            { lat: 59.9139, lng: 10.7522 },     // Oslo
+            { lat: 59.3293, lng: 18.0686 },     // Stockholm
+            { lat: 35.6895, lng: 51.3894 },     // Tehran
+            { lat: 34.5055, lng: 69.1750 },     // Khabul
+            { lat: 31.7686, lng: 35.2162 },     // Jerusalem
+            { lat: 38.8951, lng: -77.0364 },    // Washington D.C.
+            { lat: 32.0853, lng: 34.7818 },     // Tel Aviv
+            { lat: 52.3676, lng: 4.9041 },      // Amsterdam
+            { lat: 12.9716, lng: 77.5946 },     // Bangalore
+            { lat: 14.5995, lng: 120.9842 },    // Manila
+            { lat: 47.6062, lng: 122.3321 },    // Seattle
+            { lat: 31.6299, lng: -7.9831 },     // Marrakech
+            { lat: 43.6532, lng: -79.3832 },    // Toronto
+            { lat: 24.6290, lng: 46.6772 },     // Riyadh
+            { lat: 32.7555, lng: -97.3307 },    // Fort Worth
+            { lat: 29.7604, lng: -95.3698 },    // Houston
+            { lat: 33.7490, lng: -84.3880 },    // Atlanta
+            { lat: 33.4484, lng: -112.0740 },   // Phoenix
+            { lat: 37.7749, lng: -122.4194 },   // San Francisco
+            { lat: 39.7392, lng: -104.9903 },   // Denver
+            { lat: 45.5236, lng: -122.6750 },   // Portland
+            { lat: 43.6130, lng: -116.2300 },   // Boise
+
         ];
 
         // Draw City Nodes

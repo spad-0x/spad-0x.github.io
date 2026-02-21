@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence Archive | Leonardo Spadoni</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="../style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#030712', // darker slate
+                        bgSec: '#020617', // slate-950
+                        textMain: '#f8fafc', // slate-50
+                        textMuted: '#94a3b8', // slate-400
+                        accentGreen: '#10b981', // Emerald tech
+                        accentTeal: '#14b8a6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-bgMain text-textMain font-sans antialiased selection:bg-accentGreen selection:text-white">
+
+    <nav class="fixed top-0 w-full z-50 bg-bgMain/30 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="../index.html"
+                class="font-mono text-xs text-textMuted uppercase tracking-widest hover:text-white transition-colors flex items-center">
+                <i class="ph ph-arrow-left mr-2 text-lg"></i>Return to Base
+            </a>
+            <div class="font-mono text-xs text-white tracking-widest uppercase">Directory: <span
+                    class="text-accentGreen">/blog</span></div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 md:px-0 max-w-4xl mx-auto relative z-10 min-h-screen">
+
+        <header class="mb-16 pb-10 border-b border-white/10">
+            <h1 class="text-4xl md:text-6xl font-sans font-semibold text-white mb-6 leading-tight tracking-tight">
+                Intelligence Archive</h1>
+            <p class="text-textMuted font-light text-lg">
+                Technical research, zero-day analyses, and tactical methodologies.
+            </p>
+        </header>
+
+        <div class="space-y-6">
+
+            <!-- Article 1 -->
+            <a href="log4shell.html"
+                class="block bg-white/[0.02] backdrop-blur-lg border border-white/5 hover:bg-white/[0.04] hover:border-white/20 p-8 transition-all duration-500 rounded-2xl group relative overflow-hidden">
+                <div
+                    class="absolute top-0 left-0 w-1 h-full bg-accentGreen transform -translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-3 font-mono text-xs text-textMuted">
+                        <span class="block mb-1 text-accentGreen">ID: #REQ-4029</span>
+                        2023-11-04
+                    </div>
+                    <div class="md:col-span-6">
+                        <h2 class="font-sans text-xl sm:text-2xl text-white mb-2 font-medium">Zero-Day Analysis:
+                            log4shell</h2>
+                        <p class="text-textMuted text-sm font-light line-clamp-2">A deep dive into the underlying
+                            mechanics of CVE-2021-44228, network indicators, and robust mitigation strategies.</p>
+                    </div>
+                    <div class="md:col-span-3 flex md:justify-end gap-2 text-[10px] font-mono uppercase">
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 text-gray-300 rounded-full">Rev_Eng</span>
+                        <span class="px-3 py-1 bg-white/5 border border-white/10 text-gray-300 rounded-full">Java</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Article 2 -->
+            <a href="log4shell.html"
+                class="block bg-white/[0.02] backdrop-blur-lg border border-white/5 hover:bg-white/[0.04] hover:border-white/20 p-8 transition-all duration-500 rounded-2xl group relative overflow-hidden">
+                <div
+                    class="absolute top-0 left-0 w-1 h-full bg-accentTeal transform -translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    <div class="md:col-span-3 font-mono text-xs text-textMuted">
+                        <span class="block mb-1 text-accentTeal">STATUS: DEPLOYED</span>
+                        2023-08-12
+                    </div>
+                    <div class="md:col-span-6">
+                        <h2 class="font-sans text-xl sm:text-2xl text-white mb-2 font-medium">Automated C2
+                            Infrastructure</h2>
+                        <p class="text-textMuted text-sm font-light line-clamp-2">Terraform modules to deploy ephemeral,
+                            heavily obfuscated Command & Control redirectors across multiple cloud providers.</p>
+                    </div>
+                    <div class="md:col-span-3 flex md:justify-end gap-2 text-[10px] font-mono uppercase">
+                        <span class="px-3 py-1 bg-white/5 border border-white/10 text-gray-300 rounded-full">IaC</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 text-gray-300 rounded-full">Cloud</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer class="py-10 text-center border-t border-white/5 bg-bgMain/50 backdrop-blur-md relative z-10">
+        <p class="font-mono text-[10px] text-textMuted tracking-widest uppercase">END OF DIRECTORY</p>
+    </footer>
+
+</body>
+
+</html>

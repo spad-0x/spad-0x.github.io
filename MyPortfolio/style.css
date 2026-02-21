@@ -37,3 +37,45 @@ input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px #030712 inset !important;
     -webkit-text-fill-color: white !important;
 }
+
+/* Infinite Marquee Slider for Academic Degrees */
+.marquee-container {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+    display: flex;
+    min-width: 100%;
+    flex-shrink: 0;
+    animation: scroll 30s linear infinite;
+}
+
+@media (max-width: 768px) {
+    .marquee-content {
+        animation: scroll 25s linear infinite;
+    }
+
+    .marquee-content-reverse {
+        animation: scroll 30s linear infinite;
+    }
+}
+
+.marquee-content-reverse {
+    animation-direction: reverse;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
