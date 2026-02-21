@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
             arcLine.userData = {
                 currentPoint: Math.random() * -100, // Stagger flight origins
                 speed: 1.0 + Math.random() * 1.5,   // Moves 1-2.5 vertices per frame reliably
-                trailLength: 25 + Math.random() * 20 // Long visible tail spanning 30+ vertices
+                trailLength: 80 + Math.random() * 70 // Long visible tail spanning 80-150 vertices
             };
 
             globeContainer.add(arcLine);

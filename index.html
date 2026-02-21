@@ -42,7 +42,7 @@
 </head>
 
 <body
-    class="bg-bgMain text-textMain font-sans antialiased selection:bg-accentGreen selection:text-white overflow-hidden">
+    class="bg-bgMain text-textMain font-sans antialiased selection:bg-accentGreen selection:text-white overflow-hidden h-screen fixed w-full">
 
     <!-- SPLASH SCREEN -->
     <style>
@@ -81,12 +81,12 @@
             font-family: 'JetBrains Mono', monospace;
             color: #10b981;
             /* Matrix green */
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 5vw, 1.5rem);
             letter-spacing: 0.1em;
             position: relative;
             text-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
             font-weight: bold;
-            text-align: center;
+            text-align: left;
             max-width: 90vw;
             white-space: pre-wrap;
             word-break: keep-all;
@@ -116,8 +116,8 @@
     </div>
     <script>
             (function () {
-                const text = "Wake up matrix has you";
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
+                const text = "Wake up Neo...\nThe matrix has you...";
+                const chars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ";
                 const textEl = document.getElementById('matrix-text');
                 const splashEl = document.getElementById('matrix-splash');
                 let i = 0;
@@ -160,32 +160,34 @@
                     }, 40);
                 }
 
-                setTimeout(typeWriter, 800);
+                setTimeout(typeWriter, 1000);
 
                 let windowLoaded = false;
                 window.addEventListener('load', () => {
                     windowLoaded = true;
+                    // Ensure page starts at the top to prevent weird layout shifts during splash
+                    window.scrollTo(0, 0);
                     checkDone();
                 });
 
                 function checkDone() {
                     if (typingComplete && windowLoaded) {
                         setTimeout(() => {
-                            textEl.classList.remove('matrix-cursor');
+                            // textEl.classList.remove('matrix-cursor'); // Keep cursor visible
 
                             // Scramble the text matrix style
-                            scrambleText();
+                            // scrambleText();
 
                             // Concurrently start the slice up animation
                             setTimeout(() => {
                                 splashEl.classList.add('slice-up');
                                 setTimeout(() => {
                                     splashEl.remove();
-                                    document.body.classList.remove('overflow-hidden');
+                                    document.body.classList.remove('overflow-hidden', 'h-screen', 'fixed', 'w-full');
                                 }, 1500);
                             }, 50);
 
-                        }, 500);
+                        }, 1500);
                     }
                 }
             })();
