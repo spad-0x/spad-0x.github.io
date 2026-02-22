@@ -34,6 +34,26 @@
                     boxShadow: {
                         'glass': '0 4px 30px rgba(0, 0, 0, 0.5)',
                         'glow-green': '0 0 20px rgba(16, 185, 129, 0.4)',
+                    },
+                    keyframes: {
+                        scan: {
+                            '0%, 100%': { transform: 'translateY(-100%)' },
+                            '50%': { transform: 'translateY(400px)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.1', transform: 'scale(1)' },
+                            '50%': { opacity: '0.3', transform: 'scale(1.05)' },
+                        }
+                    },
+                    animation: {
+                        'scan-mobile': 'scan 3s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'spin-slow': 'spin 4s linear infinite',
                     }
                 }
             }
@@ -211,6 +231,8 @@
                             data-value="About">About</a></li>
                     <li><a href="#services" class="hover:text-white transition-colors duration-300 decode-text-slow"
                             data-value="Expertise">Expertise</a></li>
+                    <li><a href="#consulting" class="hover:text-white transition-colors duration-300 decode-text-slow"
+                            data-value="Consulting">Consulting</a></li>
                     <li><a href="#projects" class="hover:text-white transition-colors duration-300 decode-text-slow"
                             data-value="Intelligence">Intelligence</a>
                     </li>
@@ -230,6 +252,7 @@
                     class="flex flex-col space-y-6 px-6 py-8 text-xs font-mono tracking-widest uppercase text-center text-textMuted">
                     <li><a href="#about" class="block hover:text-white mobile-link">About</a></li>
                     <li><a href="#services" class="block hover:text-white mobile-link">Expertise</a></li>
+                    <li><a href="#consulting" class="block hover:text-white mobile-link">Consulting</a></li>
                     <li><a href="#projects" class="block hover:text-white mobile-link">Intelligence</a></li>
                     <li><a href="#contact" class="block hover:text-white mobile-link">Communicate</a></li>
                 </ul>
@@ -658,6 +681,137 @@
             </div>
         </section>
 
+        <!-- Consulting & Services Section -->
+        <section id="consulting"
+            class="min-h-screen flex items-center pt-24 pb-32 px-6 md:px-16 lg:px-24 relative overflow-hidden">
+            <!-- Background glow -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accentGreen/5 rounded-full blur-[120px] pointer-events-none">
+            </div>
+
+            <div class="w-full max-w-7xl mx-auto relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="w-8 h-px bg-accentTeal"></span>
+                            <span class="font-mono text-xs text-accentTeal tracking-[0.2em] uppercase">Professional
+                                Operations</span>
+                        </div>
+                        <h3
+                            class="font-sans text-3xl md:text-5xl font-semibold text-white tracking-tight leading-tight">
+                            Freelance & <br>Consulting.</h3>
+                    </div>
+                    <p
+                        class="font-mono text-xs text-textMuted tracking-widest uppercase mt-6 md:mt-0 max-w-sm text-left md:text-right leading-relaxed">
+                        Delivering end-to-end engineering and offensive security assessments for modern infrastructure.
+                    </p>
+                </div>
+
+                <!-- Bento Box Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]">
+
+                    <!-- Full Stack Dev (Spans 2 cols) -->
+                    <div
+                        class="md:col-span-2 row-span-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 md:hover:border-accentGreen/50 p-8 md:p-10 transition-all duration-500 rounded-2xl group flex flex-col justify-between relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 p-8 opacity-10 md:group-hover:opacity-20 transition-opacity max-md:animate-pulse-glow">
+                            <i class="ph ph-brackets-curly text-8xl text-accentGreen"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h4 class="font-sans text-2xl font-medium text-white mb-2">Full Stack Development</h4>
+                            <p class="text-textMuted text-sm font-light leading-relaxed max-w-md">
+                                Architecting and building secure, scalable, and high-performance web applications. From
+                                modern frontends to robust backend APIs and database designs.
+                            </p>
+                        </div>
+                        <div class="relative z-10 mt-8 flex flex-wrap gap-2">
+                            <span
+                                class="px-3 py-1 bg-white/5 border border-white/10 text-xs font-mono text-gray-300 rounded-full">React/Next.js</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 border border-white/10 text-xs font-mono text-gray-300 rounded-full">Node.js</span>
+                            <span
+                                class="px-3 py-1 bg-white/5 border border-white/10 text-xs font-mono text-gray-300 rounded-full">Secure
+                                Architecture</span>
+                        </div>
+                    </div>
+
+                    <!-- App Dev -->
+                    <div
+                        class="md:col-span-1 row-span-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 md:hover:border-accentTeal/50 p-8 md:p-10 transition-all duration-500 rounded-2xl group flex flex-col justify-between">
+                        <div>
+                            <i
+                                class="ph ph-device-mobile text-3xl text-accentTeal mb-6 md:group-hover:-translate-y-1 transition-transform max-md:animate-float"></i>
+                            <h4 class="font-sans text-xl font-medium text-white mb-2">App Development</h4>
+                            <p class="text-textMuted text-xs font-light leading-relaxed">
+                                Cross-platform and native mobile application development with a security-first approach
+                                to protect user data and prevent reverse engineering.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Pen Testing -->
+                    <div
+                        class="md:col-span-1 row-span-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 md:hover:border-red-500/40 p-8 transition-all duration-500 rounded-2xl group flex flex-col justify-between overflow-hidden relative">
+                        <!-- Red scanning line effect on hover (animated continuously on mobile) -->
+                        <div
+                            class="absolute top-0 left-0 w-full h-1 bg-red-500/50 transform -translate-y-full md:group-hover:translate-y-[400px] transition-transform duration-[2s] ease-in-out shadow-[0_0_15px_rgba(239,68,68,0.8)] max-md:animate-scan-mobile">
+                        </div>
+
+                        <div class="relative z-10">
+                            <i
+                                class="ph ph-skull text-3xl text-red-500 opacity-80 mb-6 md:group-hover:scale-110 transition-transform"></i>
+                            <h4 class="font-sans text-lg font-medium text-white mb-2">Penetration Testing</h4>
+                            <p class="text-textMuted text-xs font-light leading-relaxed">
+                                Simulating sophisticated cyber attacks on your infrastructure and applications to
+                                uncover critical exploitable vulnerabilities.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Vuln Assessment -->
+                    <div
+                        class="md:col-span-1 row-span-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 md:hover:border-orange-500/40 p-8 transition-all duration-500 rounded-2xl group flex flex-col justify-between">
+                        <div>
+                            <i
+                                class="ph ph-radar text-3xl text-orange-400 mb-6 md:group-hover:rotate-180 transition-transform duration-700 max-md:animate-spin-slow"></i>
+                            <h4 class="font-sans text-lg font-medium text-white mb-2">Vulnerability Assessment</h4>
+                            <p class="text-textMuted text-xs font-light leading-relaxed">
+                                Systematic scanning and manual verification of your digital assets to identify,
+                                quantify, and prioritize security weaknesses.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Security Auditing -->
+                    <div
+                        class="md:col-span-1 row-span-1 bg-white/[0.02] backdrop-blur-xl border border-white/5 md:hover:border-blue-500/40 p-8 transition-all duration-500 rounded-2xl group flex flex-col justify-between">
+                        <div>
+                            <i
+                                class="ph ph-shield-check text-3xl text-blue-400 mb-6 md:group-hover:scale-110 transition-transform max-md:animate-pulse"></i>
+                            <h4 class="font-sans text-lg font-medium text-white mb-2">Security Auditing</h4>
+                            <p class="text-textMuted text-xs font-light leading-relaxed">
+                                Comprehensive source code review, architecture analysis, and compliance checks to ensure
+                                robust defense-in-depth strategies.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-16 flex justify-center">
+                    <a href="#contact"
+                        class="group relative px-8 py-4 bg-white/5 border border-white/10 hover:border-accentGreen/50 text-white font-mono text-xs uppercase tracking-widest backdrop-blur-md transition-all duration-300 overflow-hidden flex items-center">
+                        <div
+                            class="absolute inset-0 h-full w-full bg-accentGreen/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out z-0">
+                        </div>
+                        <span class="relative z-10">Request a Proposal</span>
+                        <i
+                            class="ph ph-arrow-right relative z-10 group-hover:translate-x-1 transition-transform ml-3"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <!-- Projects Section -->
         <section id="projects" class="min-h-screen flex items-center pt-24 pb-32 px-6 md:px-16 lg:px-24">
             <div class="w-full max-w-7xl mx-auto">
@@ -730,30 +884,125 @@
 
         <!-- Contact Section -->
         <section id="contact"
-            class="min-h-[70vh] flex flex-col justify-center items-center text-center relative pt-24 pb-32 px-6 md:px-16 lg:px-24">
+            class="min-h-screen flex items-center pt-24 pb-32 px-6 md:px-16 lg:px-24 relative overflow-hidden">
             <div
-                class="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent">
+                class="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-accentTeal/30 to-transparent">
             </div>
 
-            <h3 class="font-sans text-4xl md:text-6xl font-semibold text-white tracking-tight mb-8">Ready to fortify?
-            </h3>
-            <p class="text-textMuted font-light max-w-xl mx-auto mb-12 text-base md:text-lg">
-                My inbox is open for new opportunities, consulting requests, or challenging contracts. Communication is
-                strictly confidential.
-            </p>
-
-            <a href="mailto:leonardospadoni@proton.me"
-                class="group relative px-10 py-5 bg-white text-bgMain font-bold font-mono text-sm uppercase tracking-widest overflow-hidden">
-                <span class="relative z-10">Initiate Secure Channel</span>
-                <div
-                    class="absolute inset-0 h-full w-full bg-gray-300 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out z-0">
+            <div class="w-full max-w-7xl mx-auto relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="w-8 h-px bg-accentGreen"></span>
+                            <span class="font-mono text-xs text-accentGreen tracking-[0.2em] uppercase">Encrypted
+                                Handshake</span>
+                        </div>
+                        <h3
+                            class="font-sans text-3xl md:text-5xl font-semibold text-white tracking-tight leading-tight">
+                            Establish <br>Connection.</h3>
+                    </div>
+                    <p
+                        class="font-mono text-xs text-textMuted tracking-widest uppercase mt-6 md:mt-0 max-w-sm text-left md:text-right leading-relaxed">
+                        My inbox is open for new opportunities, consulting requests, or challenging contracts.
+                        Communication is strictly confidential.
+                    </p>
                 </div>
-            </a>
 
-            <div class="mt-24 font-mono text-[10px] text-textMuted tracking-widest uppercase flex space-x-6">
-                <a href="https://github.com/spad-0x" class="hover:text-white transition-colors">GitHub</a>
-                <a href="https://it.linkedin.com/in/spadonileonardo"
-                    class="hover:text-white transition-colors">LinkedIn</a>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                    <!-- Main Email Action (Spans 8 cols) -->
+                    <div
+                        class="md:col-span-8 bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-accentGreen/30 p-8 md:p-12 rounded-2xl group flex flex-col justify-between relative overflow-hidden transition-colors duration-500">
+                        <!-- Cyber wireframe background pattern -->
+                        <div class="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity pointer-events-none"
+                            style="background-image: radial-gradient(#10b981 1px, transparent 1px); background-size: 20px 20px;">
+                        </div>
+
+                        <div class="relative z-10 flex flex-col h-full justify-between">
+                            <div>
+                                <i class="ph ph-envelope-simple-open text-4xl text-white mb-6"></i>
+                                <h4 class="font-sans text-2xl md:text-3xl font-medium text-white mb-3">Primary Channel
+                                </h4>
+                                <p class="text-textMuted text-sm font-light max-w-md leading-relaxed">
+                                    Send me an email directly. For highly sensitive information, please use my PGP key
+                                    to encrypt your message payload before transmission.
+                                </p>
+                            </div>
+
+                            <div class="mt-12 flex flex-col sm:flex-row items-center gap-4">
+                                <a href="mailto:leonardospadoni@proton.me"
+                                    class="w-full sm:w-auto text-center group/btn relative px-8 py-4 bg-white text-bgMain font-bold font-mono text-sm uppercase tracking-widest overflow-hidden transition-transform hover:scale-105 active:scale-95 duration-200">
+                                    <span class="relative z-10">Initialize Email</span>
+                                    <div
+                                        class="absolute inset-0 h-full w-full bg-accentGreen transform scale-x-0 group-hover/btn:scale-x-100 transition-transform origin-left duration-300 ease-out z-0">
+                                    </div>
+                                </a>
+                                <div
+                                    class="font-mono text-xs text-textMuted bg-bgMain/50 px-4 py-4 rounded border border-white/5 w-full sm:w-auto text-center">
+                                    leonardospadoni<span class="text-accentTeal">@</span>proton.me
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PGP Block (Spans 4 cols) -->
+                    <div
+                        class="md:col-span-4 bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-accentTeal/30 p-8 rounded-2xl group flex flex-col relative transition-colors duration-500">
+                        <div class="absolute top-0 right-0 p-6 opacity-20">
+                            <i class="ph ph-fingerprint text-6xl text-accentTeal"></i>
+                        </div>
+
+                        <div class="relative z-10 flex-1 flex flex-col">
+                            <i class="ph ph-key text-2xl text-accentTeal mb-4"></i>
+                            <h4 class="font-sans text-lg font-medium text-white mb-2">Public Key</h4>
+                            <p class="text-textMuted text-xs font-light mb-6 flex-1">
+                                Verify my identity or encrypt payloads destined for my inbox.
+                            </p>
+
+                            <a href="LeonardoSpadoni.asc" download
+                                class="flex items-center justify-between p-4 bg-bgMain/80 border border-white/10 hover:border-accentTeal/50 transition-colors rounded group/dl cursor-pointer">
+                                <span class="font-mono text-xs text-white truncate mr-4">LeonardoSpadoni.asc</span>
+                                <i
+                                    class="ph ph-download-simple text-accentTeal group-hover/dl:translate-y-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Secure Messaging (Spans 6 cols) -->
+                    <div
+                        class="md:col-span-6 bg-white/[0.02] backdrop-blur-xl border border-white/5 hover:border-white/20 p-8 rounded-2xl transition-colors duration-500 flex items-center group">
+                        <div class="p-4 bg-white/5 rounded-xl mr-6 group-hover:bg-white/10 transition-colors">
+                            <i class="ph ph-chat-centered-text text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-sans font-medium text-white mb-1">Session ID</h4>
+                            <div class="font-mono text-[10px] sm:text-xs text-textMuted break-all select-all hover:text-white transition-colors cursor-copy"
+                                title="Click to copy">
+                                05c6e053b21645757d55e6c4ee8fe0609296...<span class="text-accentTeal">(ask)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social / Professional (Spans 6 cols) -->
+                    <div
+                        class="md:col-span-6 bg-white/[0.02] backdrop-blur-xl border-t border-b sm:border border-white/5 rounded-2xl flex flex-row divide-x divide-white/5 overflow-hidden">
+                        <a href="https://github.com/spad-0x" target="_blank"
+                            class="flex-1 p-8 flex flex-col items-center justify-center hover:bg-white/5 transition-colors group">
+                            <i
+                                class="ph ph-github-logo text-3xl text-textMuted group-hover:text-white mb-3 transition-colors"></i>
+                            <span
+                                class="font-mono text-[10px] tracking-widest uppercase text-textMuted group-hover:text-white transition-colors">GitHub</span>
+                        </a>
+                        <a href="https://it.linkedin.com/in/spadonileonardo" target="_blank"
+                            class="flex-1 p-8 flex flex-col items-center justify-center hover:bg-white/5 transition-colors group">
+                            <i
+                                class="ph ph-linkedin-logo text-3xl text-textMuted group-hover:text-[#0a66c2] mb-3 transition-colors"></i>
+                            <span
+                                class="font-mono text-[10px] tracking-widest uppercase text-textMuted group-hover:text-white transition-colors">LinkedIn</span>
+                        </a>
+                    </div>
+
+                </div>
             </div>
         </section>
 
